@@ -1,0 +1,15 @@
+machine:
+  php:
+    version: 7.0.4
+dependencies:
+  cache_directories:
+    - ~/.composer/cache
+  pre:
+      #
+      #
+test:
+  override:
+    # phpcs circleci status
+    - ./vendor/bin/phpcs -n --standard=phpcs.xml
+    # phpmd
+    - ./vendor/bin/phpmd app text phpmd.xml

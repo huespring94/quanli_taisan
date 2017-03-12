@@ -14,7 +14,10 @@ class CreateHaoMonVoHinhTable extends Migration
     public function up()
     {
         Schema::create('hao_mon_vo_hinh', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('ma');
+            $table->string('ten', 1000);
+            $table->string('mo_ta', 2000);
+            $table->integer('ty_le_hao_mon');
             $table->timestamps();
         });
     }

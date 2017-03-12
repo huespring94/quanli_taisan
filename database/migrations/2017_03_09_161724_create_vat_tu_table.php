@@ -14,7 +14,12 @@ class CreateVatTuTable extends Migration
     public function up()
     {
         Schema::create('vat_tu', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('ma');
+            $table->string('ten', 200);
+            $table->string('mo_ta', 2000)->nullable();
+            $table->string('don_vi_tinh', 10);
+            $table->integer('ma_loai_vat_tu')->unsigned();
+            $table->integer('ma_hao_monn_mon')->unsigned();
             $table->timestamps();
         });
     }

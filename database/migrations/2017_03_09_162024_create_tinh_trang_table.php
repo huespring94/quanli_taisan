@@ -14,7 +14,12 @@ class CreateTinhTrangTable extends Migration
     public function up()
     {
         Schema::create('tinh_trang', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('ma');
+            $table->integer('ma_kho_phong')->unsigned();
+            $table->integer('hu_hai_hien_tai')->unsigned()->default(0);
+            $table->integer('tong_hu_hai')->unsigned()->default(0);
+            $table->date('thoi_gian')->nullable();
+            $table->string('ghi_chu', 1000)->nullable();
             $table->timestamps();
         });
     }

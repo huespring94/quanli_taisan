@@ -14,7 +14,9 @@ class CreatePhongTable extends Migration
     public function up()
     {
         Schema::create('phong', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('ma');
+            $table->string('ten', 20);
+            $table->integer('ma_khoa')->unsigned();
             $table->timestamps();
         });
     }

@@ -14,7 +14,8 @@ class CreateKhoaTable extends Migration
     public function up()
     {
         Schema::create('khoa', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('ma');
+            $table->string('ten', 50);
             $table->timestamps();
         });
     }

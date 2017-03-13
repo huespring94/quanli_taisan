@@ -14,7 +14,8 @@ class CreateKhoTable extends Migration
     public function up()
     {
         Schema::create('kho', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('ma');
+            $table->string('ten', 50)->nullable();
             $table->timestamps();
         });
     }

@@ -13,7 +13,7 @@ class CreateTinhTrangTable extends Migration
      */
     public function up()
     {
-        Schema::create('tinh_trang', function (Blueprint $table) {
+        Schema::create('tinh_trang_hu_hai', function (Blueprint $table) {
             $table->increments('ma');
             $table->integer('ma_kho_phong')->unsigned();
             $table->integer('hu_hai_hien_tai')->unsigned()->default(0);
@@ -31,6 +31,6 @@ class CreateTinhTrangTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tinh_trang');
+        Schema::dropIfExists('tinh_trang_hu_hai');
     }
 }

@@ -14,7 +14,9 @@ class CreateNhaCungCapTable extends Migration
     public function up()
     {
         Schema::create('nha_cung_cap', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('ma');
+            $table->string('ten', 500);
+            $table->string('mo_ta', 1000)->nullable();
             $table->timestamps();
         });
     }

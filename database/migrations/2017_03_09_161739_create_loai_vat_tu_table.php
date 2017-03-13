@@ -14,7 +14,9 @@ class CreateLoaiVatTuTable extends Migration
     public function up()
     {
         Schema::create('loai_vat_tu', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('ma');
+            $table->string('ten', 100);
+            $table->string('mo_ta', 1000)->nullable();
             $table->timestamps();
         });
     }

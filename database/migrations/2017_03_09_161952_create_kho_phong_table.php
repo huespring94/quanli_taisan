@@ -14,7 +14,12 @@ class CreateKhoPhongTable extends Migration
     public function up()
     {
         Schema::create('kho_phong', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('ma');
+            $table->datetime('ngay_nhap');
+            $table->string('tinh_trang');
+            $table->integer('ma_phong')->unsigned();
+            $table->integer('ma_kho_khoa')->unsigned();
+            $table->integer('ma_nguoi_dung')->unsigned();
             $table->timestamps();
         });
     }

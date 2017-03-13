@@ -14,7 +14,16 @@ class CreateNguoiDungTable extends Migration
     public function up()
     {
         Schema::create('nguoi_dung', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('ma');
+            $table->string('mat_khau', 255);
+            $table->string('ten', 20);
+            $table->string('ho'. 50);
+            $table->date('dob')->nullable();
+            $table->string('dien_thoai', 11)->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('dia_chi', 500)->nullable();
+            $table->integer('ma_phan_quyen')->unsigned();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

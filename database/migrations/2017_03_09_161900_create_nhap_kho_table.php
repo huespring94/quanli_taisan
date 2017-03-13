@@ -14,7 +14,11 @@ class CreateNhapKhoTable extends Migration
     public function up()
     {
         Schema::create('nhap_kho', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('ma');
+            $table->datetime('ngay_nhap');
+            $table->integer('so_tien');
+            $table->integer('ma_nguoi_dung')->unsigned();
+            $table->integer('ma_kho')->unsigned();
             $table->timestamps();
         });
     }

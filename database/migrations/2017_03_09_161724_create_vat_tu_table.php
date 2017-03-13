@@ -19,7 +19,7 @@ class CreateVatTuTable extends Migration
             $table->string('mo_ta', 2000)->nullable();
             $table->string('don_vi_tinh', 10);
             $table->integer('ma_loai_vat_tu')->unsigned();
-            $table->integer('ma_hao_monn_mon')->unsigned();
+            $table->integer('ma_hao_mon')->unsigned();
             $table->timestamps();
         });
     }

@@ -17,8 +17,8 @@ class CreateNhapKhoTable extends Migration
             $table->increments('ma');
             $table->datetime('ngay_nhap');
             $table->integer('so_tien');
-            $table->integer('ma_nguoi_dung')->unsiged();
-            $table->integer('ma_khoa')->unsigned();
+            $table->integer('ma_nguoi_dung')->unsigned();
+            $table->integer('ma_kho')->unsigned();
             $table->timestamps();
         });
     }

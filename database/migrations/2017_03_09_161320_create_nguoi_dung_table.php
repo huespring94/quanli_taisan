@@ -14,7 +14,7 @@ class CreateNguoiDungTable extends Migration
     public function up()
     {
         Schema::create('nguoi_dung', function (Blueprint $table) {
-            $table->increments('ma_nguoi_dung');
+            $table->increments('ma');
             $table->string('mat_khau', 255);
             $table->string('ten', 20);
             $table->string('ho'. 50);

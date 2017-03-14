@@ -18,6 +18,7 @@ class CreateNguoiDungTable extends Migration
             $table->string('mat_khau', 255);
             $table->string('ten', 20);
             $table->string('ho'. 50);
+            $table->string('hinh_anh');
             $table->date('ngay_sinh')->nullable();
             $table->string('dien_thoai', 11)->nullable();
             $table->string('email')->unique()->nullable();

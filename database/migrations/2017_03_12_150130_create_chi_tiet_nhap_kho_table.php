@@ -19,7 +19,7 @@ class CreateChiTietNhapKhoTable extends Migration
             $table->integer('don_gia');
             $table->string('trang_thai', 100);
             $table->integer('ma_nhap_kho')->unsigned();
-            $table->integer('ma_vat_tu')->unsigned();
+            $table->string('ma_vat_tu', 100);
             $table->integer('ma_nha_cung_cap')->unsigned();
             $table->timestamps();
         });

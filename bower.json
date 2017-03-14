@@ -1,0 +1,17 @@
+{
+  "name": "quanlivattu",
+  "description": "",
+  "main": "",
+  "authors": [
+    "huespring"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/huespring94/quanli_taisan",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

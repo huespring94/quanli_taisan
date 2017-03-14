@@ -8,6 +8,9 @@ class KhoPhong extends Model
 {
     protected $table = 'kho_phong';
     
+    const TT_MOI = 'moi';
+    const TT_DA_SU_DUNG = 'da su dung';
+    
     protected $fillable = [
         'ma',
         'ngay_nhap',

@@ -14,7 +14,7 @@ class CreateVatTuTable extends Migration
     public function up()
     {
         Schema::create('vat_tu', function (Blueprint $table) {
-            $table->string('ma', 100);
+            $table->increments('ma');
             $table->string('ma_vat_tu', 100)->unique();
             $table->string('ten', 200);
             $table->string('mo_ta', 2000)->nullable();
@@ -22,7 +22,6 @@ class CreateVatTuTable extends Migration
             $table->string('ma_loai_vat_tu', 10);
             $table->integer('ma_hao_mon')->unsigned();
             $table->timestamps();
-            $table->primary('ma');
         });
     }
 

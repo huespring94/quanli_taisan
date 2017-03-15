@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateKhoKhoaTable extends Migration
+class CreateThanhLyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,12 @@ class CreateKhoKhoaTable extends Migration
      */
     public function up()
     {
-        Schema::create('kho_khoa', function (Blueprint $table) {
+        Schema::create('thanh_ly', function (Blueprint $table) {
             $table->increments('ma');
-            $table->datetime('ngay_nhap');
+            $table->date('ngay_thanh_ly');
             $table->integer('so_luong');
-            $table->string('tinh_trang');
-            $table->integer('ma_khoa')->unsigned();
-            $table->integer('ma_nguoi_dung')->unsigned();
             $table->integer('ma_chi_tiet_nhap_kho')->unsigned();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -33,6 +29,6 @@ class CreateKhoKhoaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kho_khoa');
+        Schema::dropIfExists('thanh_ly');
     }
 }

@@ -17,11 +17,11 @@ class CreateNguoiDungTable extends Migration
             $table->increments('ma');
             $table->string('mat_khau', 255);
             $table->string('ten', 20);
-            $table->string('ho'. 50);
+            $table->string('ho', 50);
             $table->string('hinh_anh');
             $table->date('ngay_sinh')->nullable();
             $table->string('dien_thoai', 11)->nullable();
-            $table->string('email')->unique()->nullable();
+            $table->string('email')->unique();
             $table->string('dia_chi', 500)->nullable();
             $table->integer('ma_phan_quyen')->unsigned();
             $table->rememberToken();

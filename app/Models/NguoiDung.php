@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class NguoiDung extends Model
+class NguoiDung extends Authenticatable
 {
     use SoftDeletes;
     
@@ -39,4 +39,12 @@ class NguoiDung extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+    
+    /**
+     * Lay phan quyen theo nguoi dung
+     */
+    public function phanQuyen()
+    {
+        return $this->belongsTo('App\Models\PhanQuyen');
+    }
 }

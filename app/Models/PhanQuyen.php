@@ -10,13 +10,20 @@ class PhanQuyen extends Model
     
     public $timestamps = true;
     
-    const QUYEN_KHOA = 'Khoa';
-    const QUYEN_PHONG = 'Phong';
+    const QUYEN_KHOA = 'Quan li khoa';
+    const QUYEN_PHONG = 'Quan li phong';
     const QUYEN_KE_TOAN = 'Ke toan';
-    const QUYEN_PHONG_CSVC = 'Truong phong CSVC';
     
     protected $fillable = [
         'ma',
         'ten'
     ];
+    
+    /**
+     * Lay nguoi dung theo phan quyen
+     */
+    public function nguoiDungs()
+    {
+        return $this->hasMany('App\Models\NguoiDung');
+    }
 }

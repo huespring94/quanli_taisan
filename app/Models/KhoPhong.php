@@ -19,4 +19,11 @@ class KhoPhong extends Model
         'ma_kho_khoa',
         'ma_nguoi_dung'
     ];
+    
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
 }

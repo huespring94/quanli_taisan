@@ -42,6 +42,8 @@ class NguoiDung extends Authenticatable
     
     /**
      * Lay phan quyen theo nguoi dung
+     *
+     * @return object
      */
     public function phanQuyen()
     {

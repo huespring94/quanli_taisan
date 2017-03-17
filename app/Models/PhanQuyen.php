@@ -13,14 +13,16 @@ class PhanQuyen extends Model
     const QUYEN_KHOA = 'Quan li khoa';
     const QUYEN_PHONG = 'Quan li phong';
     const QUYEN_KE_TOAN = 'Ke toan';
-    
+
     protected $fillable = [
         'ma',
         'ten'
     ];
-    
+
     /**
      * Lay nguoi dung theo phan quyen
+     *
+     * @return array
      */
     public function nguoiDungs()
     {

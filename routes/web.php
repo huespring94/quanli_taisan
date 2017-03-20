@@ -12,5 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.header_lib');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');

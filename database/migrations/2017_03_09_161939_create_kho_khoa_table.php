@@ -22,6 +22,7 @@ class CreateKhoKhoaTable extends Migration
             $table->integer('ma_nguoi_dung')->unsigned();
             $table->integer('ma_chi_tiet_nhap_kho')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

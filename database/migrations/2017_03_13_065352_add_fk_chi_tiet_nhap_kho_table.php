@@ -18,7 +18,7 @@ class AddFkChiTietNhapKhoTable extends Migration
                 ->references('ma')->on('nha_cung_cap')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
             $table->foreign('ma_vat_tu')
-                ->references('ma')->on('vat_tu')
+                ->references('ma_vat_tu')->on('vat_tu')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
             $table->foreign('ma_nhap_kho')
                 ->references('ma')->on('nhap_kho')

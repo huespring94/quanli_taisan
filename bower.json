@@ -1,0 +1,22 @@
+{
+  "name": "QLTSCD",
+  "description": "",
+  "main": "pubic",
+  "authors": [
+    "huespring94 <huespringnt@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/huespring94/quanli_taisan",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "AdminLTE": "adminlte#^2.3.11",
+    "font-awesome": "Font-Awesome#^4.7.0",
+    "Ionicons": "ionicons#^2.0.1"
+  }
+}

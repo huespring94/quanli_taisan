@@ -1,6 +1,5 @@
 <?php
 
 return [
-    
-    'title' => 'Quản lí tài sản cố định', 
+    'title' => 'Quản lí tài sản cố định',
 ];

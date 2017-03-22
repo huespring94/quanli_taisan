@@ -32,6 +32,6 @@ class CreateKhoPhongTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('store_room');
+        Schema::dropIfExists('store_rooms');
     }
 }

@@ -4,13 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LoaiVatTu extends Model
+class Faculty extends Model
 {
-    protected $table = 'loai_vat_tu';
+    protected $table = 'faculties';
     
     protected $fillable = [
-        'ma',
-        'ten',
-        'mo_ta',
+        'id',
+        'name'
     ];
 }

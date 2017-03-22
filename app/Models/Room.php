@@ -4,14 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Kho extends Model
+class Room extends Model
 {
-    protected $table = 'kho';
+    protected $table = 'facuties';
     
     public $timestamps = true;
     
     protected $fillable = [
-        'ma',
-        'ten'
+        'id',
+        'name',
+        'faculty_id',
     ];
 }

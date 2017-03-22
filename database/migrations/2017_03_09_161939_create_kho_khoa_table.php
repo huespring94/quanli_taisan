@@ -13,7 +13,7 @@ class CreateKhoKhoaTable extends Migration
      */
     public function up()
     {
-        Schema::create('', function (Blueprint $table) {
+        Schema::create('store_faculties', function (Blueprint $table) {
             $table->increments('id');
             $table->datetime('date_import');
             $table->integer('quantity');

@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('layouts.header_lib');
+    return view('welcome');
 });
 
 Auth::routes();

@@ -13,12 +13,12 @@ class AddFkNhapKhoTable extends Migration
      */
     public function up()
     {
-        Schema::table('nhap_kho', function (Blueprint $table) {
-            $table->foreign('ma_kho')
-                ->references('ma')->on('kho')
+        Schema::table('import_stores', function (Blueprint $table) {
+            $table->foreign('store_id')
+                ->references('id')->on('stores')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
-            $table->foreign('ma_nguoi_dung')
-                ->references('ma')->on('nguoi_dung')
+            $table->foreign('user_id')
+                ->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
         });
     }
@@ -30,9 +30,9 @@ class AddFkNhapKhoTable extends Migration
      */
     public function down()
     {
-        Schema::table('nhap_kho', function (Blueprint $table) {
-            $table->dropForeign(['ma_nguoi_dung']);
-            $table->dropForeign(['ma_kho']);
+        Schema::table('import_stores', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->dropForeign(['store_id']);
         });
     }
 }

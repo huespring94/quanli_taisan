@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PhanQuyen extends Model
+class Role extends Model
 {
-    protected $table = 'phan_quyen';
+    protected $table = 'roles';
     
     public $timestamps = true;
     
@@ -15,8 +15,8 @@ class PhanQuyen extends Model
     const QUYEN_KE_TOAN = 'Ke toan';
 
     protected $fillable = [
-        'ma',
-        'ten'
+        'id',
+        'name'
     ];
 
     /**
@@ -24,8 +24,8 @@ class PhanQuyen extends Model
      *
      * @return array
      */
-    public function nguoiDungs()
+    public function users()
     {
-        return $this->hasMany('App\Models\NguoiDung');
+        return $this->hasMany('App\Models\User');
     }
 }

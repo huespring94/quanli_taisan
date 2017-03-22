@@ -13,13 +13,13 @@ class CreateKhoPhongTable extends Migration
      */
     public function up()
     {
-        Schema::create('kho_phong', function (Blueprint $table) {
-            $table->increments('ma');
-            $table->datetime('ngay_nhap');
-            $table->string('tinh_trang');
-            $table->integer('ma_phong')->unsigned();
-            $table->integer('ma_kho_khoa')->unsigned();
-            $table->integer('ma_nguoi_dung')->unsigned();
+        Schema::create('store_rooms', function (Blueprint $table) {
+            $table->increments('id');
+            $table->datetime('date_import');
+            $table->string('status');
+            $table->integer('room_id')->unsigned();
+            $table->integer('store_faculty_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -32,6 +32,6 @@ class CreateKhoPhongTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kho_phong');
+        Schema::dropIfExists('store_rooms');
     }
 }

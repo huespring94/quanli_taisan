@@ -13,11 +13,11 @@ class CreateThanhLyTable extends Migration
      */
     public function up()
     {
-        Schema::create('thanh_ly', function (Blueprint $table) {
-            $table->increments('ma');
-            $table->date('ngay_thanh_ly');
-            $table->integer('so_luong');
-            $table->integer('ma_chi_tiet_nhap_kho')->unsigned();
+        Schema::create('liquidations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->date('date_liquidation');
+            $table->integer('quantity');
+            $table->integer('detail_import_store_id')->unsigned();
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateThanhLyTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('thanh_ly');
+        Schema::dropIfExists('liquidations');
     }
 }

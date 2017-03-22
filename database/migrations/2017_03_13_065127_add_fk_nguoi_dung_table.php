@@ -13,9 +13,9 @@ class AddFkNguoiDungTable extends Migration
      */
     public function up()
     {
-        Schema::table('nguoi_dung', function (Blueprint $table) {
-            $table->foreign('ma_phan_quyen')
-                ->references('ma')->on('phan_quyen')
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('role_id')
+                ->references('id')->on('roles')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
         });
     }
@@ -27,8 +27,8 @@ class AddFkNguoiDungTable extends Migration
      */
     public function down()
     {
-        Schema::table('nguoi_dung', function (Blueprint $table) {
-            $table->dropForeign(['ma_phan_quyen']);
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['role_id']);
         });
     }
 }

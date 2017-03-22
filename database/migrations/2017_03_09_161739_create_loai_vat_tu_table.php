@@ -13,12 +13,12 @@ class CreateLoaiVatTuTable extends Migration
      */
     public function up()
     {
-        Schema::create('loai_vat_tu', function (Blueprint $table) {
-            $table->string('ma', 10);
-            $table->string('ten', 100);
-            $table->string('mo_ta', 1000)->nullable();
+        Schema::create('kind_stuffs', function (Blueprint $table) {
+            $table->string('id', 10);
+            $table->string('name', 100);
+            $table->string('description', 1000)->nullable();
             $table->timestamps();
-            $table->primary('ma');
+            $table->primary('id');
         });
     }
 
@@ -29,6 +29,6 @@ class CreateLoaiVatTuTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('loai_vat_tu');
+        Schema::dropIfExists('kind_stuffs');
     }
 }

@@ -13,9 +13,9 @@ class CreateKhoTable extends Migration
      */
     public function up()
     {
-        Schema::create('kho', function (Blueprint $table) {
-            $table->increments('ma');
-            $table->string('ten', 50)->nullable();
+        Schema::create('stores', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name', 50)->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateKhoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kho');
+        Schema::dropIfExists('stores');
     }
 }

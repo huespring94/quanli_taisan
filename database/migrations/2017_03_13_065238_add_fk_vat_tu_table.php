@@ -13,12 +13,12 @@ class AddFkVatTuTable extends Migration
      */
     public function up()
     {
-        Schema::table('vat_tu', function (Blueprint $table) {
-            $table->foreign('ma_loai_vat_tu')
-                ->references('ma')->on('loai_vat_tu')
+        Schema::table('stuffs', function (Blueprint $table) {
+            $table->foreign('kind_stuff_id')
+                ->references('id')->on('kind_stuffs')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
-            $table->foreign('ma_hao_mon')
-                ->references('ma')->on('hao_mon_vo_hinh')
+            $table->foreign('atrophy_id')
+                ->references('id')->on('atrophies')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
         });
     }
@@ -30,9 +30,9 @@ class AddFkVatTuTable extends Migration
      */
     public function down()
     {
-        Schema::table('vat_tu', function (Blueprint $table) {
-            $table->dropForeign(['ma_loai_vat_tu']);
-            $table->dropForeign(['ma_hao_mon']);
+        Schema::table('stuffs', function (Blueprint $table) {
+            $table->dropForeign(['kind_stuff_id']);
+            $table->dropForeign(['atrophy_id']);
         });
     }
 }

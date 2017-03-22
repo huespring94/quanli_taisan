@@ -13,14 +13,14 @@ class CreateChiTietNhapKhoTable extends Migration
      */
     public function up()
     {
-        Schema::create('chi_tiet_nhap_kho', function (Blueprint $table) {
-            $table->increments('ma');
-            $table->integer('so_luong');
-            $table->integer('don_gia');
-            $table->string('trang_thai', 100);
-            $table->integer('ma_nhap_kho')->unsigned();
-            $table->string('ma_vat_tu', 100);
-            $table->string('ma_nha_cung_cap', 10);
+        Schema::create('detail_import_stores', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('quantity');
+            $table->integer('price_unit');
+            $table->string('status', 100);
+            $table->integer('import_store_id')->unsigned();
+            $table->string('stuff_id', 100);
+            $table->string('supplier_id', 10);
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateChiTietNhapKhoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('chi_tiet_nhap_kho');
+        Schema::dropIfExists('detail_import_stores');
     }
 }

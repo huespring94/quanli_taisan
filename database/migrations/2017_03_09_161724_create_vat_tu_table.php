@@ -13,14 +13,14 @@ class CreateVatTuTable extends Migration
      */
     public function up()
     {
-        Schema::create('vat_tu', function (Blueprint $table) {
-            $table->increments('ma');
-            $table->string('ma_vat_tu', 100)->unique();
-            $table->string('ten', 200);
-            $table->string('mo_ta', 2000)->nullable();
-            $table->string('don_vi_tinh', 10);
-            $table->string('ma_loai_vat_tu', 10);
-            $table->integer('ma_hao_mon')->unsigned();
+        Schema::create('stuffs', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('stuff_id', 100)->unique();
+            $table->string('name', 200);
+            $table->string('description', 2000)->nullable();
+            $table->string('unit', 10);
+            $table->string('kind_stuff_id', 10);
+            $table->integer('atrophy_id')->unsigned();
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateVatTuTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vat_tu');
+        Schema::dropIfExists('stuffs');
     }
 }

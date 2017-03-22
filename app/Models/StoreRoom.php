@@ -3,24 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class KhoPhong extends Model
+class StoreRoom extends Model
 {
     use SoftDeletes;
     
-    protected $table = 'kho_phong';
+    protected $table = 'store_rooms';
     
     const TT_MOI = 'moi';
     const TT_DA_SU_DUNG = 'da su dung';
     
     protected $fillable = [
-        'ma',
-        'ngay_nhap',
-        'tinh_trang',
-        'ma_phong',
-        'ma_kho_khoa',
-        'ma_nguoi_dung'
+        'id',
+        'date_import',
+        'status',
+        'room_id',
+        'store_faculty_id',
+        'user_id'
     ];
     
     /**

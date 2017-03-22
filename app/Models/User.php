@@ -2,35 +2,33 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class NguoiDung extends Authenticatable
+class User extends Model
 {
     use SoftDeletes;
     
-    protected $table = 'nguoi_dung';
+    protected $table = 'users';
     
     public $timestamps = true;
     
     protected $fillable = [
-        'ma',
-        'mat_khau',
-        'ten',
-        'ho',
-        'ngay_sinh',
-        'dien_thoai',
+        'id',
+        'firstname',
+        'lastname',
+        'dob',
+        'phone',
         'email',
-        'dia_chi'
+        'address'
     ];
     
     protected $hidden = [
-        'mat_khau',
+        'password',
         'remember_token'
     ];
     
     protected $guarded = [
-        'ma_phan_quyen'
+        'role_id'
     ];
     
     /**
@@ -45,8 +43,8 @@ class NguoiDung extends Authenticatable
      *
      * @return object
      */
-    public function phanQuyen()
+    public function role()
     {
-        return $this->belongsTo('App\Models\PhanQuyen');
+        return $this->belongsTo('App\Models\Role');
     }
 }

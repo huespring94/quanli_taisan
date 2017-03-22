@@ -13,12 +13,12 @@ class AddFkChuyenYeuCauTable extends Migration
      */
     public function up()
     {
-        Schema::table('chuyen_yeu_cau', function (Blueprint $table) {
-            $table->foreign('ma_yeu_cau')
-                ->references('ma')->on('yeu_cau')
+        Schema::table('request_transfers', function (Blueprint $table) {
+            $table->foreign('request_id')
+                ->references('id')->on('requests')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
-            $table->foreign('ma_kho_phong')
-                ->references('ma')->on('kho_phong')
+            $table->foreign('store_room_id')
+                ->references('id')->on('store_rooms')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
         });
     }
@@ -30,9 +30,9 @@ class AddFkChuyenYeuCauTable extends Migration
      */
     public function down()
     {
-        Schema::table('chuyen_yeu_cau', function (Blueprint $table) {
-            $table->dropForeign(['ma_yeu_cau']);
-            $table->dropForeign(['ma_kho_phong']);
+        Schema::table('request_transfers', function (Blueprint $table) {
+            $table->dropForeign(['request_id']);
+            $table->dropForeign(['store_room_id']);
         });
     }
 }

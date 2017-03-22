@@ -13,12 +13,12 @@ class CreateYeuCauTable extends Migration
      */
     public function up()
     {
-        Schema::create('yeu_cau', function (Blueprint $table) {
-            $table->increments('ma');
-            $table->integer('so_luong');
-            $table->string('loai_yeu_cau', 50);
-            $table->integer('trang_thai');
-            $table->string('ghi_chu', 1000);
+        Schema::create('requests', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('quantity');
+            $table->string('kind_request', 50);
+            $table->integer('status');
+            $table->string('note', 1000);
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateYeuCauTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('yeu_cau');
+        Schema::dropIfExists('requests');
     }
 }

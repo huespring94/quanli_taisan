@@ -13,12 +13,12 @@ class CreateNhapKhoTable extends Migration
      */
     public function up()
     {
-        Schema::create('nhap_kho', function (Blueprint $table) {
-            $table->increments('ma');
-            $table->datetime('ngay_nhap');
-            $table->integer('so_tien');
-            $table->integer('ma_nguoi_dung')->unsigned();
-            $table->integer('ma_kho')->unsigned();
+        Schema::create('import_stores', function (Blueprint $table) {
+            $table->increments('id');
+            $table->datetime('date_import');
+            $table->integer('amount');
+            $table->integer('user_id')->unsigned();
+            $table->integer('store_id')->unsigned();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateNhapKhoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nhap_kho');
+        Schema::dropIfExists('import_stores');
     }
 }

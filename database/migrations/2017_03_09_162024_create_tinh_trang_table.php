@@ -13,13 +13,13 @@ class CreateTinhTrangTable extends Migration
      */
     public function up()
     {
-        Schema::create('tinh_trang', function (Blueprint $table) {
-            $table->increments('ma');
-            $table->integer('ma_kho_phong')->unsigned();
-            $table->integer('hu_hai_hien_tai')->unsigned()->default(0);
-            $table->integer('tong_hu_hai')->unsigned()->default(0);
-            $table->date('thoi_gian')->nullable();
-            $table->string('ghi_chu', 1000)->nullable();
+        Schema::create('statuses', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('store_room_id')->unsigned();
+            $table->integer('damage_current')->unsigned()->default(0);
+            $table->integer('damage_total')->unsigned()->default(0);
+            $table->date('time')->nullable();
+            $table->string('note', 1000)->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateTinhTrangTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tinh_trang');
+        Schema::dropIfExists('statuses');
     }
 }

@@ -13,9 +13,9 @@ class CreatePhanQuyenTable extends Migration
      */
     public function up()
     {
-        Schema::create('phan_quyen', function (Blueprint $table) {
-            $table->increments('ma');
-            $table->string('ten', 50)->unique();
+        Schema::create('roles', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name', 50)->unique();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreatePhanQuyenTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('phan_quyen');
+        Schema::dropIfExists('roles');
     }
 }

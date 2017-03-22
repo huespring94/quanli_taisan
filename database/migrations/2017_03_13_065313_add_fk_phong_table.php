@@ -13,9 +13,9 @@ class AddFkPhongTable extends Migration
      */
     public function up()
     {
-        Schema::table('phong', function (Blueprint $table) {
-            $table->foreign('ma_khoa')
-                ->references('ma')->on('khoa')
+        Schema::table('rooms', function (Blueprint $table) {
+            $table->foreign('faculty_id')
+                ->references('id')->on('faculties')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
         });
     }
@@ -27,8 +27,8 @@ class AddFkPhongTable extends Migration
      */
     public function down()
     {
-        Schema::table('phong', function (Blueprint $table) {
-            $table->dropForeign(['ma_khoa']);
+        Schema::table('rooms', function (Blueprint $table) {
+            $table->dropForeign(['faculty_id']);
         });
     }
 }

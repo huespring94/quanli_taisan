@@ -13,10 +13,10 @@ class CreateChuyenYeuCauTable extends Migration
      */
     public function up()
     {
-        Schema::create('chuyen_yeu_cau', function (Blueprint $table) {
-            $table->increments('ma');
-            $table->integer('ma_yeu_cau')->unsigned();
-            $table->integer('ma_kho_phong')->unsigned();
+        Schema::create('request_transfers', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('request_id')->unsigned();
+            $table->integer('store_room_id')->unsigned();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateChuyenYeuCauTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('chuyen_yeu_cau');
+        Schema::dropIfExists('request_transfers');
     }
 }

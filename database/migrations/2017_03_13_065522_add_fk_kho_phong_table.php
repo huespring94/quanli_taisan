@@ -13,15 +13,15 @@ class AddFkKhoPhongTable extends Migration
      */
     public function up()
     {
-        Schema::table('kho_phong', function (Blueprint $table) {
-            $table->foreign('ma_phong')
-                ->references('ma')->on('phong')
+        Schema::table('store_rooms', function (Blueprint $table) {
+            $table->foreign('room_id')
+                ->references('id')->on('rooms')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
-            $table->foreign('ma_nguoi_dung')
-                ->references('ma')->on('nguoi_dung')
+            $table->foreign('user_id')
+                ->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
-            $table->foreign('ma_kho_khoa')
-                ->references('ma')->on('kho_khoa')
+            $table->foreign('store_faculty_id')
+                ->references('id')->on('store_faculties')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
         });
     }
@@ -33,10 +33,10 @@ class AddFkKhoPhongTable extends Migration
      */
     public function down()
     {
-        Schema::table('kho_phong', function (Blueprint $table) {
-            $table->dropForeign(['ma_phong']);
-            $table->dropForeign(['ma_nguoi_dung']);
-            $table->dropForeign(['ma_kho_khoa']);
+        Schema::table('store_rooms', function (Blueprint $table) {
+            $table->dropForeign(['room_id']);
+            $table->dropForeign(['user_id']);
+            $table->dropForeign(['store_faculty_id']);
         });
     }
 }

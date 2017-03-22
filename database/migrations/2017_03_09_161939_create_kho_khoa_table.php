@@ -13,14 +13,14 @@ class CreateKhoKhoaTable extends Migration
      */
     public function up()
     {
-        Schema::create('kho_khoa', function (Blueprint $table) {
-            $table->increments('ma');
-            $table->datetime('ngay_nhap');
-            $table->integer('so_luong');
-            $table->string('tinh_trang');
-            $table->integer('ma_khoa')->unsigned();
-            $table->integer('ma_nguoi_dung')->unsigned();
-            $table->integer('ma_chi_tiet_nhap_kho')->unsigned();
+        Schema::create('', function (Blueprint $table) {
+            $table->increments('id');
+            $table->datetime('date_import');
+            $table->integer('quantity');
+            $table->string('status');
+            $table->integer('faculty_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->integer('detail_import_store_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,6 +33,6 @@ class CreateKhoKhoaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kho_khoa');
+        Schema::dropIfExists('store_faculties');
     }
 }

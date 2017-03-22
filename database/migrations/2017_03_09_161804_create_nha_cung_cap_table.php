@@ -13,13 +13,13 @@ class CreateNhaCungCapTable extends Migration
      */
     public function up()
     {
-        Schema::create('nha_cung_cap', function (Blueprint $table) {
-            $table->string('ma', 10);
-            $table->string('ten', 500);
-            $table->string('dia_chi', 1000);
-            $table->string('mo_ta', 1000)->nullable();
+        Schema::create('suppliers', function (Blueprint $table) {
+            $table->string('id', 10);
+            $table->string('name', 500);
+            $table->string('address', 1000);
+            $table->string('description', 1000)->nullable();
             $table->timestamps();
-            $table->primary('ma');
+            $table->primary('id');
         });
     }
 
@@ -30,6 +30,6 @@ class CreateNhaCungCapTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nha_cung_cap');
+        Schema::dropIfExists('suppliers');
     }
 }

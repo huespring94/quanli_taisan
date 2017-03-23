@@ -21,6 +21,7 @@ class CreateVatTuTable extends Migration
             $table->string('unit', 10);
             $table->string('kind_stuff_id', 10);
             $table->integer('atrophy_id')->unsigned();
+            $table->string('supplier_id', 10);
             $table->timestamps();
         });
     }

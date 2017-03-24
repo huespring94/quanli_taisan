@@ -20,7 +20,6 @@ class CreateChiTietNhapKhoTable extends Migration
             $table->string('status', 100);
             $table->integer('import_store_id')->unsigned();
             $table->string('stuff_id', 100);
-            $table->string('supplier_id', 10);
             $table->timestamps();
         });
     }

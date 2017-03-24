@@ -14,6 +14,9 @@ class AddFkVatTuTable extends Migration
     public function up()
     {
         Schema::table('stuffs', function (Blueprint $table) {
+            $table->foreign('supplier_id')
+                ->references('id')->on('suppliers')
+                ->onUpdate('cascade')->onDelete('NO ACTION');
             $table->foreign('kind_stuff_id')
                 ->references('id')->on('kind_stuffs')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
@@ -31,6 +34,7 @@ class AddFkVatTuTable extends Migration
     public function down()
     {
         Schema::table('stuffs', function (Blueprint $table) {
+            $table->dropForeign(['supplier_id']);
             $table->dropForeign(['kind_stuff_id']);
             $table->dropForeign(['atrophy_id']);
         });

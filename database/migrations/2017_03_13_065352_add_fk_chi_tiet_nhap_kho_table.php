@@ -14,9 +14,6 @@ class AddFkChiTietNhapKhoTable extends Migration
     public function up()
     {
         Schema::table('detail_import_stores', function (Blueprint $table) {
-            $table->foreign('supplier_id')
-                ->references('id')->on('suppliers')
-                ->onUpdate('cascade')->onDelete('NO ACTION');
             $table->foreign('stuff_id')
                 ->references('stuff_id')->on('stuffs')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
@@ -34,7 +31,6 @@ class AddFkChiTietNhapKhoTable extends Migration
     public function down()
     {
         Schema::table('detail_import_stores', function (Blueprint $table) {
-            $table->dropForeign(['supplier_id']);
             $table->dropForeign(['stuff_id']);
             $table->dropForeign(['import_store_id']);
         });

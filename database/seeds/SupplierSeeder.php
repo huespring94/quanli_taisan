@@ -16,7 +16,7 @@ class SupplierSeeder extends Seeder
         for ($i = 0; $i < 10; $i++)
         {
             DB::table('suppliers')->insert([
-                'id' => $faker->unique()->word,
+                'supplier_id' => $faker->unique()->text($maxNbChars = 10) ,
                 'name' => $faker->company,
                 'address' => $faker->address,
             ]);

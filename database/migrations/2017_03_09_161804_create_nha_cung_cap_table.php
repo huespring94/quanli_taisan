@@ -14,12 +14,12 @@ class CreateNhaCungCapTable extends Migration
     public function up()
     {
         Schema::create('suppliers', function (Blueprint $table) {
-            $table->string('id', 10);
+            $table->increments('id', 10);
+            $table->string('supplier_id', 10)->unique();
             $table->string('name', 500);
             $table->string('address', 1000);
             $table->string('description', 1000)->nullable();
             $table->timestamps();
-            $table->primary('id');
         });
     }
 

@@ -14,11 +14,11 @@ class CreateLoaiVatTuTable extends Migration
     public function up()
     {
         Schema::create('kind_stuffs', function (Blueprint $table) {
-            $table->string('id', 10);
+            $table->increments('id');
+            $table->string('kind_stuff_id', 10)->unique();
             $table->string('name', 100);
             $table->string('description', 1000)->nullable();
             $table->timestamps();
-            $table->primary('id');
         });
     }
 

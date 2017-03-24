@@ -16,8 +16,8 @@ class KindStuffSeeder extends Seeder {
         for ($i = 0; $i < 10; $i++)
         {
             DB::table('kind_stuffs')->insert([
-                'id' => $faker->unique()->word,
-                'name' => $faker->sentence($nbWords = 3, $variableNbWords = true)
+                'kind_stuff_id' => $faker->unique()->text($maxNbChars = 10) ,
+                'name' => $faker->sentence($nbWords = 3)
             ]);
         }
     }

@@ -15,10 +15,10 @@ class AddFkVatTuTable extends Migration
     {
         Schema::table('stuffs', function (Blueprint $table) {
             $table->foreign('supplier_id')
-                ->references('id')->on('suppliers')
+                ->references('supplier_id')->on('suppliers')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
             $table->foreign('kind_stuff_id')
-                ->references('id')->on('kind_stuffs')
+                ->references('kind_stuff_id')->on('kind_stuffs')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
             $table->foreign('atrophy_id')
                 ->references('id')->on('atrophies')

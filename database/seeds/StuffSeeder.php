@@ -17,8 +17,8 @@ class StuffSeeder extends Seeder
     {
         $faker = Faker::create('vi_VN');
         $atrophyIds = Atrophy::all()->pluck('id');
-        $kindStuffIds = KindStuff::all()->pluck('id');
-        $supplierIds = Supplier::all()->pluck('id');
+        $kindStuffIds = KindStuff::all()->pluck('kind_stuff_id');
+        $supplierIds = Supplier::all()->pluck('supplier_id');
         for ($i = 0; $i < 10; $i++)
         {
             $k = $faker->randomElement($kindStuffIds->toArray());

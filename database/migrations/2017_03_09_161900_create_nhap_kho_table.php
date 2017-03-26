@@ -16,7 +16,7 @@ class CreateNhapKhoTable extends Migration
         Schema::create('import_stores', function (Blueprint $table) {
             $table->increments('id');
             $table->datetime('date_import');
-            $table->integer('amount');
+            $table->integer('amount')->nullable();
             $table->integer('user_id')->unsigned();
             $table->integer('store_id')->unsigned();
             $table->timestamps();

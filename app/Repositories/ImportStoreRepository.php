@@ -3,8 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\ImportStore;
+use App\Repositories\BaseRepo;
 
-class ImportStoreRepository
+class ImportStoreRepository extends BaseRepo
 {
     /**
      * To telling repository what model class you want to use
@@ -15,4 +16,4 @@ class ImportStoreRepository
     {
         return ImportStore::class;
     }
-}
+    }

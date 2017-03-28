@@ -12,7 +12,7 @@ class ImportStore extends Model
         'id',
         'date_import',
         'amount',
-        'role_id',
+        'user_id',
         'store_id'
     ];
 }

@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Repositories\UserRepository;
 use App\Criteria\RequestFilter;
 
-class UserService
+class UserService extends BaseService
 {
     /**
      * User repository

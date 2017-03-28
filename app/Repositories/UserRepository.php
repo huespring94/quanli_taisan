@@ -1,9 +1,10 @@
 <?php
+
 namespace App\Repositories;
 
-use App\Models\NguoiDung;
+use App\Models\User;
 
-class NguoiDungRepo extends BaseRepo
+class UserRepository extends BaseRepo
 {
     /**
      * To telling repository what model class you want to use
@@ -12,6 +13,6 @@ class NguoiDungRepo extends BaseRepo
      */
     public function model()
     {
-        return NguoiDung::class;
+        return User::class;
     }
 }

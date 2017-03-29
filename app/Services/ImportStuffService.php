@@ -8,7 +8,6 @@ use App\Repositories\ImportStoreRepository;
 use App\Repositories\DetailImportStoreRepository;
 use App\Repositories\StoreFacultyRepository;
 use App\Repositories\StoreRoomRepository;
-use App\Http\Requests\PostImportStoreRequest;
 
 class ImportStuffService extends BaseService
 {
@@ -17,46 +16,42 @@ class ImportStuffService extends BaseService
      * 
      * @var StuffRepository
      */
-    private $stuffRepo;
-    
+    protected $stuffRepo;
+
     /**
      * Import store repository
      * 
      * @var ImportStoreRepository
      */
-    private $importStoreRepo;
-    
+    protected $importStoreRepo;
+
     /**
      * Detail import store repository
      * 
      * @var DetailImportStoreRepository
      */
-    private $detailImportStoreRepo;
+    protected $detailImportStoreRepo;
 
     /**
      * Store faculty repository
      * 
      * @var StoreFacultyRepository
      */
-    private $storeFacultyRepository;
-    
+    protected $storeFacultyRepository;
+
     /**
      * Store room repository
      * 
      * @var StoreRoomRepository
      */
-    private $storeRoomRepository;
-    
+    protected $storeRoomRepository;
+
     /**
-     * Constructor of import stuff service
-     * 
-     * @param StuffRepository $stuffRepo
-     * @param ImportStoreRepository $importStoreRepo
-     * @param DetailImportStoreRepository $detailImportStoreRepo
-     * @param StoreFacultyRepository $storeFacultyRepository
-     * @param StoreRoomRepository $storeRoomRepository
+     * Contructor of import stuff service
+     *
+     * @param ImportStoreRepository $importStoreRepo []
      */
-    public function _contruct(
+    public function __construct(
         StuffRepository $stuffRepo,
         ImportStoreRepository $importStoreRepo,
         DetailImportStoreRepository $detailImportStoreRepo,
@@ -69,33 +64,31 @@ class ImportStuffService extends BaseService
         $this->storeFacultyRepository = $storeFacultyRepository;
         $this->storeRoomRepository = $storeRoomRepository;
     }
-
-    /**
-     * 
-     * @param type $data
-     * 
-     * @return type
-     */
-    public function createImportStore()
-    {
-        $abc = $this->importStoreRepo->findByField('date_import', '2017-10-10 00:00:00')->first();
-        
-        return $abc;
-//        if($importStore = $this->importStoreRepo->first(1)) {
-//            return $importStore;
-//        }
-//        return $this->importStoreRepo->create($data);
-    }
     
     /**
-     * Get all data in table import_store
-     * 
+     * Get all import store
+     *
      * @return array
      */
     public function getAllImportStore()
     {
-        return \App\Models\User::all();
+        return $this->importStoreRepo->all();
     }
     
-    
+    /**
+     * Create import store
+     * 
+     * @param Request $data
+     *
+     * @return object
+     */
+    public function createImportStore($data)
+    {
+        $importStore = $this->importStoreRepo->findByField('date_import', '2017-10-10')->first();
+        if($importStore) {
+            return $importStore;
+        }
+        $data['user_id'] = auth('web')->user()->id;
+        return $this->importStoreRepo->create($data);
+    }
 }

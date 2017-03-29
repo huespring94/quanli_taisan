@@ -23,4 +23,14 @@ class UserService extends BaseService
     {
         $this->userRepo = $userRepo;
     }
+    
+    /**
+     * Get all users
+     * 
+     * @return array
+     */
+    public function getAll()
+    {
+        return $this->userRepo->all();
+    }
 }

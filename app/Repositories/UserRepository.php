@@ -15,4 +15,6 @@ class UserRepository extends BaseRepo
     {
         return User::class;
     }
+    
+   
 }

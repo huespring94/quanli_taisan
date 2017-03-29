@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\ImportStuffService;
-use App\Repositories\ImportStoreRepository;
+use App\Http\Requests\PostImportStoreRequest;
 
 class ImportStoreController extends Controller
 {
@@ -14,17 +14,15 @@ class ImportStoreController extends Controller
      * @var ImportStuffService
      */
     protected $importStuffService;
-    private $importStoreRepo;
     
     /**
      * Contructor of stuff controller
      * 
      * @param \App\Http\Controllers\ImportStuffService $importStuffService []
      */
-    public function __construct(ImportStuffService $importStuffService, ImportStoreRepository $importStoreRepo)
+    public function __construct(ImportStuffService $importStuffService)
     {
         $this->importStuffService = $importStuffService;
-        $this->importStoreRepo = $importStoreRepo;
     }
     
     /**
@@ -34,9 +32,7 @@ class ImportStoreController extends Controller
      */
     public function index()
     {
-        $abc = $this->importStuffService->getAllImportStore();
-                dd($abc);
-
+        return $this->importStuffService->getAllImportStore();
     }
 
     /**
@@ -44,11 +40,9 @@ class ImportStoreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(PostImportStoreRequest $request)
     {
-//        $abc = $this->importStoreRepo->findByField('date_import', '2017-10-10 00:00:00')->first();
-//                dd($abc);
-        return $this->importStuffService->createImportStore();
+        return $this->importStuffService->createImportStore($request);
     }
 
     /**

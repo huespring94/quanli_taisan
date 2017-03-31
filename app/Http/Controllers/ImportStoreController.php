@@ -10,15 +10,15 @@ class ImportStoreController extends Controller
 {
     /**
      * Import stuff service
-     * 
+     *
      * @var ImportStuffService
      */
     protected $importStuffService;
     
     /**
      * Contructor of stuff controller
-     * 
-     * @param \App\Http\Controllers\ImportStuffService $importStuffService []
+     *
+     * @param ImportStuffService $importStuffService Import stuff service
      */
     public function __construct(ImportStuffService $importStuffService)
     {
@@ -28,7 +28,7 @@ class ImportStoreController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return object
      */
     public function index()
     {
@@ -38,7 +38,9 @@ class ImportStoreController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param PostImportStoreRequest $request []
+     *
+     * @return object
      */
     public function create(PostImportStoreRequest $request)
     {
@@ -48,7 +50,8 @@ class ImportStoreController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request []
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -59,7 +62,8 @@ class ImportStoreController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id []
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -70,7 +74,8 @@ class ImportStoreController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id []
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -81,8 +86,9 @@ class ImportStoreController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request []
+     * @param int                      $id      []
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -93,7 +99,8 @@ class ImportStoreController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id []
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

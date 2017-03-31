@@ -20,3 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 Route::resource('/nhap', 'ImportStoreController');
+
+Route::get('admin', function () {
+    return view('layouts.template_admin');
+});

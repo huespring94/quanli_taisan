@@ -1,8 +1,8 @@
 @extends('layouts.template_admin')
 
-@section('main-content')
+@section('content')
     
-   fsdshadhasgdha
+   
 
 @stop
 

@@ -13,51 +13,56 @@ class ImportStuffService extends BaseService
 {
     /**
      * Stuff repository
-     * 
+     *
      * @var StuffRepository
      */
     protected $stuffRepo;
 
     /**
      * Import store repository
-     * 
+     *
      * @var ImportStoreRepository
      */
     protected $importStoreRepo;
 
     /**
      * Detail import store repository
-     * 
+     *
      * @var DetailImportStoreRepository
      */
     protected $detailImportStoreRepo;
 
     /**
      * Store faculty repository
-     * 
+     *
      * @var StoreFacultyRepository
      */
     protected $storeFacultyRepository;
 
     /**
      * Store room repository
-     * 
+     *
      * @var StoreRoomRepository
      */
     protected $storeRoomRepository;
 
     /**
-     * Contructor of import stuff service
+     * Constructor of import stuff service
      *
-     * @param ImportStoreRepository $importStoreRepo []
+     * @param StuffRepository             $stuffRepo              []
+     * @param ImportStoreRepository       $importStoreRepo        []
+     * @param DetailImportStoreRepository $detailImportStoreRepo  []
+     * @param StoreFacultyRepository      $storeFacultyRepository []
+     * @param StoreRoomRepository         $storeRoomRepository    []
      */
     public function __construct(
         StuffRepository $stuffRepo,
         ImportStoreRepository $importStoreRepo,
         DetailImportStoreRepository $detailImportStoreRepo,
         StoreFacultyRepository $storeFacultyRepository,
-        StoreRoomRepository $storeRoomRepository)
-    {
+        StoreRoomRepository $storeRoomRepository
+    ) {
+    
         $this->stuffRepo = $stuffRepo;
         $this->importStoreRepo = $importStoreRepo;
         $this->detailImportStoreRepo = $detailImportStoreRepo;
@@ -77,15 +82,15 @@ class ImportStuffService extends BaseService
     
     /**
      * Create import store
-     * 
-     * @param Request $data
+     *
+     * @param Request $data []
      *
      * @return object
      */
     public function createImportStore($data)
     {
         $importStore = $this->importStoreRepo->findByField('date_import', '2017-10-10')->first();
-        if($importStore) {
+        if ($importStore) {
             return $importStore;
         }
         $data['user_id'] = auth('web')->user()->id;

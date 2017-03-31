@@ -13,7 +13,6 @@ class StuffController extends Controller
      */
     public function index()
     {
-        
     }
 
     /**

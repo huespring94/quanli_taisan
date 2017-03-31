@@ -1,12 +1,14 @@
+<!-- =============================================== -->
+<!--Header-->
 @include ('layouts.header_lib')
     @yield('header_link')
-<!-- =============================================== -->
 @include ('layouts.header_admin')
+
 <!-- =============================================== -->
 <!--Left bar-->
 @include ('layouts.left_bar')
-<!-- =============================================== -->
 
+<!-- =============================================== -->
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -17,19 +19,21 @@
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li><a href="#">Layout</a></li>
-      <li class="active">Boxed</li>
+      <li><a href="#">@yield('home_one')</a></li>
+      <li class="active">@yield('home_two')</li>
     </ol>
   </section>
 
   <!-- Main content -->
   <section class="content">
     <!-- Your Page Content Here -->
-      @yield ('main-content')
+      @yield ('content')
   </section>
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 
-@extends ('layouts.footer_admin')
-
+<!-- =============================================== -->
+<!--Footer-->
+@include ('layouts.footer_admin')
+@include ('layouts.footer_lib')

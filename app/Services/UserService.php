@@ -26,7 +26,7 @@ class UserService extends BaseService
     
     /**
      * Get all users
-     * 
+     *
      * @return array
      */
     public function getAll()

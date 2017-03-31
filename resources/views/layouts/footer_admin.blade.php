@@ -7,7 +7,3 @@
 </footer>
 
 <div class="control-sidebar-bg"></div>
-
-@extends ('layouts.footer_lib')
-
-

@@ -16,4 +16,4 @@ class ImportStoreRepository extends BaseRepo
     {
         return ImportStore::class;
     }
-    }
+}

@@ -15,4 +15,24 @@ class UserRepository extends BaseRepo
     {
         return User::class;
     }
+    
+    /**
+     * Get only soft delete result 
+     *
+     * @return array
+     */
+    public function getSoftDelete()
+    {
+        return $this->onlyTrashed()->get();
+    }
+    
+    /**
+     * Restore soft delete
+     *
+     * @return array
+     */
+    public function restoreSoftDelete()
+    {
+        return $this->model->restore();
+    }
 }

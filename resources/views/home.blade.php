@@ -1,4 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.template_admin')
+
+@section('home')
+    <li class="active">Tong quan</li>
+@stop
 
 @section('content')
 <div class="container">

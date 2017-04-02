@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\ImportStuffService;
 use App\Services\StoreService;
@@ -50,7 +51,7 @@ class ImportStoreController extends Controller
     public function create()
     {
         $stores = $this->storeService->getAll();
-        return view('stuff.create', compact('stores', $stores));
+        return view('store.create', ['stores' => $stores]);
     }
 
     /**
@@ -62,7 +63,8 @@ class ImportStoreController extends Controller
      */
     public function store(PostImportStoreRequest $request)
     {
-        return $this->importStuffService->createImportStore($request);
+        $storeImport = $this->importStuffService->createImportStore($request);
+        return view('store.import', ['storeImport' => $storeImport]);
     }
 
     /**

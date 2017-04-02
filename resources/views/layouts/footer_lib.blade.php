@@ -13,5 +13,7 @@
 <script src="{{asset('/bower_components/AdminLTE/dist/js/app.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('/bower_components/AdminLTE/dist/js/demo.js')}}"></script>
+
+@yield('js')
 </body>
 </html>

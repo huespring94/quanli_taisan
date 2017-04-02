@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PostImportStoreRequest extends FormRequest
+class PostRequestRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class PostImportStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,8 +24,7 @@ class PostImportStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'date_import' => 'required|date_format:' . config('define.date_format'),
-            'store_id' => 'required'
+            //
         ];
     }
 }

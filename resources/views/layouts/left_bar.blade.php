@@ -51,7 +51,7 @@
           </a>
         </li>
         <li class="treeview active">
-          <a href="{!! url('stuff/create') !!}">
+          <a href="{!! route('nhap.create') !!}">
             <i class="fa fa-edit"></i> <span> {{trans('content.left_bar.import')}}</span>
           </a>
         </li>

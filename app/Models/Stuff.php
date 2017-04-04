@@ -12,7 +12,6 @@ class Stuff extends Model
         'id',
         'name',
         'description',
-        'unit',
         'kind_stuff_id',
         'atrophy_id'
     ];

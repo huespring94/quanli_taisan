@@ -104,32 +104,41 @@ class ImportStuffService extends BaseService
     /**
      * Create import store
      *
-     * @param Request $data []
+     * @param Request $request []
      *
      * @return object
      */
-    public function createImportStore($dd)
+    public function createImportStore($request)
     {
-        $data = $dd->only('store_id', 'date_import');
+        $data = $request->only('store_id', 'date_import');
+        $user = auth('web')->user();
         $importStore = $this->importStoreRepo
-            ->findWhere(['store_id' => $data['store_id'], 'date_import' => $data['date_import']], ['store_id', 'date_import'])->first();
+            ->findWhere(
+                ['store_id' => $data['store_id'], 
+                'date_import' => $data['date_import'],
+                'user_id' => $user->id])->first();
         if ($importStore) {
-            return $importStore;
+            $result = $importStore;
         }
-        $data['user_id'] = auth('web')->user()->id;
-        return $this->importStoreRepo->create($data);
+        $data['user_id'] = $user->id;
+        $result = $this->importStoreRepo->create($data);
+        return $this->importStoreRepo->with(['store', 'user'])->find($result->id);
     }
     
     /**
      * Create detail import store 
      *
-     * @param Request $data []
+     * @param Request $request []
      *
      * @return object
      */
-    public function createDetailImportStore($data)
+    public function createDetailImportStore($request)
     {
-        return $this->detailImportStoreRepo->create($data);
+        $data = $request->only('quantity', 'price_unit', 'status', 'stuff_id', 'import_store_id');
+        $this->detailImportStoreRepo->create($data);
+        $amount = $data['price_unit'] * $data['quantity'];
+        $this->importStoreRepo->update(['amount' => $amount], $data['import_store_id']);
+        return $this->importStoreRepo->with('detail_import_store')->find($data['import_store_id']);
     }
     
     /**
@@ -144,6 +153,16 @@ class ImportStuffService extends BaseService
         return $this->stuffRepo->create($data);
     }
     
+    /**
+     * Get all of stuffs
+     * 
+     * @return array
+     */
+    public function getAllStuff()
+    {
+        return $this->stuffRepo->all();
+    }
+
     /**
      * Create kind of stuff
      * 

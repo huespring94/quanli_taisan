@@ -38,7 +38,7 @@ Nhập kho hàng
         <div class="tab-pane" id="tab_2">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">General Elements</h3>
+                    <h3 class="box-title">Nhập kho hàng</h3>
                 </div>
                 <!-- /.box-header -->
                 <form class="form-horizontal" role="form" method="POST" action="{{ route('nhap.store') }}">

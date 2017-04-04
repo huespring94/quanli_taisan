@@ -13,7 +13,7 @@ class PostDetailImportStore extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,11 @@ class PostDetailImportStore extends FormRequest
     public function rules()
     {
         return [
-            //
+            'quantity' => 'required',
+            'price_unit' => 'required',
+            'status' => 'required',
+            'stuff_id' => 'required',
+            'import_store_id' => 'required'
         ];
     }
 }

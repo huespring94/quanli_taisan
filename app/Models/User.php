@@ -48,4 +48,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\Role');
     }
+    
+    /**
+     * Get the import stores for user.
+     * 
+     * @return ImportStore
+     */
+    public function importStores()
+    {
+        return $this->hasMany('App\Models\ImportStore');
+    }
 }

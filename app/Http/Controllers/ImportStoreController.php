@@ -63,8 +63,9 @@ class ImportStoreController extends Controller
      */
     public function store(PostImportStoreRequest $request)
     {
+        $stuffs = $this->importStuffService->getAllStuff();
         $storeImport = $this->importStuffService->createImportStore($request);
-        return view('store.import', ['storeImport' => $storeImport]);
+        return view('store.create_detail', ['storeImport' => $storeImport, 'stuffs' => $stuffs]);
     }
 
     /**

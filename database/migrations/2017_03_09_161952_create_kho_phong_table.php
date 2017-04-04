@@ -15,10 +15,12 @@ class CreateKhoPhongTable extends Migration
     {
         Schema::create('store_rooms', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('store_room_id', 20)->unique();
             $table->date('date_import');
-            $table->string('status');
+            $table->integer('quantity');
+            $table->integer('status');
             $table->integer('room_id')->unsigned();
-            $table->integer('store_faculty_id')->unsigned();
+            $table->string('store_faculty_id', 20);
             $table->integer('user_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();

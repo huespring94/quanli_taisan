@@ -18,7 +18,6 @@ class CreateVatTuTable extends Migration
             $table->string('stuff_id', 100)->unique();
             $table->string('name', 200);
             $table->string('description', 2000)->nullable();
-            $table->string('unit', 10);
             $table->string('kind_stuff_id', 10);
             $table->integer('atrophy_id')->unsigned();
             $table->string('supplier_id', 10);

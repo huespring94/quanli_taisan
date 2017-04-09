@@ -21,6 +21,8 @@ Route::get('/home', 'HomeController@index');
 
 Route::resource('/nhap', 'ImportStoreController');
 
+Route::resource('/chitiet', 'DetailImportStoreController');
+
 Route::get('admin', function () {
     return view('layouts.template_admin');
 });

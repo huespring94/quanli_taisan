@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\ImportStuffService;
+use App\Http\Requests\PostDetailImportStoreRequest;
+use Session;
 
 class DetailImportStoreController extends Controller
 {
@@ -49,9 +52,11 @@ class DetailImportStoreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostDetailImportStoreRequest $request)
     {
-        //
+        $detailImports = $this->importStuffService->createDetailImportStore($request);
+        Session::flash('msg', 'success');
+        return view('store.show_detail', ['detailImports' => $detailImports]);
     }
 
     /**

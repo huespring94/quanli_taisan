@@ -3,9 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\ImportStuffService;
 
 class StuffController extends Controller
 {
+    /**
+     * Import stuff service
+     *
+     * @var ImportStuffService
+     */
+    protected $importStuffService;
+    
+    /**
+     * Contructor of stuff controller
+     *
+     * @param ImportStuffService $importStuffService Import stuff service
+     */
+    public function __construct(ImportStuffService $importStuffService)
+    {
+        $this->importStuffService = $importStuffService;
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +40,10 @@ class StuffController extends Controller
      */
     public function create()
     {
-        //
+        $kindStuffs = $this->importStuffService->getAllKindStuff();
+        $atrophies = '';
+        $suppliers = '';
+        return view();
     }
 
     /**

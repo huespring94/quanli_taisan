@@ -85,18 +85,77 @@ Nhập chi tiết kho hàng
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    
-                    
-                    
-                    
+
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('chitiet.store') }}">
+                        {{ csrf_field() }}
+                        <input type="text" hidden="true" name="import_store_id" value="{{$storeImport->id}}">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Chọn tài sản</label>
+                                <div class="col-sm-8">
+                                    <select name="stuff_id" class="form-control">
+                                        @foreach($stuffs as $stuff)
+                                        <option value="{{$stuff->stuff_id}}">{{$stuff->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-plus-circle"></i>
+                                    </div>
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-danger">Tạo mới</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Số lượng</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-database"></i>
+                                        </div>
+                                        <input type="number" min="1" name="quantity" class="form-control pull-right">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Đơn giá (VND)</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-dollar"></i>
+                                        </div>
+                                        <input type="number" name="price_unit" class="form-control pull-right">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Trạng thái (%)</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-bars"></i>
+                                        </div>
+                                        <input type="number" max="100" min="1" name="status" class="form-control pull-right">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-info pull-right">Nhập chi tiết đơn hàng</button>
+                        </div>
+                    </form>
+
+
                 </div>
             </div>
             <!-- /.tab-pane -->
         </div>
         <!-- /.tab-content -->
     </div>
-
-
-
     @stop
-

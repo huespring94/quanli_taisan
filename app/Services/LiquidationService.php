@@ -1,18 +1,26 @@
 <?php
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 namespace App\Services;
 
-/**
- * Description of LiquidationService
- *
- * @author asiantech
- */
-class LiquidationService
+use App\Services\BaseService;
+use App\Repositories\LiquidationRepository;
+
+class LiquidationService extends BaseService
 {
-    //put your code here
+    /**
+     * Liquidation repository
+     *
+     * @var LiquidationRepository
+     */
+    private $liquidationRepo;
+    
+    /**
+     * Constructor of liquidation service 
+     *
+     * @param LiquidationRepository $liquidationRepo
+     */
+    public function __construct(LiquidationRepository $liquidationRepo)
+    {
+        $this->liquidationRepo = $liquidationRepo;
+    }
 }

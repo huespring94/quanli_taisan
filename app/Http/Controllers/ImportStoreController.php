@@ -25,9 +25,10 @@ class ImportStoreController extends Controller
     protected $storeService;
 
     /**
-     * Contructor of stuff controller
+     * Contructor of import store controller
      *
      * @param ImportStuffService $importStuffService Import stuff service
+     * @param StoreService       $storeService       Store service
      */
     public function __construct(ImportStuffService $importStuffService, StoreService $storeService)
     {
@@ -63,8 +64,8 @@ class ImportStoreController extends Controller
      */
     public function store(PostImportStoreRequest $request)
     {
-        $stuffs = $this->importStuffService->getAllStuff();
         $storeImport = $this->importStuffService->createImportStore($request);
+        $stuffs = $this->importStuffService->getAllStuff();
         return view('store.create_detail', ['storeImport' => $storeImport, 'stuffs' => $stuffs]);
     }
 

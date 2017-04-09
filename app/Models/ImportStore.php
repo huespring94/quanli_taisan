@@ -35,4 +35,14 @@ class ImportStore extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+    
+    /**
+     * Get detail import store by import store
+     *
+     * @return array
+     */
+    public function detailImportStores()
+    {
+        return $this->hasMany('App\Models\DetailImportStore');
+    }
 }

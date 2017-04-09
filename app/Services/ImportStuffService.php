@@ -20,6 +20,7 @@ class ImportStuffService extends BaseService
      * @var KindStuff 
      */
     protected $kindStuffRepo;
+    
     /**
      * Stuff repository
      *
@@ -112,17 +113,13 @@ class ImportStuffService extends BaseService
     {
         $data = $request->only('store_id', 'date_import');
         $user = auth('web')->user();
-        $importStore = $this->importStoreRepo
-            ->findWhere(
-                ['store_id' => $data['store_id'], 
-                'date_import' => $data['date_import'],
-                'user_id' => $user->id])->first();
-        if ($importStore) {
-            $result = $importStore;
-        }
-        $data['user_id'] = $user->id;
-        $result = $this->importStoreRepo->create($data);
-        return $this->importStoreRepo->with(['store', 'user'])->find($result->id);
+        $array = [
+            'store_id' => $data['store_id'], 
+            'date_import' => $data['date_import'],
+            'user_id' => $user->id
+            ];
+        $condition = array_only($array, ['store_id', 'date_import', 'user_id']);
+        return $this->importStoreRepo->updateOrCreate($condition, $array);
     }
     
     /**
@@ -135,10 +132,14 @@ class ImportStuffService extends BaseService
     public function createDetailImportStore($request)
     {
         $data = $request->only('quantity', 'price_unit', 'status', 'stuff_id', 'import_store_id');
-        $this->detailImportStoreRepo->create($data);
-        $amount = $data['price_unit'] * $data['quantity'];
-        $this->importStoreRepo->update(['amount' => $amount], $data['import_store_id']);
-        return $this->importStoreRepo->with('detail_import_store')->find($data['import_store_id']);
+        $conditions = [
+            'status' => $data['status'],
+            'price_unit' => $data['price_unit'],
+            'stuff_id' => $data['stuff_id'],
+            'import_store_id' => $data['import_store_id']
+        ];
+        $this->detailImportStoreRepo->updateOrCreateQuantity($conditions, $data, 'quantity');
+        return $this->detailImportStoreRepo->with(['importStore', 'stuff'])->findByField('stuff_id', $data['stuff_id']);
     }
     
     /**
@@ -158,6 +159,16 @@ class ImportStuffService extends BaseService
      * 
      * @return array
      */
+    public function getAllKindStuff()
+    {
+        return $this->kindStuffRepo->all();
+    }
+    
+    /**
+     * Get all of kind of stuffs
+     * 
+     * @return array
+     */
     public function getAllStuff()
     {
         return $this->stuffRepo->all();
@@ -173,5 +184,17 @@ class ImportStuffService extends BaseService
     public function createKindStuff($data)
     {
         return $this->kindStuffRepo->create($data);
+    }
+    
+    /**
+     * Get stuff by id kind of stuff
+     * 
+     * @param int $kindStuffId Id of kind of stuff
+     *
+     * @return object
+     */
+    public function getStuffByIdKindStuff($kindStuffId)
+    {
+        return $this->stuffRepo->findByField('kind_stuff_id', $kindStuffId);
     }
 }

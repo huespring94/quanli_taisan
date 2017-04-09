@@ -17,7 +17,6 @@ class CreateChiTietNhapKhoTable extends Migration
             $table->increments('id');
             $table->integer('quantity');
             $table->integer('price_unit');
-            $table->integer('atrophy_rate');
             $table->integer('status');
             $table->integer('import_store_id')->unsigned();
             $table->string('stuff_id', 100);

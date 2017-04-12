@@ -4,28 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\ImportStuffService;
-use App\Http\Requests\PostDetailImportStoreRequest;
-use Session;
 
-class DetailImportStoreController extends Controller
+class ImportFacultyController extends Controller
 {
-    /**
-     * Import stuff service
-     *
-     * @var ImportStuffService
-     */
     private $importStuffService;
-
+    
     /**
-     * Contructor of stuff controller
+     * Constructor of import faculty store controller
      *
-     * @param ImportStuffService $importStuffService Import stuff service
+     * @param ImportStuffService $importStuffService
      */
     public function __construct(ImportStuffService $importStuffService)
     {
-        $this->importStuffService = $importStuffService;
+        $this->importFaculty = $importStuffService;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -33,7 +26,8 @@ class DetailImportStoreController extends Controller
      */
     public function index()
     {
-        //
+        $importFacs = $this->importStuffService->getAllImportFaculty();
+        return view('', ['importFacs' => $importFacs]);
     }
 
     /**
@@ -43,7 +37,7 @@ class DetailImportStoreController extends Controller
      */
     public function create()
     {
-        //
+        return view('');
     }
 
     /**
@@ -52,17 +46,10 @@ class DetailImportStoreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostDetailImportStoreRequest $request)
+    public function store(Request $request)
     {
-        $importStore = $this->importStuffService->getImportStoreUserStore($request->toArray()['import_store_id']);
-        $detailImports = $this->importStuffService->createDetailImportStore($request);
-        $amount = $this->importStuffService->countAmountImportStore($request->toArray()['import_store_id']);
-        Session::flash('msg', 'success');
-        return view('store.show_detail', [
-            'detailImports' => $detailImports,
-            'importStore' => $importStore,
-            'amount' => $amount
-            ]);
+        $this->importStuffService->createImportFaculty();
+        return view('');
     }
 
     /**

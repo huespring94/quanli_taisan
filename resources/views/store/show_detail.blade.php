@@ -17,10 +17,37 @@ Nhập chi tiết kho hàng
     <p>{{ Session::get('msg') }}</p>
 </div>
 @endif
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">Thông tin nhập kho</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <table id="example2" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Mã nhập kho</th>
+                    <th>Kho nhập</th>
+                    <th>Ngày nhập</th>
+                    <th>Người nhập</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{$importStore->id}}</td>
+                    <td>{{$importStore->store->name}}</td>
+                    <td>{{$importStore->date_import}}</td>
+                    <td>{{$importStore->user->firstname}} {{$importStore->user->lastname}} </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- /.box-body -->
+</div>
 
 <div class="box">
     <div class="box-header">
-        <h3 class="box-title">Hover Data Table</h3>
+        <h3 class="box-title">Chi tiết nhập kho</h3>
     </div>
     <!-- /.box-header -->
     <div class="box-body">
@@ -28,10 +55,10 @@ Nhập chi tiết kho hàng
             <thead>
                 <tr>
                     <th>Mã nhập thiết bị</th>
+                    <th>Mã tài sản</th>
                     <th>Số lượng</th>
                     <th>Đơn giá</th>
                     <th>Thành tiền</th>
-                    <th>Mã tài sản</th>
                     <th>Tên tài sản</th>
                 </tr>
             </thead>
@@ -39,18 +66,18 @@ Nhập chi tiết kho hàng
                 @foreach($detailImports as $detail)
                 <tr>
                     <td>{{$detail->id}}</td>
+                    <td>{{$detail->stuff_id}}</td>
                     <td>{{$detail->quantity}}</td>
                     <td>{{$detail->price_unit}}</td>
                     <td>{{$detail->quantity * $detail->price_unit}} </td>
-                    <td>{{$detail->stuff_id}}</td>
                     <td>{{$detail->stuff->name}}</td>
                 </tr>
                 @endforeach
             </tbody>
             <tfoot>
                 <tr>
-                    <th colspan="3">Tổng tiền</th>
-                    <th colspan="3"></th>
+                    <th colspan="4">Tổng tiền</th>
+                    <th colspan="2">{{$amount}}</th>
                 </tr>
             </tfoot>
         </table>

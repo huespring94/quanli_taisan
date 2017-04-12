@@ -26,3 +26,9 @@ Route::resource('/chitiet', 'DetailImportStoreController');
 Route::get('admin', function () {
     return view('layouts.template_admin');
 });
+
+Route::get('logout', function() {
+    Auth::logout();
+    Session::flush();
+    return redirect('/');
+});

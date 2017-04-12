@@ -139,7 +139,7 @@ class ImportStuffService extends BaseService
             'import_store_id' => $data['import_store_id']
         ];
         $this->detailImportStoreRepo->updateOrCreateQuantity($conditions, $data, 'quantity');
-        return $this->detailImportStoreRepo->with(['importStore', 'stuff'])->findByField('stuff_id', $data['stuff_id']);
+        return $this->detailImportStoreRepo->with(['stuff'])->findByField('import_store_id', $data['import_store_id']);
     }
     
     /**
@@ -196,5 +196,35 @@ class ImportStuffService extends BaseService
     public function getStuffByIdKindStuff($kindStuffId)
     {
         return $this->stuffRepo->findByField('kind_stuff_id', $kindStuffId);
+    }
+    
+    public function getImportStoreUserStore($id)
+    {
+        return $this->importStoreRepo->with(['store', 'user'])->find($id);
+    }
+
+    public function countAmountImportStore($id)
+    {
+        $detailImports = $this->detailImportStoreRepo->findByField('import_store_id', $id);
+        $result = 0;
+        foreach ($detailImports as $detail){
+            $result += ($detail->quantity * $detail->price_unit);
+        }
+        return $result;
+    }
+
+    public function getAllImportFaculty()
+    {
+        return $this->storeFacultyRepository->all();
+    }
+
+    public function getImportFacultyByImportedUser($userId)
+    {
+        return $this->storeFacultyRepository->findByField('user_id', $userId);
+    }
+    
+    public function createImportFaculty($data)
+    {
+        
     }
 }

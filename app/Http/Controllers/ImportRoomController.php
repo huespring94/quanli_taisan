@@ -3,29 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\ImportStuffService;
-use App\Http\Requests\PostDetailImportStoreRequest;
-use Session;
 
-class DetailImportStoreController extends Controller
+class ImportRoomController extends Controller
 {
-    /**
-     * Import stuff service
-     *
-     * @var ImportStuffService
-     */
-    private $importStuffService;
-
-    /**
-     * Contructor of stuff controller
-     *
-     * @param ImportStuffService $importStuffService Import stuff service
-     */
-    public function __construct(ImportStuffService $importStuffService)
-    {
-        $this->importStuffService = $importStuffService;
-    }
-    
     /**
      * Display a listing of the resource.
      *
@@ -52,17 +32,9 @@ class DetailImportStoreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostDetailImportStoreRequest $request)
+    public function store(Request $request)
     {
-        $importStore = $this->importStuffService->getImportStoreUserStore($request->toArray()['import_store_id']);
-        $detailImports = $this->importStuffService->createDetailImportStore($request);
-        $amount = $this->importStuffService->countAmountImportStore($request->toArray()['import_store_id']);
-        Session::flash('msg', 'success');
-        return view('store.show_detail', [
-            'detailImports' => $detailImports,
-            'importStore' => $importStore,
-            'amount' => $amount
-            ]);
+        //
     }
 
     /**

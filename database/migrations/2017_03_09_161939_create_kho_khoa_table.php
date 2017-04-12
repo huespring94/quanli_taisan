@@ -20,7 +20,7 @@ class CreateKhoKhoaTable extends Migration
             $table->integer('quantity');
             $table->integer('status');
             $table->integer('faculty_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->integer('detail_import_store_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();

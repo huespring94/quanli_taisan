@@ -26,3 +26,7 @@ Route::resource('/chitiet', 'DetailImportStoreController');
 Route::get('admin', function () {
     return view('layouts.template_admin');
 });
+
+Route::get('importExport', 'MaatwebsiteDemoController@importExport');
+Route::get('downloadExcel/{type}', 'MaatwebsiteDemoController@downloadExcel');
+Route::post('importExcel', 'MaatwebsiteDemoController@importExcel');

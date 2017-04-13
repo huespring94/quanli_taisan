@@ -41,7 +41,7 @@ Nhập kho hàng
                     <h3 class="box-title">Nhập kho hàng</h3>
                 </div>
                 <!-- /.box-header -->
-                <form class="form-horizontal" role="form" method="POST" action="{{ route('nhap.store') }}">
+                <form class="form-horizontal" role="form" method="POST" action="{{ url('admin/import-store/store') }}">
                     {{ csrf_field() }}
                     <div class="box-body">
                         <div class="form-group">

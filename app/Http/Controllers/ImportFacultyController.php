@@ -4,19 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\ImportStuffService;
+use App\Services\FacultyRoomService;
 
 class ImportFacultyController extends Controller
 {
     private $importStuffService;
     
+    private $facultyRoomService;
+
+
     /**
      * Constructor of import faculty store controller
      *
      * @param ImportStuffService $importStuffService
      */
-    public function __construct(ImportStuffService $importStuffService)
+    public function __construct(ImportStuffService $importStuffService,
+        FacultyRoomService $facultyRoomService)
     {
-        $this->importFaculty = $importStuffService;
+        $this->importStuffService = $importStuffService;
+        $this->facultyRoomService = $facultyRoomService;
     }
 
     /**
@@ -37,7 +43,9 @@ class ImportFacultyController extends Controller
      */
     public function create()
     {
-        return view('');
+        $faculties = $this->facultyRoomService->getAllFaculties();
+        $stuffs = $this->importStuffService->getAllStuff();
+        return view('faculty.create_import', ['faculties' => $faculties, 'stuffs' => $stuffs]);
     }
 
     /**

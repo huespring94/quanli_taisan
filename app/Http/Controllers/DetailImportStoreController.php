@@ -109,4 +109,9 @@ class DetailImportStoreController extends Controller
     {
         //
     }
+    
+    public function getDetailByStuffId($id)
+    {
+        return $this->importStuffService->getDetailStoreByStuffId($id);
+    }
 }

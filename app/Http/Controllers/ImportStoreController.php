@@ -10,13 +10,14 @@ use App\Http\Requests\PostImportStoreRequest;
 
 class ImportStoreController extends Controller
 {
+
     /**
      * Import stuff service
      *
      * @var ImportStuffService
      */
     protected $importStuffService;
-    
+
     /**
      * Store service
      * 
@@ -35,7 +36,7 @@ class ImportStoreController extends Controller
         $this->importStuffService = $importStuffService;
         $this->storeService = $storeService;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -116,5 +117,11 @@ class ImportStoreController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getImportStoreById()
+    {
+        $data = Input::get('id');
+        return $this->importStuffService->getImportStoreById($data);
     }
 }

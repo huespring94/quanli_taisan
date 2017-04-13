@@ -198,11 +198,37 @@ class ImportStuffService extends BaseService
         return $this->stuffRepo->findByField('kind_stuff_id', $kindStuffId);
     }
     
+    /**
+     * Get import store with user and stor by id import store
+     *
+     * @param mixed $id Id of import store
+     *
+     * @return mixed
+     */
     public function getImportStoreUserStore($id)
     {
         return $this->importStoreRepo->with(['store', 'user'])->find($id);
     }
+    
+    /**
+     * Get import store by id import store
+     *
+     * @param mixed $id Id of import store
+     *
+     * @return object
+     */
+    public function getImportStoreById($id)
+    {
+        return $this->importStoreRepo->find($id);
+    }
 
+    /**
+     * Calculate amount by id of import store 
+     *
+     * @param mixed $id Id of import store
+     *
+     * @return int
+     */
     public function countAmountImportStore($id)
     {
         $detailImports = $this->detailImportStoreRepo->findByField('import_store_id', $id);
@@ -211,6 +237,21 @@ class ImportStuffService extends BaseService
             $result += ($detail->quantity * $detail->price_unit);
         }
         return $result;
+    }
+
+    /**
+     * Get detail store with stuff which has quantity greater than zero
+     *
+     * @return mixed
+     */
+    public function getDetailStoreVsStuffNotZero()
+    {
+        return $this->detailImportStoreRepo->with('stuff')->findWhere([['quantity', '>', '0']]);
+    }
+    
+    public function getDetailStoreByStuffId($id)
+    {
+        return $this->detailImportStoreRepo->findByField('stuff_id', $id);
     }
 
     public function getAllImportFaculty()

@@ -86,7 +86,7 @@ Nhập chi tiết kho hàng
                 <!-- /.box-header -->
                 <div class="box-body">
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('chitiet.store') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('admin/import-store-detail/store') }}">
                         {{ csrf_field() }}
                         <input type="text" hidden="true" name="import_store_id" value="{{$storeImport->id}}">
                         <div class="box-body">

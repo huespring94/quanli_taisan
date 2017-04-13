@@ -17,7 +17,12 @@ class FacultyRoomService extends BaseService
         $this->roomRepo = $roomRepo;
     }
     
-    public function getAllFaculty()
+    /**
+     * Get all of faculties
+     *
+     * @return array
+     */
+    public function getAllFaculties()
     {
         return $this->facultyRepo->all();
     }

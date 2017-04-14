@@ -41,12 +41,12 @@ Nhập kho hàng
                     <h3 class="box-title">Nhập kho hàng</h3>
                 </div>
                 <!-- /.box-header -->
-                <form class="form-horizontal" role="form" method="POST" action="{{ url('admin/import-store/store') }}">
+                <form class="form-horizontal" role="form" method="POST" action="{{ route('import-store.store') }}">
                     {{ csrf_field() }}
                     <div class="box-body">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Chon kho hang</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-8">
                                 <select name="store_id" class="form-control">
                                     @foreach($stores as $store)
                                     <option value="{{$store->id}}">{{$store->name}}</option>
@@ -57,19 +57,21 @@ Nhập kho hàng
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Ngay nhap</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-8">
                                 <div class="input-group date">
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input type="date" name="date_import" class="form-control pull-right" id="datepicker">
+                                    <input type="date" name="date_import" class="form-control pull-right">
                                 </div>
                                 <!-- /.input group -->
                             </div>
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-info pull-right">Tao</button>
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-info pull-right">Tao</button>
+                        </div>
                     </div>
                 </form>
             </div>

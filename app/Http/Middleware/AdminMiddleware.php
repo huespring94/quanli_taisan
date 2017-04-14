@@ -14,7 +14,7 @@ class AdminMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $role)
+    public function handle($request, Closure $next)
     {
 //        if (Auth::user()->role->name !== Role::ROLE_ADMIN) {
 //            return redirect('login');

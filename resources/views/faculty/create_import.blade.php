@@ -65,7 +65,9 @@ Nhap TS cho kho khoa
                         </div>
                     </div>
                     <div id="detailImport">
-                        hello
+                        @if (!empty($details))
+                        {{$details}}
+                        @endif
                     </div>
 
                 </div>

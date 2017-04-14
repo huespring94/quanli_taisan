@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\ImportStuffService;
 use App\Http\Requests\PostDetailImportStoreRequest;
 use Session;
+use Illuminate\Support\Facades\Input;
 
 class DetailImportStoreController extends Controller
 {
@@ -110,8 +111,9 @@ class DetailImportStoreController extends Controller
         //
     }
     
-    public function getDetailByStuffId($id)
+    public function getDetailByStuffId()
     {
+        $id = Input::get('stuff_id');
         return $this->importStuffService->getDetailStoreByStuffId($id);
     }
 }

@@ -3,12 +3,12 @@ $(document).ready(function () {
         e.preventDefault();
         var stuff_id = $(this).val();
         $.ajax({
-            url: '/detail-import/' + stuff_id,
+            url: '/detail-import/{stuff_id}',
             type: 'GET',
             dataType: 'html',
-            data: {},
+            data: {'stuff_id': stuff_id},
             success: function (data) {
-                $('#detailImport').html(data);
+                $('#detailImport').html('<h1>' + data+ '</h1>');
             },
             error: function () {
             }

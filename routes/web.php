@@ -17,7 +17,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
- 
+
 Route::group(['prefix' => 'admin'], function () {
     Route::resource('/import-store', 'ImportStoreController');
     Route::resource('/import-store-detail', 'DetailImportStoreController');
@@ -30,4 +30,4 @@ Route::get('logout', function() {
     return redirect('/');
 });
 
-    Route::get('detail-import/{id}', 'DetailImportStoreController@getDetailByStuffId');
+Route::get('detail-import/{id}', 'DetailImportStoreController@getDetailByStuffId');

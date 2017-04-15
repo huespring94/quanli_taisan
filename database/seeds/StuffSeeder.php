@@ -25,7 +25,6 @@ class StuffSeeder extends Seeder
             $s = $faker->randomElement($supplierIds->toArray());
             DB::table('stuffs')->insert([
                 'name' => $faker->sentence($nbWords = 5),
-                'unit' => $faker->word,
                 'atrophy_id' => $faker->randomElement($atrophyIds->toArray()),
                 'kind_stuff_id' => $k,
                 'supplier_id' => $s, 

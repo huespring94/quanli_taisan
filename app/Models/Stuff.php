@@ -12,8 +12,17 @@ class Stuff extends Model
         'id',
         'name',
         'description',
-        'unit',
         'kind_stuff_id',
         'atrophy_id'
     ];
+    
+    /**
+     * Get the detail import store that owns the stuff.
+     * 
+     * @return DetailImportStore
+     */
+    public function detailImportStores()
+    {
+        return $this->hasMany('App\Models\DetailImportStore');
+    }
 }

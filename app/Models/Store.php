@@ -14,4 +14,14 @@ class Store extends Model
         'id',
         'name'
     ];
+    
+    /**
+     * Get the import stores for store.
+     * 
+     * @return ImportStore
+     */
+    public function importStores()
+    {
+        return $this->hasMany('App\Models\ImportStore');
+    }
 }

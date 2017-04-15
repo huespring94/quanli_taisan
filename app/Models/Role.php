@@ -20,7 +20,7 @@ class Role extends Model
     ];
 
     /**
-     * Lay nguoi dung theo phan quyen
+     * Get users by role
      *
      * @return array
      */

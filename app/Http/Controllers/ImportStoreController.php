@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\ImportStuffService;
+use App\Services\StoreService;
 use App\Http\Requests\PostImportStoreRequest;
 
 class ImportStoreController extends Controller
@@ -16,13 +18,22 @@ class ImportStoreController extends Controller
     protected $importStuffService;
     
     /**
-     * Contructor of stuff controller
+     * Store service
+     * 
+     * @var StoreService
+     */
+    protected $storeService;
+
+    /**
+     * Contructor of import store controller
      *
      * @param ImportStuffService $importStuffService Import stuff service
+     * @param StoreService       $storeService       Store service
      */
-    public function __construct(ImportStuffService $importStuffService)
+    public function __construct(ImportStuffService $importStuffService, StoreService $storeService)
     {
         $this->importStuffService = $importStuffService;
+        $this->storeService = $storeService;
     }
     
     /**
@@ -37,26 +48,25 @@ class ImportStoreController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @param PostImportStoreRequest $request []
-     *
-     * @return object
      */
-    public function create(PostImportStoreRequest $request)
+    public function create()
     {
-        return $this->importStuffService->createImportStore($request);
+        $stores = $this->storeService->getAll();
+        return view('store.create', ['stores' => $stores]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request []
+     * @param PostImportStoreRequest $request []
      *
-     * @return \Illuminate\Http\Response
+     * @return object
      */
-    public function store(Request $request)
+    public function store(PostImportStoreRequest $request)
     {
-        //
+        $storeImport = $this->importStuffService->createImportStore($request);
+        $stuffs = $this->importStuffService->getAllStuff();
+        return view('store.create_detail', ['storeImport' => $storeImport, 'stuffs' => $stuffs]);
     }
 
     /**

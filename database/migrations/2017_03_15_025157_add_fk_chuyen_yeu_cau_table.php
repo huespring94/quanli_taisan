@@ -18,7 +18,7 @@ class AddFkChuyenYeuCauTable extends Migration
                 ->references('id')->on('requests')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
             $table->foreign('store_room_id')
-                ->references('id')->on('store_rooms')
+                ->references('store_room_id')->on('store_rooms')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
         });
     }

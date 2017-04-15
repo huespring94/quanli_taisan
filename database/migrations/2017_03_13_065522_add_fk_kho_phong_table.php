@@ -21,7 +21,7 @@ class AddFkKhoPhongTable extends Migration
                 ->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
             $table->foreign('store_faculty_id')
-                ->references('id')->on('store_faculties')
+                ->references('store_faculty_id')->on('store_faculties')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
         });
     }

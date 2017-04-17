@@ -35,14 +35,15 @@ class UserService extends BaseService
         return $this->userRepo->all();
     }
     
+    /**
+     * Create user
+     *
+     * @param mixed $data []
+     *
+     * @return object
+     */
     public function createUser($data)
     {
         return $this->userRepo->create($data);
-    }
-    
-    public function deleteSoftUser($id)
-    {
-        $now = Carbon::now();
-        $this->userRepo->update(['delete_at' => $now->format(config('define.timestamp_format'))], $id);
     }
 }

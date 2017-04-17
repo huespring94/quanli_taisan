@@ -18,11 +18,14 @@ class ImportFacultyController extends Controller
     /**
      * Constructor of import faculty store controller
      *
-     * @param ImportStuffService $importStuffService
+     * @param ImportStuffService $importStuffService []
+     * @param FacultyRoomService $facultyRoomService []
      */
-    public function __construct(ImportStuffService $importStuffService,
-        FacultyRoomService $facultyRoomService)
-    {
+    public function __construct(
+        ImportStuffService $importStuffService,
+        FacultyRoomService $facultyRoomService
+    ) {
+    
         $this->importStuffService = $importStuffService;
         $this->facultyRoomService = $facultyRoomService;
     }
@@ -53,13 +56,14 @@ class ImportFacultyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request []
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(PostImportFacultyRequest $request)
     {
         $importFaculties = $this->importStuffService->createImportFaculty($request);
-        if(!empty($importFaculties)) {
+        if (!empty($importFaculties)) {
             Session::flash('msg', 'success');
             return view('faculty.detail_import', ['importFaculties' => $importFaculties]);
         }
@@ -70,45 +74,49 @@ class ImportFacultyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id []
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        return $id;
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id []
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        return $id;
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request []
+     * @param int                      $id      []
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        return $request . $id;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id []
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        return $id;
     }
 }

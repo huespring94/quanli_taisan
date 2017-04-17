@@ -30,7 +30,7 @@ class StoreFaculty extends Model
     
     /**
      * Get the detail import store that owns the store faculty.
-     * 
+     *
      * @return DetailImportStore
      */
     public function detailImportStore()
@@ -40,7 +40,7 @@ class StoreFaculty extends Model
     
     /**
      * Get the detail import store that owns the store faculty.
-     * 
+     *
      * @return Faculty
      */
     public function faculty()

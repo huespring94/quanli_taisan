@@ -17,7 +17,7 @@ class UserRepository extends BaseRepo
     }
     
     /**
-     * Get only soft delete result 
+     * Get only soft delete result
      *
      * @return array
      */

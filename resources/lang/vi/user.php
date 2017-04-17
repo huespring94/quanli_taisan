@@ -22,4 +22,3 @@ return [
     'email' => 'Email không đúng',
     
 ];
-

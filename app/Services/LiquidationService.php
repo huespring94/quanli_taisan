@@ -15,9 +15,9 @@ class LiquidationService extends BaseService
     private $liquidationRepo;
     
     /**
-     * Constructor of liquidation service 
+     * Constructor of liquidation service
      *
-     * @param LiquidationRepository $liquidationRepo
+     * @param LiquidationRepository $liquidationRepo []
      */
     public function __construct(LiquidationRepository $liquidationRepo)
     {

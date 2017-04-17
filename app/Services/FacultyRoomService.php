@@ -11,6 +11,12 @@ class FacultyRoomService extends BaseService
     
     private $roomRepo;
     
+    /**
+     * Constructor faculty room service
+     *
+     * @param FacultyRepository $facultyRepo []
+     * @param RoomRepository    $roomRepo    []
+     */
     public function __construct(FacultyRepository $facultyRepo, RoomRepository $roomRepo)
     {
         $this->facultyRepo = $facultyRepo;
@@ -27,11 +33,13 @@ class FacultyRoomService extends BaseService
         return $this->facultyRepo->all();
     }
     
+    /**
+     * Get all rooms
+     *
+     * @return mixed
+     */
     public function getAllRoom()
     {
         return $this->roomRepo->all();
     }
-    
-    
-    
 }

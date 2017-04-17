@@ -40,9 +40,9 @@ class StuffController extends Controller
      */
     public function create()
     {
-        $kindStuffs = $this->importStuffService->getAllKindStuff();
-        $atrophies = '';
-        $suppliers = '';
+//        $kindStuffs = $this->importStuffService->getAllKindStuff();
+//        $atrophies = '';
+//        $suppliers = '';
         return view();
     }
 
@@ -55,7 +55,7 @@ class StuffController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request;
     }
 
     /**
@@ -67,7 +67,7 @@ class StuffController extends Controller
      */
     public function show($id)
     {
-        //
+        return $id;
     }
 
     /**
@@ -79,7 +79,7 @@ class StuffController extends Controller
      */
     public function edit($id)
     {
-        //
+        return $id;
     }
 
     /**
@@ -92,7 +92,7 @@ class StuffController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return $request . $id;
     }
 
     /**
@@ -104,6 +104,6 @@ class StuffController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $id;
     }
 }

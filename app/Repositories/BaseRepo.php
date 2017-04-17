@@ -7,10 +7,10 @@ abstract class BaseRepo extends BaseRepository
 {
     /**
      * Update or create detail import store depend on quantity
-     * 
+     *
      * @param array  $attributes []
      * @param array  $datas      []
-     * @param string $columns    []
+     * @param string $column     []
      *
      * @return mixed
      */

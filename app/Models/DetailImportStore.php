@@ -20,7 +20,7 @@ class DetailImportStore extends Model
     
     /**
      * Get the import store that owns the detail import store.
-     * 
+     *
      * @return ImportStore
      */
     public function importStore()
@@ -30,7 +30,7 @@ class DetailImportStore extends Model
     
     /**
      * Get the stuff that owns the detail import store.
-     * 
+     *
      * @return Stuff
      */
     public function stuff()
@@ -40,7 +40,7 @@ class DetailImportStore extends Model
     
     /**
      * Get the store faculties for detail import store.
-     * 
+     *
      * @return StoreFaculty
      */
     public function storeFaculties()

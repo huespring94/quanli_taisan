@@ -18,7 +18,7 @@ class ImportStore extends Model
     
     /**
      * Get the store that owns the import store.
-     * 
+     *
      * @return Store
      */
     public function store()
@@ -28,7 +28,7 @@ class ImportStore extends Model
     
     /**
      * Get the user that owns the import store.
-     * 
+     *
      * @return User
      */
     public function user()

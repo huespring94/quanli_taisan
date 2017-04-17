@@ -30,6 +30,11 @@ class PostImportFacultyRequest extends FormRequest
         ];
     }
     
+    /**
+     * Messages
+     *
+     * @return mixed
+     */
     public function messages()
     {
         return [

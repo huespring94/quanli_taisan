@@ -15,7 +15,7 @@ class Faculty extends Model
     
     /**
      * Get the store faculties for faculty.
-     * 
+     *
      * @return StoreFaculty
      */
     public function storeFaculties()

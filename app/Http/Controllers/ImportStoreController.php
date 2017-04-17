@@ -20,7 +20,7 @@ class ImportStoreController extends Controller
 
     /**
      * Store service
-     * 
+     *
      * @var StoreService
      */
     protected $storeService;
@@ -46,9 +46,11 @@ class ImportStoreController extends Controller
     {
         return $this->importStuffService->getAllImportStore();
     }
-
+    
     /**
      * Show the form for creating a new resource.
+     *
+     * @return view
      */
     public function create()
     {
@@ -79,7 +81,7 @@ class ImportStoreController extends Controller
      */
     public function show($id)
     {
-        //
+        return $id;
     }
 
     /**
@@ -91,7 +93,7 @@ class ImportStoreController extends Controller
      */
     public function edit($id)
     {
-        //
+        return $id;
     }
 
     /**
@@ -104,7 +106,7 @@ class ImportStoreController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return $request . $id;
     }
 
     /**
@@ -116,12 +118,6 @@ class ImportStoreController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
-
-    public function getImportStoreById()
-    {
-        $data = Input::get('id');
-        return $this->importStuffService->getImportStoreById($data);
+        return $id;
     }
 }

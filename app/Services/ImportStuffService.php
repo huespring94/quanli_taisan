@@ -18,8 +18,8 @@ class ImportStuffService extends BaseService
 
     /**
      * Kind of stuff
-     * 
-     * @var KindStuff 
+     *
+     * @var KindStuff
      */
     protected $kindStuffRepo;
 
@@ -42,14 +42,14 @@ class ImportStuffService extends BaseService
      *
      * @var DetailImportStoreRepository
      */
-    protected $detailImportStoreRepo;
+    protected $detailImStoreRepo;
 
     /**
      * Store faculty repository
      *
      * @var StoreFacultyRepository
      */
-    protected $storeFacultyRepository;
+    protected $storeFacultyRepo;
 
     /**
      * Store room repository
@@ -68,22 +68,29 @@ class ImportStuffService extends BaseService
     /**
      * Constructor of import stuff service
      *
-     * @param KindStuffRepository         $kindStuffRepo          []
-     * @param StuffRepository             $stuffRepo              []
-     * @param ImportStoreRepository       $importStoreRepo        []
-     * @param DetailImportStoreRepository $detailImportStoreRepo  []
-     * @param StoreFacultyRepository      $storeFacultyRepository []
-     * @param StoreRoomRepository         $storeRoomRepository    []
-     * @param SupplierRepository          $supplierRepository     []
+     * @param KindStuffRepository         $kindStuffRepo       []
+     * @param StuffRepository             $stuffRepo           []
+     * @param ImportStoreRepository       $importStoreRepo     []
+     * @param DetailImportStoreRepository $detailImStoreRepo   []
+     * @param StoreFacultyRepository      $storeFacultyRepo    []
+     * @param StoreRoomRepository         $storeRoomRepository []
+     * @param SupplierRepository          $supplierRepository  []
      */
     public function __construct(
-    KindStuffRepository $kindStuffRepo, StuffRepository $stuffRepo, ImportStoreRepository $importStoreRepo, DetailImportStoreRepository $detailImportStoreRepo, StoreFacultyRepository $storeFacultyRepository, StoreRoomRepository $storeRoomRepository, SupplierRepository $supplierRepository)
-    {
+        KindStuffRepository $kindStuffRepo,
+        StuffRepository $stuffRepo,
+        ImportStoreRepository $importStoreRepo,
+        DetailImportStoreRepository $detailImStoreRepo,
+        StoreFacultyRepository $storeFacultyRepo,
+        StoreRoomRepository $storeRoomRepository,
+        SupplierRepository $supplierRepository
+    ) {
+    
         $this->kindStuffRepo = $kindStuffRepo;
         $this->stuffRepo = $stuffRepo;
         $this->importStoreRepo = $importStoreRepo;
-        $this->detailImportStoreRepo = $detailImportStoreRepo;
-        $this->storeFacultyRepository = $storeFacultyRepository;
+        $this->detailImStoreRepo = $detailImStoreRepo;
+        $this->storeFacultyRepo = $storeFacultyRepo;
         $this->storeRoomRepository = $storeRoomRepository;
         $this->supplierRepository = $supplierRepository;
     }
@@ -119,7 +126,7 @@ class ImportStuffService extends BaseService
     }
 
     /**
-     * Create detail import store 
+     * Create detail import store
      *
      * @param Request $request []
      *
@@ -134,8 +141,8 @@ class ImportStuffService extends BaseService
             'stuff_id' => $data['stuff_id'],
             'import_store_id' => $data['import_store_id']
         ];
-        $this->detailImportStoreRepo->updateOrCreateQuantity($conditions, $data, 'quantity');
-        return $this->detailImportStoreRepo->with(['stuff'])->findByField('import_store_id', $data['import_store_id']);
+        $this->detailImStoreRepo->updateOrCreateQuantity($conditions, $data, 'quantity');
+        return $this->detailImStoreRepo->with(['stuff'])->findByField('import_store_id', $data['import_store_id']);
     }
 
     /**
@@ -152,7 +159,7 @@ class ImportStuffService extends BaseService
 
     /**
      * Get all of stuffs
-     * 
+     *
      * @return array
      */
     public function getAllKindStuff()
@@ -162,7 +169,7 @@ class ImportStuffService extends BaseService
 
     /**
      * Get all of kind of stuffs
-     * 
+     *
      * @return array
      */
     public function getAllStuff()
@@ -172,7 +179,7 @@ class ImportStuffService extends BaseService
 
     /**
      * Create kind of stuff
-     * 
+     *
      * @param Request $data []
      *
      * @return object
@@ -184,7 +191,7 @@ class ImportStuffService extends BaseService
 
     /**
      * Get stuff by id kind of stuff
-     * 
+     *
      * @param int $kindStuffId Id of kind of stuff
      *
      * @return object
@@ -219,7 +226,7 @@ class ImportStuffService extends BaseService
     }
 
     /**
-     * Calculate amount by id of import store 
+     * Calculate amount by id of import store
      *
      * @param mixed $id Id of import store
      *
@@ -227,7 +234,7 @@ class ImportStuffService extends BaseService
      */
     public function countAmountImportStore($id)
     {
-        return $this->detailImportStoreRepo->countAmountImportStore($id);
+        return $this->detailImStoreRepo->countAmountImportStore($id);
     }
 
     /**
@@ -237,50 +244,50 @@ class ImportStuffService extends BaseService
      */
     public function getDetailStoreVsStuffNotZero()
     {
-        return $this->detailImportStoreRepo->with('stuff')->findWhere([['quantity', '>', '0']]);
+        return $this->detailImStoreRepo->with('stuff')->findWhere([['quantity', '>', '0']]);
     }
 
     /**
      * Get quantity by stuff id
-     * 
-     * @param any $id
+     *
+     * @param any $id []
      *
      * @return int
      */
     public function getQuantityByStuffId($id)
     {
-        return $this->detailImportStoreRepo->getQuantityByStuffId($id);
+        return $this->detailImStoreRepo->getQuantityByStuffId($id);
     }
 
-    public function getDetailStoreByStuffId($id)
-    {
-        return $this->detailImportStoreRepo->findByField('stuff_id', $id);
-    }
-
-    public function getAllImportFaculty()
-    {
-        return $this->storeFacultyRepository->all();
-    }
-
-    public function getImportFacultyByImportedUser($userId)
-    {
-        return $this->storeFacultyRepository->findByField('user_id', $userId);
-    }
+//    public function getDetailStoreByStuffId($id)
+//    {
+//        return $this->detailImportStoreRepo->findByField('stuff_id', $id);
+//    }
+//
+//    public function getAllImportFaculty()
+//    {
+//        return $this->storeFacultyRepository->all();
+//    }
+//
+//    public function getImportFacultyByImportedUser($userId)
+//    {
+//        return $this->storeFacultyRepository->findByField('user_id', $userId);
+//    }
 
     /**
      * Create import store faculty
      *
-     * @param Request $request
+     * @param Request $request []
      *
      * @return mixed
      */
     public function createImportFaculty($request)
     {
         $data = $request->only('faculty_id', 'stuff_id', 'quantity');
-        $quantityAll = $this->detailImportStoreRepo->getQuantityByStuffId($data['stuff_id']);
+        $quantityAll = $this->detailImStoreRepo->getQuantityByStuffId($data['stuff_id']);
         $results = [];
         if ($quantityAll >= $data['quantity']) {
-            $details = $this->detailImportStoreRepo->findWhere([['quantity', '>', '0']]);
+            $details = $this->detailImStoreRepo->findWhere([['quantity', '>', '0']]);
             $quantity = $data['quantity'];
             foreach ($details as $key => $detail) {
                 $remain = $detail->quantity - $quantity;
@@ -307,7 +314,7 @@ class ImportStuffService extends BaseService
                 }
                 $detail->quantity = $remain + $quantity;
                 $detail->save();
-                $results[$key] = $this->storeFacultyRepository->updateOrCreateQuantity($conditions, $data, 'quantity');
+                $results[$key] = $this->storeFacultyRepo->updateOrCreateQuantity($conditions, $data, 'quantity');
                 $results[$key]->store_faculty_id = $results[$key]->id . ' - ' . $data['faculty_id'];
                 $results[$key]->save();
             }

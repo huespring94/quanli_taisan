@@ -37,4 +37,14 @@ class DetailImportStore extends Model
     {
         return $this->belongsTo('App\Models\Stuff', 'stuff_id', 'stuff_id');
     }
+    
+    /**
+     * Get the store faculties for detail import store.
+     * 
+     * @return StoreFaculty
+     */
+    public function storeFaculties()
+    {
+        return $this->hasMany('App\Models\StoreFaculty');
+    }
 }

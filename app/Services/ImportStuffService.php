@@ -11,16 +11,18 @@ use App\Repositories\DetailImportStoreRepository;
 use App\Repositories\StoreFacultyRepository;
 use App\Repositories\StoreRoomRepository;
 use App\Repositories\SupplierRepository;
+use Session;
 
 class ImportStuffService extends BaseService
 {
+
     /**
      * Kind of stuff
      * 
      * @var KindStuff 
      */
     protected $kindStuffRepo;
-    
+
     /**
      * Stuff repository
      *
@@ -62,7 +64,7 @@ class ImportStuffService extends BaseService
      * @var SupplierRepository
      */
     protected $supplierRepository;
-    
+
     /**
      * Constructor of import stuff service
      *
@@ -75,13 +77,7 @@ class ImportStuffService extends BaseService
      * @param SupplierRepository          $supplierRepository     []
      */
     public function __construct(
-        KindStuffRepository $kindStuffRepo,
-        StuffRepository $stuffRepo,
-        ImportStoreRepository $importStoreRepo,
-        DetailImportStoreRepository $detailImportStoreRepo,
-        StoreFacultyRepository $storeFacultyRepository,
-        StoreRoomRepository $storeRoomRepository,
-        SupplierRepository $supplierRepository)
+    KindStuffRepository $kindStuffRepo, StuffRepository $stuffRepo, ImportStoreRepository $importStoreRepo, DetailImportStoreRepository $detailImportStoreRepo, StoreFacultyRepository $storeFacultyRepository, StoreRoomRepository $storeRoomRepository, SupplierRepository $supplierRepository)
     {
         $this->kindStuffRepo = $kindStuffRepo;
         $this->stuffRepo = $stuffRepo;
@@ -91,7 +87,7 @@ class ImportStuffService extends BaseService
         $this->storeRoomRepository = $storeRoomRepository;
         $this->supplierRepository = $supplierRepository;
     }
-    
+
     /**
      * Get all import store
      *
@@ -101,7 +97,7 @@ class ImportStuffService extends BaseService
     {
         return $this->importStoreRepo->all();
     }
-    
+
     /**
      * Create import store
      *
@@ -114,14 +110,14 @@ class ImportStuffService extends BaseService
         $data = $request->only('store_id', 'date_import');
         $user = auth('web')->user();
         $array = [
-            'store_id' => $data['store_id'], 
+            'store_id' => $data['store_id'],
             'date_import' => $data['date_import'],
             'user_id' => $user->id
-            ];
+        ];
         $condition = array_only($array, ['store_id', 'date_import', 'user_id']);
         return $this->importStoreRepo->updateOrCreate($condition, $array);
     }
-    
+
     /**
      * Create detail import store 
      *
@@ -141,7 +137,7 @@ class ImportStuffService extends BaseService
         $this->detailImportStoreRepo->updateOrCreateQuantity($conditions, $data, 'quantity');
         return $this->detailImportStoreRepo->with(['stuff'])->findByField('import_store_id', $data['import_store_id']);
     }
-    
+
     /**
      * Create stuff
      *
@@ -153,7 +149,7 @@ class ImportStuffService extends BaseService
     {
         return $this->stuffRepo->create($data);
     }
-    
+
     /**
      * Get all of stuffs
      * 
@@ -163,7 +159,7 @@ class ImportStuffService extends BaseService
     {
         return $this->kindStuffRepo->all();
     }
-    
+
     /**
      * Get all of kind of stuffs
      * 
@@ -185,7 +181,7 @@ class ImportStuffService extends BaseService
     {
         return $this->kindStuffRepo->create($data);
     }
-    
+
     /**
      * Get stuff by id kind of stuff
      * 
@@ -197,7 +193,7 @@ class ImportStuffService extends BaseService
     {
         return $this->stuffRepo->findByField('kind_stuff_id', $kindStuffId);
     }
-    
+
     /**
      * Get import store with user and stor by id import store
      *
@@ -209,7 +205,7 @@ class ImportStuffService extends BaseService
     {
         return $this->importStoreRepo->with(['store', 'user'])->find($id);
     }
-    
+
     /**
      * Get import store by id import store
      *
@@ -231,12 +227,7 @@ class ImportStuffService extends BaseService
      */
     public function countAmountImportStore($id)
     {
-        $detailImports = $this->detailImportStoreRepo->findByField('import_store_id', $id);
-        $result = 0;
-        foreach ($detailImports as $detail){
-            $result += ($detail->quantity * $detail->price_unit);
-        }
-        return $result;
+        return $this->detailImportStoreRepo->countAmountImportStore($id);
     }
 
     /**
@@ -248,7 +239,19 @@ class ImportStuffService extends BaseService
     {
         return $this->detailImportStoreRepo->with('stuff')->findWhere([['quantity', '>', '0']]);
     }
-    
+
+    /**
+     * Get quantity by stuff id
+     * 
+     * @param any $id
+     *
+     * @return int
+     */
+    public function getQuantityByStuffId($id)
+    {
+        return $this->detailImportStoreRepo->getQuantityByStuffId($id);
+    }
+
     public function getDetailStoreByStuffId($id)
     {
         return $this->detailImportStoreRepo->findByField('stuff_id', $id);
@@ -263,9 +266,52 @@ class ImportStuffService extends BaseService
     {
         return $this->storeFacultyRepository->findByField('user_id', $userId);
     }
-    
-    public function createImportFaculty($data)
+
+    /**
+     * Create import store faculty
+     *
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    public function createImportFaculty($request)
     {
-        
+        $data = $request->only('faculty_id', 'stuff_id', 'quantity');
+        $quantityAll = $this->detailImportStoreRepo->getQuantityByStuffId($data['stuff_id']);
+        $results = [];
+        if ($quantityAll >= $data['quantity']) {
+            $details = $this->detailImportStoreRepo->findWhere([['quantity', '>', '0']]);
+            $quantity = $data['quantity'];
+            foreach ($details as $key => $detail) {
+                $remain = $detail->quantity - $quantity;
+                $arr = [
+                    'date_import' => $detail->importStore->date_import,
+                    'status' => $detail->status,
+                    'detail_import_store_id' => $detail->id
+                ];
+                $data = array_merge($data, $arr);
+                $conditions = [
+                    'date_import' => $data['date_import'],
+                    'detail_import_store_id' => $data['detail_import_store_id'],
+                    'faculty_id' => $data['faculty_id']
+                ];
+                if ($quantity == 0) {
+                    break;
+                }
+                if ($remain >= 0) {
+                    $data['quantity'] = $quantity;
+                    $quantity = 0;
+                } else {
+                    $data['quantity'] = $detail->quantity;
+                    $quantity = abs($remain);
+                }
+                $detail->quantity = $remain + $quantity;
+                $detail->save();
+                $results[$key] = $this->storeFacultyRepository->updateOrCreateQuantity($conditions, $data, 'quantity');
+                $results[$key]->store_faculty_id = $results[$key]->id . ' - ' . $data['faculty_id'];
+                $results[$key]->save();
+            }
+        }
+        return array_unique($results);
     }
 }

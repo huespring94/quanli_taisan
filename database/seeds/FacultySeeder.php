@@ -16,6 +16,7 @@ class FacultySeeder extends Seeder
         for ($i = 0; $i < 10; $i++)
         {
             DB::table('faculties')->insert([
+                'faculty_id' => $faker->unique()->text($maxNbChars = 10),
                 'name' => $faker->sentence($nbWords = 2)
             ]);
         }

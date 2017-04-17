@@ -12,4 +12,14 @@ class Faculty extends Model
         'id',
         'name'
     ];
+    
+    /**
+     * Get the store faculties for faculty.
+     * 
+     * @return StoreFaculty
+     */
+    public function storeFaculties()
+    {
+        return $this->hasMany('App\Models\StoreFaculty');
+    }
 }

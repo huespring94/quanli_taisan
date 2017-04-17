@@ -24,7 +24,7 @@ class PostDetailImportStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'quantity' => 'required',
+            'quantity' => 'required|integer',
             'price_unit' => 'required',
             'status' => 'required',
             'stuff_id' => 'required',
@@ -36,6 +36,7 @@ class PostDetailImportStoreRequest extends FormRequest
     {
         return [
             'quantity.required' => trans('user.require.firstname'),
+            'quantity.integer' => 'integer',
             'price_unit.required' => trans('user.max.firstname'),
             'status.required' => trans('user.require.lastname'),
         ];

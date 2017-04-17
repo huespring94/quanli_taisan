@@ -15,7 +15,7 @@ class AddFkKhoKhoaTable extends Migration
     {
         Schema::table('store_faculties', function (Blueprint $table) {
             $table->foreign('faculty_id')
-                ->references('id')->on('faculties')
+                ->references('faculty_id')->on('faculties')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
             $table->foreign('user_id')
                 ->references('id')->on('users')

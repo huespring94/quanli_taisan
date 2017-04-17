@@ -13,7 +13,7 @@ class PostImportFacultyRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,7 +25,18 @@ class PostImportFacultyRequest extends FormRequest
     {
         return [
             'faculty_id' => 'required',
-            'quantity' => 'required'
+            'quantity' => 'required|integer',
+            'stuff_id' => 'required',
+        ];
+    }
+    
+    public function messages()
+    {
+        return [
+            'quantity.required' => 'yeu cau so luong',
+            'quantity.integer' => 'yeu cau so',
+            'faculty_id.required' => 'yeu cau khoa',
+            'stuff_id.required' => 'yeu cau stuff',
         ];
     }
 }

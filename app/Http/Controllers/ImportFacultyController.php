@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\ImportStuffService;
 use App\Services\FacultyRoomService;
+use App\Http\Requests\PostImportFacultyRequest;
+use Session;
 
 class ImportFacultyController extends Controller
 {
@@ -54,10 +56,15 @@ class ImportFacultyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostImportFacultyRequest $request)
     {
-        $this->importStuffService->createImportFaculty();
-        return view('');
+        $importFaculties = $this->importStuffService->createImportFaculty($request);
+        if(!empty($importFaculties)) {
+            Session::flash('msg', 'success');
+            return view('faculty.detail_import', ['importFaculties' => $importFaculties]);
+        }
+        Session::flash('msg', 'fail');
+        return view('faculty.create_import');
     }
 
     /**

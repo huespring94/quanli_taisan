@@ -1,8 +1,5 @@
-<!-- Left side column. contains the sidebar -->
   <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-      <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
             <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
@@ -23,8 +20,6 @@
               </span>
         </div>
       </form>
-      <!-- /.search form -->
-      <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
         <li class="treeview active">
@@ -50,7 +45,7 @@
             </span>
           </a>
         </li>
-        <li class="treeview active">
+        <li class="treeview">
           <a href="{!! url('admin/import-store/create') !!}">
             <i class="fa fa-edit"></i> <span> {{trans('content.left_bar.import')}}</span>
           </a>
@@ -140,5 +135,4 @@
         </li>
       </ul>
     </section>
-    <!-- /.sidebar -->
   </aside>

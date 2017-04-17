@@ -26,7 +26,7 @@ class DetailImportStoreController extends Controller
     {
         $this->importStuffService = $importStuffService;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -63,7 +63,7 @@ class DetailImportStoreController extends Controller
             'detailImports' => $detailImports,
             'importStore' => $importStore,
             'amount' => $amount
-            ]);
+        ]);
     }
 
     /**
@@ -110,10 +110,10 @@ class DetailImportStoreController extends Controller
     {
         //
     }
-    
-    public function getDetailByStuffId()
+
+    public function getQuantityByStuffId()
     {
         $id = Input::get('stuff_id');
-        return $this->importStuffService->getDetailStoreByStuffId($id);
+        return $this->importStuffService->getQuantityByStuffId($id);
     }
 }

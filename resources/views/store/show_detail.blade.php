@@ -48,6 +48,9 @@ Nhập chi tiết kho hàng
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
+                    <button type="button" class="btn bg-navy margin pull-right">
+                        <i class="fa fa-download"></i>
+                        In đơn nhập hàng</button>
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>

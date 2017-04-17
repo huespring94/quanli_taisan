@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\DetailImportStore;
+use Illuminate\Support\Facades\DB;
 
 class DetailImportStoreRepository extends BaseRepo
 {
@@ -18,21 +19,27 @@ class DetailImportStoreRepository extends BaseRepo
     }
 
     /**
-     * Update or create detail import store depend on quantity
-     * 
-     * @param array  $attributes []
-     * @param array  $datas      []
-     * @param string $columns    []
+     * Calculate quantity in table detail import store by stuff id
+     *
+     * @param mixed $id []
+     *
+     * @return int
+     */
+    public function getQuantityByStuffId($id)
+    {
+        return DB::table('detail_import_stores')->where('stuff_id', '=', $id)->sum('quantity');
+    }
+    
+    /**
+     * Count amount by import store id
+     *
+     * @param mixed $id []
      *
      * @return mixed
      */
-    public function updateOrCreateQuantity($attributes, $datas, $columns)
+    public function countAmountImportStore($id)
     {
-        $detailImport = $this->findByField($attributes, $datas);
-        if (empty($detailImport->toArray())) {
-            return $this->create($datas);
-        }
-        $quantity = $detailImport[0][$columns] + $datas[$columns];
-        return $this->update([$columns => $quantity], $detailImport[0]->id);
+        return DB::table('detail_import_stores')->where('import_store_id', '=', $id)
+            ->sum(DB::raw('price_unit * quantity'));
     }
 }

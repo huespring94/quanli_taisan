@@ -10,16 +10,17 @@ use App\Http\Requests\PostImportStoreRequest;
 
 class ImportStoreController extends Controller
 {
+
     /**
      * Import stuff service
      *
      * @var ImportStuffService
      */
     protected $importStuffService;
-    
+
     /**
      * Store service
-     * 
+     *
      * @var StoreService
      */
     protected $storeService;
@@ -35,7 +36,7 @@ class ImportStoreController extends Controller
         $this->importStuffService = $importStuffService;
         $this->storeService = $storeService;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -45,9 +46,11 @@ class ImportStoreController extends Controller
     {
         return $this->importStuffService->getAllImportStore();
     }
-
+    
     /**
      * Show the form for creating a new resource.
+     *
+     * @return view
      */
     public function create()
     {
@@ -78,7 +81,7 @@ class ImportStoreController extends Controller
      */
     public function show($id)
     {
-        //
+        return $id;
     }
 
     /**
@@ -90,7 +93,7 @@ class ImportStoreController extends Controller
      */
     public function edit($id)
     {
-        //
+        return $id;
     }
 
     /**
@@ -103,7 +106,7 @@ class ImportStoreController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return $request . $id;
     }
 
     /**
@@ -115,6 +118,6 @@ class ImportStoreController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $id;
     }
 }

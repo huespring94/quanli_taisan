@@ -1,15 +1,12 @@
-<!-- Left side column. contains the sidebar -->
   <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-      <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
             <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>{{Auth::user()->firstname}} {{Auth::user()->lastname}}</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          <a href="#"> {{Auth::user()->role->name}}</a>
         </div>
       </div>
       </br>
@@ -23,8 +20,6 @@
               </span>
         </div>
       </form>
-      <!-- /.search form -->
-      <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
         <li class="treeview active">
@@ -50,8 +45,8 @@
             </span>
           </a>
         </li>
-        <li class="treeview active">
-          <a href="{!! route('nhap.create') !!}">
+        <li class="treeview">
+          <a href="{!! url('admin/import-store/create') !!}">
             <i class="fa fa-edit"></i> <span> {{trans('content.left_bar.import')}}</span>
           </a>
         </li>
@@ -93,10 +88,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-            <li class="active"><a href="boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-            <li><a href="fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-            <li><a href="collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
+            <li class="active"><a href="{!! url('admin/import-faculty/index') !!}"><i class="fa fa-circle-o"></i> Danh sách TS kho</a></li>
+            <li><a href="{!! url('admin/import-faculty/create') !!}"><i class="fa fa-circle-o"></i> Nhập kho</a></li>
+            <li><a href="fixed.html"><i class="fa fa-circle-o"></i> Lịch sử nhập</a></li>
+            <li><a href="collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Thống kê</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -140,5 +135,4 @@
         </li>
       </ul>
     </section>
-    <!-- /.sidebar -->
   </aside>

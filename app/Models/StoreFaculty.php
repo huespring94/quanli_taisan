@@ -11,9 +11,6 @@ class StoreFaculty extends Model
     
     protected $table = 'store_faculties';
     
-    const TT_MOI = 'moi';
-    const TT_DA_SU_DUNG = 'da su dung';
-    
     protected $fillable = [
         'id',
         'date_import',
@@ -30,4 +27,24 @@ class StoreFaculty extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+    
+    /**
+     * Get the detail import store that owns the store faculty.
+     *
+     * @return DetailImportStore
+     */
+    public function detailImportStore()
+    {
+        return $this->belongsTo('App\Models\DetailImportStore');
+    }
+    
+    /**
+     * Get the detail import store that owns the store faculty.
+     *
+     * @return Faculty
+     */
+    public function faculty()
+    {
+        return $this->belongsTo('App\Models\Faculty');
+    }
 }

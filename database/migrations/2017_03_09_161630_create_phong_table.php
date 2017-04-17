@@ -15,8 +15,9 @@ class CreatePhongTable extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('room_id', 10)->unique();
             $table->string('name', 20);
-            $table->integer('faculty_id')->unsigned();
+            $table->string('faculty_id', 10);
             $table->timestamps();
         });
     }

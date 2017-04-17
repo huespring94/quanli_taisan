@@ -1,18 +1,45 @@
 <?php
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 namespace App\Services;
 
-/**
- * Description of FacultyRoomService
- *
- * @author asiantech
- */
-class FacultyRoomService
+use App\Repositories\FacultyRepository;
+use App\Repositories\RoomRepository;
+
+class FacultyRoomService extends BaseService
 {
-    //put your code here
+    private $facultyRepo;
+    
+    private $roomRepo;
+    
+    /**
+     * Constructor faculty room service
+     *
+     * @param FacultyRepository $facultyRepo []
+     * @param RoomRepository    $roomRepo    []
+     */
+    public function __construct(FacultyRepository $facultyRepo, RoomRepository $roomRepo)
+    {
+        $this->facultyRepo = $facultyRepo;
+        $this->roomRepo = $roomRepo;
+    }
+    
+    /**
+     * Get all of faculties
+     *
+     * @return array
+     */
+    public function getAllFaculties()
+    {
+        return $this->facultyRepo->all();
+    }
+    
+    /**
+     * Get all rooms
+     *
+     * @return mixed
+     */
+    public function getAllRoom()
+    {
+        return $this->roomRepo->all();
+    }
 }

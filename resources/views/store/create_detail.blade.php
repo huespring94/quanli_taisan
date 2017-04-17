@@ -86,7 +86,7 @@ Nhập chi tiết kho hàng
                 <!-- /.box-header -->
                 <div class="box-body">
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('chitiet.store') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('import-store-detail.store') }}">
                         {{ csrf_field() }}
                         <input type="text" hidden="true" name="import_store_id" value="{{$storeImport->id}}">
                         <div class="box-body">
@@ -140,7 +140,7 @@ Nhập chi tiết kho hàng
                                         <div class="input-group-addon">
                                             <i class="fa fa-bars"></i>
                                         </div>
-                                        <input type="number" max="100" min="1" name="status" class="form-control pull-right">
+                                        <input type="number" max="100" min="1" value="100" name="status" class="form-control pull-right">
                                     </div>
                                 </div>
                             </div>

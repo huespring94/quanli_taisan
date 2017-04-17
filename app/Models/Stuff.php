@@ -18,7 +18,7 @@ class Stuff extends Model
     
     /**
      * Get the detail import store that owns the stuff.
-     * 
+     *
      * @return DetailImportStore
      */
     public function detailImportStores()

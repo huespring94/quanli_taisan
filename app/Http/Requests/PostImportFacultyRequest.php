@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PostDetailImportStoreRequest extends FormRequest
+class PostImportFacultyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,9 @@ class PostDetailImportStoreRequest extends FormRequest
     public function rules()
     {
         return [
+            'faculty_id' => 'required',
             'quantity' => 'required|integer',
-            'price_unit' => 'required',
-            'status' => 'required',
             'stuff_id' => 'required',
-            'import_store_id' => 'required'
         ];
     }
     
@@ -40,10 +38,10 @@ class PostDetailImportStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'quantity.required' => trans('user.require.firstname'),
-            'quantity.integer' => 'integer',
-            'price_unit.required' => trans('user.max.firstname'),
-            'status.required' => trans('user.require.lastname'),
+            'quantity.required' => 'yeu cau so luong',
+            'quantity.integer' => 'yeu cau so',
+            'faculty_id.required' => 'yeu cau khoa',
+            'stuff_id.required' => 'yeu cau stuff',
         ];
     }
 }

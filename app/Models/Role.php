@@ -10,9 +10,10 @@ class Role extends Model
     
     public $timestamps = true;
     
-    const QUYEN_KHOA = 'Quan li khoa';
-    const QUYEN_PHONG = 'Quan li phong';
-    const QUYEN_KE_TOAN = 'Ke toan';
+    const ROLE_ADMIN = 'Admin';
+    const ROLE_FACULTY = 'Khoa';
+    const ROLE_ROOM = 'Phòng';
+    const ROLE_ACCOUNTANT = 'Kế toán';
 
     protected $fillable = [
         'id',

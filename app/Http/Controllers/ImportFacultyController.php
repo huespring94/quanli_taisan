@@ -4,26 +4,32 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\ImportStuffService;
+use App\Services\FacultyRoomService;
+use App\Http\Requests\PostImportFacultyRequest;
+use Session;
 
-class StuffController extends Controller
+class ImportFacultyController extends Controller
 {
-    /**
-     * Import stuff service
-     *
-     * @var ImportStuffService
-     */
-    protected $importStuffService;
+    private $importStuffService;
     
+    private $facultyRoomService;
+
+
     /**
-     * Contructor of stuff controller
+     * Constructor of import faculty store controller
      *
-     * @param ImportStuffService $importStuffService Import stuff service
+     * @param ImportStuffService $importStuffService []
+     * @param FacultyRoomService $facultyRoomService []
      */
-    public function __construct(ImportStuffService $importStuffService)
-    {
+    public function __construct(
+        ImportStuffService $importStuffService,
+        FacultyRoomService $facultyRoomService
+    ) {
+    
         $this->importStuffService = $importStuffService;
+        $this->facultyRoomService = $facultyRoomService;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -31,6 +37,8 @@ class StuffController extends Controller
      */
     public function index()
     {
+        $importFacs = $this->importStuffService->getAllImportFaculty();
+        return view('', ['importFacs' => $importFacs]);
     }
 
     /**
@@ -40,10 +48,9 @@ class StuffController extends Controller
      */
     public function create()
     {
-//        $kindStuffs = $this->importStuffService->getAllKindStuff();
-//        $atrophies = '';
-//        $suppliers = '';
-        return view();
+        $faculties = $this->facultyRoomService->getAllFaculties();
+        $stuffs = $this->importStuffService->getAllStuff();
+        return view('faculty.create_import', ['faculties' => $faculties, 'stuffs' => $stuffs]);
     }
 
     /**
@@ -53,9 +60,15 @@ class StuffController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostImportFacultyRequest $request)
     {
-        return $request;
+        $importFaculties = $this->importStuffService->createImportFaculty($request);
+        if (!empty($importFaculties)) {
+            Session::flash('msg', 'success');
+            return view('faculty.detail_import', ['importFaculties' => $importFaculties]);
+        }
+        Session::flash('msg', 'fail');
+        return view('faculty.create_import');
     }
 
     /**

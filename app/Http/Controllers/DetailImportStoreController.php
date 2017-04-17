@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\ImportStuffService;
 use App\Http\Requests\PostDetailImportStoreRequest;
 use Session;
+use Illuminate\Support\Facades\Input;
 
 class DetailImportStoreController extends Controller
 {
@@ -25,7 +26,7 @@ class DetailImportStoreController extends Controller
     {
         $this->importStuffService = $importStuffService;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -49,58 +50,80 @@ class DetailImportStoreController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request []
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(PostDetailImportStoreRequest $request)
     {
+        $importStore = $this->importStuffService->getImportStoreUserStore($request->toArray()['import_store_id']);
         $detailImports = $this->importStuffService->createDetailImportStore($request);
+        $amount = $this->importStuffService->countAmountImportStore($request->toArray()['import_store_id']);
         Session::flash('msg', 'success');
-        return view('store.show_detail', ['detailImports' => $detailImports]);
+        return view('store.show_detail', [
+            'detailImports' => $detailImports,
+            'importStore' => $importStore,
+            'amount' => $amount
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id []
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        return $id;
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id []
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        return $id;
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request []
+     * @param int                      $id      []
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        return $request . $id;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id []
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        return $id;
+    }
+
+    /**
+     * Get quantity by stuff id
+     *
+     * @return int
+     */
+    public function getQuantityByStuffId()
+    {
+        $id = Input::get('stuff_id');
+        return $this->importStuffService->getQuantityByStuffId($id);
     }
 }

@@ -15,7 +15,7 @@ class AddFkPhongTable extends Migration
     {
         Schema::table('rooms', function (Blueprint $table) {
             $table->foreign('faculty_id')
-                ->references('id')->on('faculties')
+                ->references('faculty_id')->on('faculties')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
         });
     }

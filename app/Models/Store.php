@@ -17,7 +17,7 @@ class Store extends Model
     
     /**
      * Get the import stores for store.
-     * 
+     *
      * @return ImportStore
      */
     public function importStores()

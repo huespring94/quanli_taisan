@@ -21,7 +21,7 @@ class CreateKhoPhongTable extends Migration
             $table->integer('status');
             $table->integer('room_id')->unsigned();
             $table->string('store_faculty_id', 20);
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

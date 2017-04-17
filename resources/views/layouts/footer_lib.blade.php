@@ -14,6 +14,8 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('/bower_components/AdminLTE/dist/js/demo.js')}}"></script>
 <script src="{{asset('/bower_components/jquery.priceformat/jquery.priceformat.min')}}"></script>
+<script src="{{asset('/js/handle.js')}}"></script>
+<script src="{{asset('/js/custom.js')}}"></script>
 @yield('js')
 </body>
 </html>

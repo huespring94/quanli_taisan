@@ -9,26 +9,30 @@ class RequestService
 {
     protected $requestRepository;
     
-    protected $requestTransferRepository;
+    protected $reqTransferRepo;
     
+    /**
+     * Constructor for request service
+     *
+     * @param RequestRepository         $requestRepo     []
+     * @param RequestTransferRepository $reqTransferRepo []
+     */
     public function __construct(
         RequestRepository $requestRepo,
-        RequestTransferRepository $requestTransferRepo)
-    {
+        RequestTransferRepository $reqTransferRepo
+    ) {
         $this->requestRepository = $requestRepo;
-        $this->requestTransferRepository = $requestTransferRepo;
+        $this->reqTransferRepo = $reqTransferRepo;
     }
     
-    public function createRequest()
-    {
-        
-    }
-    
-    public function createRequestTransfer()
-    {
-        
-    }
-    
-    public function updateRequest();
-    public function updateRequestTransfer(); 
+//    public function createRequest()
+//    {
+//    }
+//    
+//    public function createRequestTransfer()
+//    {
+//    }
+//    
+//    public function updateRequest();
+//    public function updateRequestTransfer();
 }

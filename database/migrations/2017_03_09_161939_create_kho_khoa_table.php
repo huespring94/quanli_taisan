@@ -15,12 +15,12 @@ class CreateKhoKhoaTable extends Migration
     {
         Schema::create('store_faculties', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('store_faculty_id', 20)->unique();
+            $table->string('store_faculty_id', 30)->unique()->nullable();
             $table->date('date_import');
             $table->integer('quantity');
             $table->integer('status');
-            $table->integer('faculty_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->string('faculty_id', 10);
+            $table->integer('user_id')->unsigned()->nullable();
             $table->integer('detail_import_store_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();

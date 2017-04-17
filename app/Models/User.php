@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
     use SoftDeletes;
+    use Notifiable;
     
     protected $table = 'users';
     
@@ -51,7 +53,7 @@ class User extends Authenticatable
     
     /**
      * Get the import stores for user.
-     * 
+     *
      * @return ImportStore
      */
     public function importStores()

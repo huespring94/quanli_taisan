@@ -140,7 +140,7 @@ Nhập chi tiết kho hàng
                                         <div class="input-group-addon">
                                             <i class="fa fa-bars"></i>
                                         </div>
-                                        <input type="number" max="100" min="1" name="status" class="form-control pull-right">
+                                        <input type="number" max="100" min="1" value="100" name="status" class="form-control pull-right">
                                     </div>
                                 </div>
                             </div>

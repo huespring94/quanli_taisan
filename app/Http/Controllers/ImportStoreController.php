@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\ImportStuffService;
 use App\Services\StoreService;
 use App\Http\Requests\PostImportStoreRequest;
+use Session;
 
 class ImportStoreController extends Controller
 {
@@ -54,6 +55,7 @@ class ImportStoreController extends Controller
      */
     public function create()
     {
+        Session::forget('msg');
         $stores = $this->storeService->getAll();
         return view('store.create', ['stores' => $stores]);
     }
@@ -81,7 +83,9 @@ class ImportStoreController extends Controller
      */
     public function show($id)
     {
-        return $id;
+        $storeImport = $this->importStuffService->getImportStoreById($id);
+        $stuffs = $this->importStuffService->getAllStuff();
+        return view('store.create_detail', ['storeImport' => $storeImport, 'stuffs' => $stuffs]);
     }
 
     /**

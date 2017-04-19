@@ -22,7 +22,8 @@ Route::get('/home', 'HomeController@index');
 Route::group(['prefix' => 'admin'], function () {
     Route::resource('/import-store', 'ImportStoreController');
     Route::resource('/import-store-detail', 'DetailImportStoreController');
-    Route::post('/update/{id}', 'DetailImportStoreController@update');
+    Route::post('/update-detail-store/{id}', 'DetailImportStoreController@update');
+    Route::get('/delete-detail-store/{id}', 'DetailImportStoreController@destroy');
     Route::resource('/import-faculty', 'ImportFacultyController');
 });
     Route::post('/abc/{id}', 'DetailImportStoreController@update');

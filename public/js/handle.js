@@ -1,38 +1,17 @@
-$(document).ready(function () {
-    $('#fac_import').on('change', function (e) {
-        e.preventDefault();
-        var stuff_id = $(this).val();
-        $.ajax({
-            url: '/detail-import/{stuff_id}',
-            type: 'GET',
-            dataType: 'html',
-            data: {'stuff_id': stuff_id},
-            success: function (data) {
-                $('.quantity-stuff').val(data);
-            },
-            error: function () {
-            }
-        });
+$('#fac_import').on('change', function (e) {
+    e.preventDefault();
+    var stuff_id = $(this).val();
+    $.ajax({
+        url: '/detail-import/{stuff_id}',
+        type: 'GET',
+        dataType: 'html',
+        data: {'stuff_id': stuff_id},
+        success: function (data) {
+            $('.quantity-stuff').val(data);
+        },
+        error: function () {
+        }
     });
-//url: '/import-store-detail/{detail_id}',
-//        type: 'DELETE',
-//    $('#detail-import-delete').on('click', function (e) {
-//        e.preventDefault();
-////        var detail_id = $(this).val();
-//        $.ajax({
-//            url: '/import-store-detail',
-//            type: 'GET',
-//            dataType: 'html',
-//            data: {},
-//            success: function (data) {
-//                alert('aaa');
-////                alert(detail_id);
-////            $('.quantity-stuff').val(data);
-//            },
-//            error: function () {
-//            }
-//        });
-//    });
 });
 
 //$('#fac_import').on('change', function (e) {

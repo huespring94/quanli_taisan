@@ -46,14 +46,20 @@ Nhập chi tiết kho hàng
                 </tbody>
             </table>
         </div>
-        <!-- /.box-body -->
     </div>
 
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">Chi tiết nhập kho</h3>
         </div>
-        <!-- /.box-header -->
+        
+        <a type="button" href="{{route('import-store.show', [$importStore->id])}}" class="btn bg-olive margin pull-right">
+                <i class="fa fa-cart-plus"></i>
+                Thêm vào đơn nhập hàng</a>
+        <a type="button" href="{{route('import-store.create')}}" class="btn bg-orange margin pull-right">
+                <i class="fa fa-plus-circle"></i>
+                Tạo đơn nhập hàng mới</a>
+        
         <div class="box-body">
             <table id="example2" class="table table-bordered table-hover">
                 <thead>
@@ -79,7 +85,7 @@ Nhập chi tiết kho hàng
                         <td>{{$detail->stuff->name}}</td>
                         <td><span class="badge bg-light-blue">{{$detail->status}}%</span></td>
                         <td>
-                            <a id="detail-import-delete" class="btn bg-red pull-right">
+                            <a id="detail-import-delete" class="btn bg-red pull-right" data-toggle="modal" data-target="#myModal">
                                 <i class="fa fa-trash"></i></a>
                             <a href="{{route('import-store-detail.edit', [$detail->id])}}" class="btn bg-olive pull-right">
                                 <i class="fa fa-edit"></i></a>
@@ -97,9 +103,9 @@ Nhập chi tiết kho hàng
                                 <h5>Bạn chắc chắn muốn xóa?</h5>
                             </div>
                             <div class="modal-footer">
-                                <form method="DELETE" action="{{ route('import-store-detail.destroy', [$detail->id]) }}">
+                                <form method="GET" action="{{ url('admin/delete-detail-store', [$detail->id]) }}">
                                     {{ csrf_field() }}
-                                    <button type="submit" class="btn btn-default" value="{{$detail->id}}">OK</button>
+                                    <button type="submit" class="btn btn-default">OK</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 </form>
                             </div>

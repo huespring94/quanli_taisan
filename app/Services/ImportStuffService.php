@@ -337,16 +337,59 @@ class ImportStuffService extends BaseService
 //        return $this->storeFacultyRepository->findByField('user_id', $userId);
 //    }
     
+    /**
+     * Get detail import store by import store id
+     *
+     * @param any $id []
+     *
+     * @return array
+     */
+    public function getDetailImportStoreByIStoreId($id)
+    {
+        return $this->detailImStoreRepo->findByField('import_store_id', $id);
+    }
+    
+    /**
+     * Get detail import store by id
+     *
+     * @param any $id []
+     *
+     * @return object
+     */
     public function getDetailImportStoreById($id)
     {
         return $this->detailImStoreRepo->find($id);
     }
     
+    /**
+     * Delete detail import store
+     *
+     * @param any $id []
+     *
+     * @return object
+     */
     public function deleteDetailImportStore($id)
     {
-        dd('hello');
-        dd($this->importStoreRepo->whereHas('detailImportStores', ['id' => $id]));
+        $detail = $this->detailImStoreRepo->find($id);
         $this->detailImStoreRepo->delete($id);
-//        if()
+        $count = $this->importStoreRepo->withCount('detailImportStores')
+            ->find($detail->import_store_id)->detail_import_stores_count;
+        if ($count == 0) {
+            $this->importStoreRepo->delete($detail->import_store_id);
+            return;
+        }
+        return $detail;
+    }
+    
+    /**
+     * Delete import store
+     *
+     * @param any $id []
+     *
+     * @return void
+     */
+    public function deleteImportStore($id)
+    {
+        $this->importStoreRepo->delete($id);
     }
 }

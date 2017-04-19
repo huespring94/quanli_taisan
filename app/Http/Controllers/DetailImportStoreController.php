@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\ImportStuffService;
+use App\Services\StoreService;
 use App\Http\Requests\PostDetailImportStoreRequest;
 use Session;
 use Illuminate\Support\Facades\Input;
@@ -16,15 +17,24 @@ class DetailImportStoreController extends Controller
      * @var ImportStuffService
      */
     private $importStuffService;
+    
+    /**
+     * Store service
+     *
+     * @var StoreService
+     */
+    private $storeService;
 
     /**
      * Contructor of stuff controller
      *
      * @param ImportStuffService $importStuffService Import stuff service
+     * @param StoreService       $storeService       Store service
      */
-    public function __construct(ImportStuffService $importStuffService)
+    public function __construct(ImportStuffService $importStuffService, StoreService $storeService)
     {
         $this->importStuffService = $importStuffService;
+        $this->storeService = $storeService;
     }
 
     /**
@@ -125,8 +135,22 @@ class DetailImportStoreController extends Controller
      */
     public function destroy($id)
     {
-        dd('heejjjee');
-        return $this->importStuffService->deleteDetailImportStore($id);
+        Session::flush();
+        $detailDeleted = $this->importStuffService->deleteDetailImportStore($id);
+        if (empty($detailDeleted)) {
+            Session::flash('msg', 'Đơn nhập hàng trống. Mời nhập mới!');
+            $stores = $this->storeService->getAll();
+            return view('store.create', ['stores' => $stores]);
+        }
+        $importStore = $this->importStuffService->getImportStoreById($detailDeleted->import_store_id);
+        $detailImports = $this->importStuffService->getDetailImportStoreByIStoreId($detailDeleted->import_store_id);
+        $amount = $this->importStuffService->countAmountImportStore($detailDeleted->import_store_id);
+        Session::flash('msg', 'delete success');
+        return view('store.show_detail', [
+            'detailImports' => $detailImports,
+            'importStore' => $importStore,
+            'amount' => $amount
+        ]);
     }
 
     /**

@@ -10,6 +10,14 @@ Nhập kho hàng
 
 @section('content')
 
+@if(Session::has('msg'))
+<div class="callout callout-info">
+    <h4>Information</h4>
+
+    <p>{{ Session::get('msg') }}</p>
+</div>
+@endif
+
 <!-- Custom Tabs -->
 <div class="nav-tabs-custom">
     <div class="box box-info">

@@ -84,10 +84,10 @@ Nhập chi tiết kho hàng
                             <a href="{{route('import-store-detail.edit', [$detail->id])}}" class="btn bg-olive pull-right">
                                 <i class="fa fa-edit"></i></a>
                         </td>
-<!--                <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal fade" id="myModal" role="dialog">
                     <div class="modal-dialog">
 
-                         Modal content
+                        Modal content
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -98,15 +98,15 @@ Nhập chi tiết kho hàng
                             </div>
                             <div class="modal-footer">
                                 <form method="DELETE" action="{{ route('import-store-detail.destroy', [$detail->id]) }}">
-                                {{ csrf_field() }}
-                                <button type="submit" class="btn btn-default" value="{{$detail->id}}">OK</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    {{ csrf_field() }}
+                                    <button type="submit" class="btn btn-default" value="{{$detail->id}}">OK</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 </form>
                             </div>
                         </div>
 
                     </div>
-                </div>-->
+                </div>
                 </tr>
                 @endforeach
                 </tbody>
@@ -121,11 +121,4 @@ Nhập chi tiết kho hàng
         <!-- /.box-body -->
     </div>
 </div>
-<script>
-$(document).ready(function(){
-    $("#detail-import-delete").click(function(){
-        alert("The paragraph was clicked.");
-    });
-});
-</script>
 @stop

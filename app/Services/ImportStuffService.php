@@ -156,7 +156,8 @@ class ImportStuffService extends BaseService
     public function updateDetailImportStore($request, $id)
     {
         $data = $request->only('quantity', 'price_unit', 'status', 'stuff_id', 'import_store_id');
-        return $this->detailImStoreRepo->update($data, $id);
+        $this->detailImStoreRepo->update($data, $id);
+        return $this->detailImStoreRepo->with(['stuff'])->findByField('import_store_id', $data['import_store_id']);
     }
 
     /**

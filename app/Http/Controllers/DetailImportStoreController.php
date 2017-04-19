@@ -103,13 +103,12 @@ class DetailImportStoreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(PostDetailImportStoreRequest $request, $id)
     {
-        dd('updaete');
-        $importStore = $this->importStuffService->getImportStoreUserStore($request->toArray()['import_store_id']);
+        $importStore = $this->importStuffService->getImportStoreUserStore($request->all()['import_store_id']);
         $detailImports = $this->importStuffService->updateDetailImportStore($request, $id);
-        $amount = $this->importStuffService->countAmountImportStore($request->toArray()['import_store_id']);
-        Session::flash('msg', 'success');
+        $amount = $this->importStuffService->countAmountImportStore($request->all()['import_store_id']);
+        Session::flash('msg', 'update success');
         return view('store.show_detail', [
             'detailImports' => $detailImports,
             'importStore' => $importStore,

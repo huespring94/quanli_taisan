@@ -66,7 +66,7 @@ Nhập chi tiết kho hàng
         <!-- /.box-header -->
         <div class="box-body">
 
-            <form class="form-horizontal" role="form" method="PUT" action="{{ route('import-store-detail.update', [$detailImport->id]) }}">
+            <form class="form-horizontal" role="form" method="POST" action="{{ url('admin/update', [$detailImport->id]) }}">
                 {{ csrf_field() }}
                 @include ('store.form')
             </form>

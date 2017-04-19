@@ -24,6 +24,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/import-store-detail', 'DetailImportStoreController');
     Route::resource('/import-faculty', 'ImportFacultyController');
 });
+    Route::post('/abc/{id}', 'DetailImportStoreController@update');
 
 Route::get('logout', function() {
     Auth::logout();

@@ -76,6 +76,7 @@ class DetailImportStoreController extends Controller
      */
     public function show($id)
     {
+        dd('day ha');
         return $id;
     }
 
@@ -88,7 +89,10 @@ class DetailImportStoreController extends Controller
      */
     public function edit($id)
     {
-        return $id;
+        $detailImport = $this->importStuffService->getDetailImportStoreById($id);
+        $storeImport = $detailImport->importStore;
+        $stuffs = $this->importStuffService->getAllStuff();
+        return view('store.update_detail', ['detailImport' => $detailImport, 'storeImport' => $storeImport, 'stuffs' => $stuffs]);
     }
 
     /**
@@ -99,9 +103,18 @@ class DetailImportStoreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        return $request . $id;
+        dd('updaete');
+        $importStore = $this->importStuffService->getImportStoreUserStore($request->toArray()['import_store_id']);
+        $detailImports = $this->importStuffService->updateDetailImportStore($request, $id);
+        $amount = $this->importStuffService->countAmountImportStore($request->toArray()['import_store_id']);
+        Session::flash('msg', 'success');
+        return view('store.show_detail', [
+            'detailImports' => $detailImports,
+            'importStore' => $importStore,
+            'amount' => $amount
+        ]);
     }
 
     /**
@@ -113,7 +126,8 @@ class DetailImportStoreController extends Controller
      */
     public function destroy($id)
     {
-        return $id;
+        dd('heejjjee');
+        return $this->importStuffService->deleteDetailImportStore($id);
     }
 
     /**

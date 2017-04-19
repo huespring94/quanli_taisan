@@ -12,22 +12,6 @@ Nhap TS cho kho khoa
 @section('content')
 <!-- Custom Tabs -->
 <div class="nav-tabs-custom">
-    <div class="box box-default">
-        <div class="box-header with-border">
-            <h3 class="box-title">Blank Box</h3>
-            <div class="form-group pull-right">
-                <label for="exampleInputFile">File input</label>
-                <input type="file" id="exampleInputFile">
-
-                <p class="help-block">Example block-level help text here.</p>
-            </div>
-        </div>
-        <div class="box-body">
-            The great content goes here
-        </div>
-        <!-- /.box-body -->
-    </div>
-    <!-- /.tab-pane -->
     <div class="box box-info">
         <div class="box-header with-border">
             <h3 class="box-title">Nhập kho khoa</h3>

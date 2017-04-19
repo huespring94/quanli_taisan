@@ -141,8 +141,22 @@ class ImportStuffService extends BaseService
             'stuff_id' => $data['stuff_id'],
             'import_store_id' => $data['import_store_id']
         ];
-        $this->detailImStoreRepo->updateOrCreateQuantity($conditions, $data, 'quantity');
+        $this->detailImStoreRepo->deleteOrCreate($conditions, $data);
         return $this->detailImStoreRepo->with(['stuff'])->findByField('import_store_id', $data['import_store_id']);
+    }
+    
+    /**
+     * Update detail import store
+     *
+     * @param Request $request []
+     * @param any     $id      []
+     *
+     * @return object
+     */
+    public function updateDetailImportStore($request, $id)
+    {
+        $data = $request->only('quantity', 'price_unit', 'status', 'stuff_id', 'import_store_id');
+        return $this->detailImStoreRepo->update($data, $id);
     }
 
     /**
@@ -259,21 +273,6 @@ class ImportStuffService extends BaseService
         return $this->detailImStoreRepo->getQuantityByStuffId($id);
     }
 
-//    public function getDetailStoreByStuffId($id)
-//    {
-//        return $this->detailImportStoreRepo->findByField('stuff_id', $id);
-//    }
-//
-//    public function getAllImportFaculty()
-//    {
-//        return $this->storeFacultyRepository->all();
-//    }
-//
-//    public function getImportFacultyByImportedUser($userId)
-//    {
-//        return $this->storeFacultyRepository->findByField('user_id', $userId);
-//    }
-
     /**
      * Create import store faculty
      *
@@ -320,5 +319,33 @@ class ImportStuffService extends BaseService
             }
         }
         return array_unique($results);
+    }
+    
+    //    public function getDetailStoreByStuffId($id)
+//    {
+//        return $this->detailImportStoreRepo->findByField('stuff_id', $id);
+//    }
+//
+//    public function getAllImportFaculty()
+//    {
+//        return $this->storeFacultyRepository->all();
+//    }
+//
+//    public function getImportFacultyByImportedUser($userId)
+//    {
+//        return $this->storeFacultyRepository->findByField('user_id', $userId);
+//    }
+    
+    public function getDetailImportStoreById($id)
+    {
+        return $this->detailImStoreRepo->find($id);
+    }
+    
+    public function deleteDetailImportStore($id)
+    {
+        dd('hello');
+        dd($this->importStoreRepo->whereHas('detailImportStores', ['id' => $id]));
+        $this->detailImStoreRepo->delete($id);
+//        if()
     }
 }

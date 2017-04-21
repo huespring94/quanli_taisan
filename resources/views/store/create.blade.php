@@ -29,13 +29,21 @@ Nhập kho hàng
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Chon kho hang</label>
+                    <label class="col-sm-2 control-label">Chọn kho hàng</label>
                     <div class="col-sm-8">
                         <select name="store_id" class="form-control">
+                            <option value="">Chọn kho</option>
                             @foreach($stores as $store)
                             <option value="{{$store->id}}">{{$store->name}}</option>
                             @endforeach
                         </select>
+                        <div class="has-error">
+                            @foreach ($errors->get('store_id') as $error)
+                            <span class="help-block">
+                                {{ $error }}
+                            </span>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
 
@@ -47,6 +55,13 @@ Nhập kho hàng
                                 <i class="fa fa-calendar"></i>
                             </div>
                             <input type="date" name="date_import" class="form-control pull-right">
+                            <div class="has-error">
+                                @foreach ($errors->get('date_import') as $error)
+                                <span class="help-block">
+                                    {{ $error }}
+                                </span>
+                                @endforeach
+                            </div>
                         </div>
                         <!-- /.input group -->
                     </div>

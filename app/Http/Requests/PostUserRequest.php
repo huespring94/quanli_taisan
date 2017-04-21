@@ -26,7 +26,7 @@ class PostUserRequest extends FormRequest
         return [
             'firstname' => 'require|max:20',
             'lastname' => 'require|max:50',
-            'email' => 'email',
+            'email' => 'email|unique:users',
             'role_id' => 'require'
         ];
     }
@@ -43,7 +43,7 @@ class PostUserRequest extends FormRequest
             'firstname.max' => trans('user.max.firstname'),
             'lastname.require' => trans('user.require.lastname'),
             'lastname.max' => trans('user.max.lastname'),
-            'lastname.email' => trans('user.email'),
+            'email' => trans('user.email'),
         ];
     }
 }

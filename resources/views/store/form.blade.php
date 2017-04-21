@@ -9,6 +9,13 @@
                 <option {{!isset($detailImport) ? '' : ($detailImport->stuff_id == $stuff->stuff_id ? "selected" : '')}} value="{{$stuff->stuff_id}}">{{$stuff->name}}</option>
                 @endforeach
             </select>
+            <div class="has-error">
+                @foreach ($errors->get('stuff_id') as $error)
+                <span class="help-block">
+                    {{ $error }}
+                </span>
+                @endforeach
+            </div>
         </div>
         <div class="col-sm-2">
             <div class="input-group-addon">
@@ -28,6 +35,13 @@
                     <i class="fa fa-database"></i>
                 </div>
                 <input type="number" min="1" name="quantity" value="{{isset($detailImport) ? $detailImport->quantity : ''}}"  class="form-control pull-right">
+                <div class="has-error">
+                    @foreach ($errors->get('quantity') as $error)
+                    <span class="help-block">
+                        {{ $error }}
+                    </span>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>
@@ -41,11 +55,13 @@
                 </div>
                 <input type="number" name="price_unit" value="{{isset($detailImport) ? $detailImport->price_unit : ''}}" class="form-control pull-right">
             </div>
-            @if ($errors->has('price_unit'))
-            <span class="help-block">
-                {{ $errors->first('price_unit') }}
-            </span>
-            @endif
+            <div class="has-error">
+                @foreach ($errors->get('price_unit') as $error)
+                <span class="help-block">
+                    {{ $error }}
+                </span>
+                @endforeach
+            </div>
         </div>
     </div>
 
@@ -58,6 +74,13 @@
                 </div>
                 <input type="number" max="100" min="1" name="status"
                        value="{{isset($detailImport) ? $detailImport->status : 100}}" class="form-control pull-right">
+                <div class="has-error">
+                    @foreach ($errors->get('status') as $error)
+                    <span class="help-block">
+                        {{ $error }}
+                    </span>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>

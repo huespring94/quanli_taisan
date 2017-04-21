@@ -25,10 +25,10 @@ class PostDetailImportStoreRequest extends FormRequest
     {
         return [
             'quantity' => 'required|integer',
-            'price_unit' => 'required',
-            'status' => 'required',
-            'stuff_id' => 'required',
-            'import_store_id' => 'required'
+            'price_unit' => 'required|numeric',
+            'status' => 'required|integer',
+            'stuff_id' => 'required|exists:stuffs,stuff_id',
+            'import_store_id' => 'required|exists:import_stores,id'
         ];
     }
     

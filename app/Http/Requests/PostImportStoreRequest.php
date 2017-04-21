@@ -25,7 +25,7 @@ class PostImportStoreRequest extends FormRequest
     {
         return [
             'date_import' => 'required|date_format:' . config('define.date_format'),
-            'store_id' => 'required'
+            'store_id' => 'required|exists:stores,id'
         ];
     }
 }

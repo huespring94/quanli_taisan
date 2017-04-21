@@ -86,6 +86,7 @@ class ImportStuffService extends BaseService
         SupplierRepository $supplierRepository
     ) {
     
+
         $this->kindStuffRepo = $kindStuffRepo;
         $this->stuffRepo = $stuffRepo;
         $this->importStoreRepo = $importStoreRepo;
@@ -144,7 +145,7 @@ class ImportStuffService extends BaseService
         $this->detailImStoreRepo->deleteOrCreate($conditions, $data);
         return $this->detailImStoreRepo->with(['stuff'])->findByField('import_store_id', $data['import_store_id']);
     }
-    
+
     /**
      * Update detail import store
      *
@@ -286,42 +287,42 @@ class ImportStuffService extends BaseService
         $data = $request->only('faculty_id', 'stuff_id', 'quantity');
         $quantityAll = $this->detailImStoreRepo->getQuantityByStuffId($data['stuff_id']);
         $results = [];
-        if ($quantityAll >= $data['quantity']) {
-            $details = $this->detailImStoreRepo->findWhere([['quantity', '>', '0']]);
-            $quantity = $data['quantity'];
-            foreach ($details as $key => $detail) {
-                $remain = $detail->quantity - $quantity;
-                $arr = [
-                    'date_import' => $detail->importStore->date_import,
-                    'status' => $detail->status,
-                    'detail_import_store_id' => $detail->id
-                ];
-                $data = array_merge($data, $arr);
-                $conditions = [
-                    'date_import' => $data['date_import'],
-                    'detail_import_store_id' => $data['detail_import_store_id'],
-                    'faculty_id' => $data['faculty_id']
-                ];
-                if ($quantity == 0) {
-                    break;
-                }
-                if ($remain >= 0) {
-                    $data['quantity'] = $quantity;
-                    $quantity = 0;
-                } else {
-                    $data['quantity'] = $detail->quantity;
-                    $quantity = abs($remain);
-                }
-                $detail->quantity = $remain + $quantity;
-                $detail->save();
-                $results[$key] = $this->storeFacultyRepo->updateOrCreateQuantity($conditions, $data, 'quantity');
-                $results[$key]->store_faculty_id = $results[$key]->id . ' - ' . $data['faculty_id'];
-                $results[$key]->save();
+        if ($quantityAll < $data['quantity']) {
+            return;
+        }
+        $details = $this->detailImStoreRepo->findWhere([['quantity', '>', '0']]);
+        $quantity = $data['quantity'];
+        foreach ($details as $key => $detail) {
+            $remain = $detail->quantity - $quantity;
+            $arr = [
+                'date_import' => $detail->importStore->date_import,
+                'status' => $detail->status,
+                'detail_import_store_id' => $detail->id
+            ];
+            $data = array_merge($data, $arr);
+            $conditions = [
+                'date_import' => $data['date_import'],
+                'detail_import_store_id' => $data['detail_import_store_id'],
+                'faculty_id' => $data['faculty_id']
+            ];
+            if ($quantity == 0) {
+                break;
             }
+            if ($remain >= 0) {
+                $data['quantity'] = $quantity;
+                $quantity = 0;
+            } else {
+                $data['quantity'] = $detail->quantity;
+                $quantity = abs($remain);
+            }
+            $detail->quantity = $remain + $quantity;
+            $detail->save();
+            $results[$key] = $this->storeFacultyRepo->updateOrCreateQuantity($conditions, $data, 'quantity');
+            $results[$key]->store_faculty_id = $results[$key]->id . ' - ' . $data['faculty_id'];
+            $results[$key]->save();
         }
         return array_unique($results);
     }
-    
     //    public function getDetailStoreByStuffId($id)
 //    {
 //        return $this->detailImportStoreRepo->findByField('stuff_id', $id);
@@ -336,7 +337,7 @@ class ImportStuffService extends BaseService
 //    {
 //        return $this->storeFacultyRepository->findByField('user_id', $userId);
 //    }
-    
+
     /**
      * Get detail import store by import store id
      *
@@ -348,7 +349,7 @@ class ImportStuffService extends BaseService
     {
         return $this->detailImStoreRepo->findByField('import_store_id', $id);
     }
-    
+
     /**
      * Get detail import store by id
      *
@@ -360,7 +361,7 @@ class ImportStuffService extends BaseService
     {
         return $this->detailImStoreRepo->find($id);
     }
-    
+
     /**
      * Delete detail import store
      *
@@ -373,14 +374,14 @@ class ImportStuffService extends BaseService
         $detail = $this->detailImStoreRepo->find($id);
         $this->detailImStoreRepo->delete($id);
         $count = $this->importStoreRepo->withCount('detailImportStores')
-            ->find($detail->import_store_id)->detail_import_stores_count;
+                ->find($detail->import_store_id)->detail_import_stores_count;
         if ($count == 0) {
             $this->importStoreRepo->delete($detail->import_store_id);
             return;
         }
         return $detail;
     }
-    
+
     /**
      * Delete import store
      *

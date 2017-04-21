@@ -24,9 +24,9 @@ class PostImportFacultyRequest extends FormRequest
     public function rules()
     {
         return [
-            'faculty_id' => 'required',
+            'faculty_id' => 'required|exists:faculties,faculty_id',
             'quantity' => 'required|integer',
-            'stuff_id' => 'required',
+            'stuff_id' => 'required|exists:stuffs,stuff_id',
         ];
     }
     
@@ -38,10 +38,11 @@ class PostImportFacultyRequest extends FormRequest
     public function messages()
     {
         return [
-            'quantity.required' => 'yeu cau so luong',
-            'quantity.integer' => 'yeu cau so',
-            'faculty_id.required' => 'yeu cau khoa',
-            'stuff_id.required' => 'yeu cau stuff',
+            'quantity.required' => 'Yêu cầu nhập số lượng',
+            'quantity.integer' => 'Yêu cầu nhập số',
+            'quantity.min' => 'Số lượng luôn lớn hơn 1',
+            'faculty_id.required' => 'Yêu cầu chọn khoa',
+            'stuff_id.required' => 'Yêu cầu chọn tài sản',
         ];
     }
 }

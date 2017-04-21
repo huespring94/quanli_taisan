@@ -1,7 +1,7 @@
 @extends('layouts.template_admin')
 
 @section('title_content')
-Nhap TS cho kho khoa
+Nhập tài sản cho khoa
 @stop
 
 @section('home')
@@ -10,5 +10,17 @@ Nhap TS cho kho khoa
 @stop
 
 @section('content')
+
+@if(Session::has('msg'))
+<div class="callout callout-success">
+    <h4>Success!</h4>
+
+    <p>{{ Session::get('msg') }}</p>
+</div>
+@endif
+
+
+
+
 
 @stop

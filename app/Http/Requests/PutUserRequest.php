@@ -25,8 +25,8 @@ class PutUserRequest extends FormRequest
     {
         return [
             'dob' => 'date_format',
-            'phone' => 'numberic',
-            'address' => 'required',
+            'phone' => 'numberic|between:min:10,max:11|unique:users',
+            'address' => 'required|max:500',
         ];
     }
 }

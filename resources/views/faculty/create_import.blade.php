@@ -1,7 +1,7 @@
 @extends('layouts.template_admin')
 
 @section('title_content')
-Nhap TS cho kho khoa
+Nhập tài sản cho khoa
 @stop
 
 @section('home')
@@ -10,6 +10,13 @@ Nhap TS cho kho khoa
 @stop
 
 @section('content')
+@if(Session::has('msg'))
+<div class="callout callout-warning">
+    <h4>Message</h4>
+
+    <p>{{ Session::get('msg') }}</p>
+</div>
+@endif
 <!-- Custom Tabs -->
 <div class="nav-tabs-custom">
     <div class="box box-info">
@@ -31,11 +38,11 @@ Nhap TS cho kho khoa
                         @endforeach
                     </select>
                     <div class="has-error">
-                        @if ($errors->has('faculty_id'))
+                        @foreach ($errors->get('faculty_id') as $error)
                         <span class="help-block">
-                            {{ $errors->first('faculty_id') }}
+                            {{ $error }}
                         </span>
-                        @endif
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -49,11 +56,11 @@ Nhap TS cho kho khoa
                         @endforeach
                     </select>
                     <div class="has-error">
-                        @if ($errors->has('stuff_id'))
+                        @foreach ($errors->get('stuff_id') as $error)
                         <span class="help-block">
-                            {{ $errors->first('stuff_id') }}
+                            {{ $error }}
                         </span>
-                        @endif
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -64,14 +71,14 @@ Nhap TS cho kho khoa
                         <span class="input-group-addon">
                             <i class="fa fa-database"></i>
                         </span>
-                        <input type="number" value="1" min="1" name="quantity" class="form-control pull-right quantity-select">
+                        <input  value="1" min="1" name="quantity" class="form-control pull-right quantity-select">
                     </div>
                     <div class="has-error">
-                        @if ($errors->has('quantity'))
+                        @foreach ($errors->get('quantity') as $error)
                         <span class="help-block">
-                            {{ $errors->first('quantity') }}
+                            {{ $error }}
                         </span>
-                        @endif
+                        @endforeach
                     </div>
                 </div>
                 <label class="col-sm-2 control-label">Số lượng còn lại</label>

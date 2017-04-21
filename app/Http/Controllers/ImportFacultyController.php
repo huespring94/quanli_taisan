@@ -68,7 +68,9 @@ class ImportFacultyController extends Controller
             return view('faculty.detail_import', ['importFaculties' => $importFaculties]);
         }
         Session::flash('msg', 'fail');
-        return view('faculty.create_import');
+        $faculties = $this->facultyRoomService->getAllFaculties();
+        $stuffs = $this->importStuffService->getAllStuff();
+        return view('faculty.create_import', ['faculties' => $faculties, 'stuffs' => $stuffs]);
     }
 
     /**

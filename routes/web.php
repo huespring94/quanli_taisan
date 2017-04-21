@@ -19,7 +19,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 //'middleware' => 'admin', 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('/import-store', 'ImportStoreController');
     Route::resource('/import-store-detail', 'DetailImportStoreController');
     Route::post('/update-detail-store/{id}', 'DetailImportStoreController@update');

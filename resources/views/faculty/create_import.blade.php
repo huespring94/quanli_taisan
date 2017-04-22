@@ -10,11 +10,11 @@ Nhập tài sản cho khoa
 @stop
 
 @section('content')
-@if(Session::has('msg'))
+@if (Session::has('msg-i-f'))
 <div class="callout callout-warning">
     <h4>Message</h4>
 
-    <p>{{ Session::get('msg') }}</p>
+    <p>{{ Session::get('msg-i-f') }}</p>
 </div>
 @endif
 <!-- Custom Tabs -->
@@ -71,7 +71,7 @@ Nhập tài sản cho khoa
                         <span class="input-group-addon">
                             <i class="fa fa-database"></i>
                         </span>
-                        <input  value="1" min="1" name="quantity" class="form-control pull-right quantity-select">
+                        <input type="number" value="1" min="1" name="quantity" class="form-control pull-right quantity-select">
                     </div>
                     <div class="has-error">
                         @foreach ($errors->get('quantity') as $error)

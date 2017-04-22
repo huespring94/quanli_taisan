@@ -16,6 +16,7 @@ class CreateKhoTable extends Migration
         Schema::create('stores', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 50)->nullable();
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
         });
     }

@@ -135,7 +135,7 @@ class DetailImportStoreController extends Controller
      */
     public function destroy($id)
     {
-        Session::flush();
+        Session::forget('msg');
         $detailDeleted = $this->importStuffService->deleteDetailImportStore($id);
         if (empty($detailDeleted)) {
             Session::flash('msg', 'Đơn nhập hàng trống. Mời nhập mới!');

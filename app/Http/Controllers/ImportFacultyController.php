@@ -48,6 +48,7 @@ class ImportFacultyController extends Controller
      */
     public function create()
     {
+        Session::forget('msg');
         $faculties = $this->facultyRoomService->getAllFaculties();
         $stuffs = $this->importStuffService->getAllStuff();
         return view('faculty.create_import', ['faculties' => $faculties, 'stuffs' => $stuffs]);
@@ -62,15 +63,24 @@ class ImportFacultyController extends Controller
      */
     public function store(PostImportFacultyRequest $request)
     {
+        Session::forget('msg');
         $importFaculties = $this->importStuffService->createImportFaculty($request);
-        if (!empty($importFaculties)) {
-            Session::flash('msg', 'success');
-            return view('faculty.detail_import', ['importFaculties' => $importFaculties]);
+        if (empty($importFaculties)) {
+            Session::flash('msg-i-f', 'Số lượng yêu cầu vượt quá số lượng hiện có');
+            $faculties = $this->facultyRoomService->getAllFaculties();
+            $stuffs = $this->importStuffService->getAllStuff();
+            return view('faculty.create_import', ['faculties' => $faculties, 'stuffs' => $stuffs]);
         }
-        Session::flash('msg', 'fail');
-        $faculties = $this->facultyRoomService->getAllFaculties();
-        $stuffs = $this->importStuffService->getAllStuff();
-        return view('faculty.create_import', ['faculties' => $faculties, 'stuffs' => $stuffs]);
+        $faculty = $this->facultyRoomService->getFacultyById($request->get('faculty_id'));
+        $stuff = $this->importStuffService->getStuffById($request->get('stuff_id'));
+        $quantity = $request->get('quantity');
+        Session::flash('msg', 'success');
+        return view('faculty.detail_import', [
+            'importFaculties' => $importFaculties,
+            'faculty' => $faculty,
+            'stuff' => $stuff,
+            'quantity' => $quantity
+        ]);
     }
 
     /**
@@ -113,12 +123,13 @@ class ImportFacultyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id []
+     * @param Request $request []
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        return $id;
+        $this->importStuffService->prepareCreateImportFaculty($request->all());
+        dd('thanh cong');
     }
 }

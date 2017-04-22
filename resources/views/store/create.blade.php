@@ -55,15 +55,14 @@ Nhập kho hàng
                                 <i class="fa fa-calendar"></i>
                             </div>
                             <input type="date" name="date_import" class="form-control pull-right">
-                            <div class="has-error">
-                                @foreach ($errors->get('date_import') as $error)
-                                <span class="help-block">
-                                    {{ $error }}
-                                </span>
-                                @endforeach
-                            </div>
                         </div>
-                        <!-- /.input group -->
+                        <div class="has-error">
+                            @foreach ($errors->get('date_import') as $error)
+                            <span class="help-block">
+                                {{ $error }}
+                            </span>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>

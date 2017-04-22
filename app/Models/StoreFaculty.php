@@ -17,7 +17,8 @@ class StoreFaculty extends Model
         'quantity',
         'status',
         'faculty_id',
-        'user_id',
+        'stuff_id',
+//        'user_id',
         'detail_import_store_id'
     ];
     
@@ -45,6 +46,6 @@ class StoreFaculty extends Model
      */
     public function faculty()
     {
-        return $this->belongsTo('App\Models\Faculty');
+        return $this->belongsTo('App\Models\Faculty', 'faculty_id', 'faculty_id');
     }
 }

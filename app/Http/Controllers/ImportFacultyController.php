@@ -38,7 +38,7 @@ class ImportFacultyController extends Controller
     public function index()
     {
         $importFacs = $this->importStuffService->getAllImportFaculty();
-        return view('', ['importFacs' => $importFacs]);
+        return view('faculty.index', ['importFacs' => $importFacs]);
     }
 
     /**
@@ -129,7 +129,11 @@ class ImportFacultyController extends Controller
      */
     public function destroy(Request $request)
     {
-        $this->importStuffService->prepareCreateImportFaculty($request->all());
-        dd('thanh cong');
+        $result = $this->importStuffService->prepareCreateImportFaculty($request->all());
+        if($result) {
+            dd('thanh cong');
+        } else {
+            dd('ko the xoa');
+        }
     }
 }

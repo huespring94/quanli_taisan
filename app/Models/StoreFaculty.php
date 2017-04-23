@@ -48,4 +48,24 @@ class StoreFaculty extends Model
     {
         return $this->belongsTo('App\Models\Faculty', 'faculty_id', 'faculty_id');
     }
+    
+    /**
+     * Get the store rooms that chilren the store faculty.
+     *
+     * @return array StoreRoom
+     */
+    public function storeRooms()
+    {
+        return $this->hasMany(StoreRoom::class, 'store_faculty_id', 'store_faculty_id');
+    }
+    
+    /**
+     * Get the stuff that owns the store faculty.
+     *
+     * @return Stuff
+     */
+    public function stuff()
+    {
+        return $this->belongsTo(Stuff::class, 'stuff_id', 'stuff_id');
+    }
 }

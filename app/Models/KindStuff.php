@@ -13,4 +13,14 @@ class KindStuff extends Model
         'name',
         'description',
     ];
+    
+    /**
+     * Get the stuffs that owns the kind of stuff.
+     *
+     * @return array Stuff
+     */
+    public function stuffs()
+    {
+        return $this->hasMany(Stuff::class, 'kind_stuff_id', 'kind_stuff_id');
+    }
 }

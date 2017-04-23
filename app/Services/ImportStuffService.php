@@ -11,7 +11,7 @@ use App\Repositories\DetailImportStoreRepository;
 use App\Repositories\StoreFacultyRepository;
 use App\Repositories\StoreRoomRepository;
 use App\Repositories\SupplierRepository;
-use DB;
+use App\Models\StoreFaculty;
 
 class ImportStuffService extends BaseService
 {
@@ -225,7 +225,7 @@ class ImportStuffService extends BaseService
      */
     public function getStuffById($id)
     {
-        return $this->stuffRepo->findByField('stuff_id', $id)->first();
+        return $this->stuffRepo->with('kindStuff')->findByField('stuff_id', $id)->first();
     }
 
     /**
@@ -404,7 +404,7 @@ class ImportStuffService extends BaseService
      *
      * @param array $attributes []
      *
-     * @return void
+     * @return boolean
      */
     public function prepareCreateImportFaculty($attributes)
     {
@@ -418,8 +418,31 @@ class ImportStuffService extends BaseService
                 $detail = $this->detailImStoreRepo->find($import->detail_import_store_id);
                 $detail->quantity += $import->quantity;
                 $detail->save();
-                $this->storeFacultyRepo->delete($import->id);
+                if (!$import->has('storeRooms')) {
+                    $import->forceDelete();
+                    return true;
+                }
             }
         }
+        return false;
+    }
+
+    /**
+     * Get all store faculties, with trashed
+     *
+     * @return mixed
+     */
+    public function getAllImportFaculty()
+    {
+        return StoreFaculty::with(['stuff', 'stuff.kindStuff', 'faculty', 'detailImportStore'])
+            ->withTrashed()
+            ->paginate(2);
+    }
+    
+    public function getImportFacultyByFaculty($id)
+    {
+        return StoreFaculty::with(['stuff', 'stuff.kindStuff', 'faculty', 'detailImportStore'])
+            ->where('faculty_id', '=', $id)
+            ->withTrashed();
     }
 }

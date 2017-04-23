@@ -88,7 +88,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="{!! url('admin/import-faculty/index') !!}"><i class="fa fa-circle-o"></i> Danh sách TS kho</a></li>
+            <li><a href="{{route('import-faculty.index') }}"><i class="fa fa-circle-o"></i> Danh sách TS kho</a></li>
             <li><a href="{!! url('admin/import-faculty/create') !!}"><i class="fa fa-circle-o"></i> Nhập kho</a></li>
             <li><a href="fixed.html"><i class="fa fa-circle-o"></i> Lịch sử nhập</a></li>
             <li><a href="collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Thống kê</a></li>

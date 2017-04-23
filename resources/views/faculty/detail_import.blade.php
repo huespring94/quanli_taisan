@@ -31,9 +31,10 @@ Nhập tài sản cho khoa
                 <thead>
                     <tr>
                         <th>Ngày nhập</th>
+                        <th>Mã tài sản</th>
                         <th>Mã khoa</th>
                         <th>Khoa</th>
-                        <th>Mã tài sản</th>
+                        <th>Loại tài sản</th>
                         <th>Tài sản</th>
                         <th>Số lượng</th>
                         <th></th>
@@ -42,9 +43,10 @@ Nhập tài sản cho khoa
                 <tbody>
                     <tr>
                         <td>{{$importFaculties['import_faculty'][0]->date_import}}</td>
+                        <td>{{$stuff->stuff_id}}</td>
                         <td>{{$faculty->faculty_id}}</td>
                         <td>{{$faculty->name}}</td>
-                        <td>{{$stuff->stuff_id}}</td>
+                        <td>{{$stuff->kindStuff->name}}</td>
                         <td>{{$stuff->name}}</td>
                         <td>{{$quantity}}</td>
                         <td>

@@ -17,6 +17,9 @@ class AddFkNguoiDungTable extends Migration
             $table->foreign('role_id')
                 ->references('id')->on('roles')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
+            $table->foreign('faculty_id')
+                ->references('faculty_id')->on('faculties')
+                ->onUpdate('cascade')->onDelete('NO ACTION');
         });
     }
 
@@ -29,6 +32,7 @@ class AddFkNguoiDungTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign(['role_id']);
+            $table->dropForeign(['faculty_id']);
         });
     }
 }

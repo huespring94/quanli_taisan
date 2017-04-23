@@ -24,8 +24,20 @@ class PostImportStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'date_import' => 'required|date_format:' . config('define.date_format'),
+            'date_import' => 'required|before:tomorrow|date_format:' . config('define.date_format'),
             'store_id' => 'required|exists:stores,id'
+        ];
+    }
+    
+    /**
+     * Messages
+     *
+     * @return mixed
+     */
+    public function messages()
+    {
+        return [
+            
         ];
     }
 }

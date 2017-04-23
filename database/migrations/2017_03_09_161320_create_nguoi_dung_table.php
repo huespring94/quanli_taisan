@@ -24,6 +24,7 @@ class CreateNguoiDungTable extends Migration
             $table->string('email')->unique();
             $table->string('address', 500)->nullable();
             $table->integer('role_id')->unsigned();
+            $table->string('faculty_id', 10)->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

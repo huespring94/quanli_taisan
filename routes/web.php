@@ -18,15 +18,30 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-//'middleware' => 'admin', 
 Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('/import-store', 'ImportStoreController');
     Route::resource('/import-store-detail', 'DetailImportStoreController');
     Route::post('/update-detail-store/{id}', 'DetailImportStoreController@update');
     Route::get('/delete-detail-store/{id}', 'DetailImportStoreController@destroy');
     Route::resource('/import-faculty', 'ImportFacultyController');
+    Route::post('/delete-import-faculty', 'ImportFacultyController@destroy');
 });
-    Route::post('/abc/{id}', 'DetailImportStoreController@update');
+
+Route::group(['middleware' => 'accountant', 'prefix' => 'admin'], function () {
+
+});
+
+Route::group(['middleware' => 'store', 'prefix' => 'admin'], function () {
+
+});
+
+Route::group(['middleware' => 'faculty', 'prefix' => 'admin'], function () {
+
+});
+
+Route::group(['middleware' => 'room', 'prefix' => 'admin'], function () {
+
+});
 
 Route::get('logout', function() {
     Auth::logout();

@@ -80,8 +80,8 @@ Nhập chi tiết kho hàng
                         <td>{{$detail->id}}</td>
                         <td>{{$detail->stuff_id}}</td>
                         <td>{{$detail->quantity}}</td>
-                        <td>{{$detail->price_unit}}</td>
-                        <td>{{$detail->quantity * $detail->price_unit}} </td>
+                        <td>{{number_format($detail->price_unit)}}</td>
+                        <td>{{number_format($detail->quantity * $detail->price_unit)}} </td>
                         <td>{{$detail->stuff->name}}</td>
                         <td><span class="badge bg-light-blue">{{$detail->status}}%</span></td>
                         <td>
@@ -119,7 +119,7 @@ Nhập chi tiết kho hàng
                 <tfoot>
                     <tr>
                         <th colspan="4">Tổng tiền</th>
-                        <th colspan="2">{{$amount}}</th>
+                        <th colspan="2">{{number_format($amount)}}</th>
                     </tr>
                 </tfoot>
             </table>

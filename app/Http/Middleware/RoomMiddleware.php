@@ -18,7 +18,7 @@ class RoomMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->role->name !== Role::ROLE_ROOM) {
+        if (Auth::check() && Auth::user()->role->name !== Role::ROLE_ROOM) {
             return redirect('login');
         }
         return $next($request);

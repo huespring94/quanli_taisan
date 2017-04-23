@@ -42,4 +42,16 @@ class FacultyRoomService extends BaseService
     {
         return $this->roomRepo->all();
     }
+    
+    /**
+     * Get faculty by faculty id
+     *
+     * @param any $facultyId []
+     *
+     * @return object
+     */
+    public function getFacultyById($facultyId)
+    {
+        return $this->facultyRepo->findByField('faculty_id', $facultyId)->first();
+    }
 }

@@ -11,7 +11,7 @@ use App\Repositories\DetailImportStoreRepository;
 use App\Repositories\StoreFacultyRepository;
 use App\Repositories\StoreRoomRepository;
 use App\Repositories\SupplierRepository;
-use Session;
+use DB;
 
 class ImportStuffService extends BaseService
 {
@@ -86,7 +86,6 @@ class ImportStuffService extends BaseService
         SupplierRepository $supplierRepository
     ) {
     
-
         $this->kindStuffRepo = $kindStuffRepo;
         $this->stuffRepo = $stuffRepo;
         $this->importStoreRepo = $importStoreRepo;
@@ -218,6 +217,18 @@ class ImportStuffService extends BaseService
     }
 
     /**
+     * Get stuff by stuff id
+     *
+     * @param int $id Stuff id
+     *
+     * @return object
+     */
+    public function getStuffById($id)
+    {
+        return $this->stuffRepo->findByField('stuff_id', $id)->first();
+    }
+
+    /**
      * Get import store with user and stor by id import store
      *
      * @param mixed $id Id of import store
@@ -286,28 +297,30 @@ class ImportStuffService extends BaseService
     {
         $data = $request->only('faculty_id', 'stuff_id', 'quantity');
         $quantityAll = $this->detailImStoreRepo->getQuantityByStuffId($data['stuff_id']);
-        $results = [];
         if ($quantityAll < $data['quantity']) {
             return;
         }
-        $details = $this->detailImStoreRepo->findWhere([['quantity', '>', '0']]);
+        $conditions = [
+            'faculty_id' => $data['faculty_id'],
+            'date_import' => Carbon::now()->format(config('define.date_format')),
+            'stuff_id' => $data['stuff_id']
+        ];
+        $this->prepareCreateImportFaculty($conditions);
+        $importFaculty = $detailImport = [];
+        $amount = 0;
         $quantity = $data['quantity'];
+        $details = $this->detailImStoreRepo->with('importStore')->findWhere([['quantity', '>', '0'], ['stuff_id', '=', $data['stuff_id']]]);
         foreach ($details as $key => $detail) {
             $remain = $detail->quantity - $quantity;
+            if ($quantity == 0) {
+                break;
+            }
             $arr = [
-                'date_import' => $detail->importStore->date_import,
+                'date_import' => Carbon::now()->format(config('define.date_format')),
                 'status' => $detail->status,
                 'detail_import_store_id' => $detail->id
             ];
             $data = array_merge($data, $arr);
-            $conditions = [
-                'date_import' => $data['date_import'],
-                'detail_import_store_id' => $data['detail_import_store_id'],
-                'faculty_id' => $data['faculty_id']
-            ];
-            if ($quantity == 0) {
-                break;
-            }
             if ($remain >= 0) {
                 $data['quantity'] = $quantity;
                 $quantity = 0;
@@ -315,28 +328,20 @@ class ImportStuffService extends BaseService
                 $data['quantity'] = $detail->quantity;
                 $quantity = abs($remain);
             }
-            $detail->quantity = $remain + $quantity;
+            $importFaculty[$key] = $this->storeFacultyRepo->create($data);
+            $detail->quantity -= $data['quantity'];
             $detail->save();
-            $results[$key] = $this->storeFacultyRepo->updateOrCreateQuantity($conditions, $data, 'quantity');
-            $results[$key]->store_faculty_id = $results[$key]->id . ' - ' . $data['faculty_id'];
-            $results[$key]->save();
+            $detailImport[] = $detail;
+            $importFaculty[$key]->store_faculty_id = $importFaculty[$key]->id . ' - ' . $data['faculty_id'];
+            $importFaculty[$key]->save();
+            $amount += $detail->price_unit * $data['quantity'];
         }
-        return array_unique($results);
+        return [
+            'import_faculty' => $importFaculty,
+            'detail' => $detailImport,
+            'amount' => $amount
+        ];
     }
-    //    public function getDetailStoreByStuffId($id)
-//    {
-//        return $this->detailImportStoreRepo->findByField('stuff_id', $id);
-//    }
-//
-//    public function getAllImportFaculty()
-//    {
-//        return $this->storeFacultyRepository->all();
-//    }
-//
-//    public function getImportFacultyByImportedUser($userId)
-//    {
-//        return $this->storeFacultyRepository->findByField('user_id', $userId);
-//    }
 
     /**
      * Get detail import store by import store id
@@ -392,5 +397,29 @@ class ImportStuffService extends BaseService
     public function deleteImportStore($id)
     {
         $this->importStoreRepo->delete($id);
+    }
+
+    /**
+     * Prepare by the way delete import faculty if have before insert
+     *
+     * @param array $attributes []
+     *
+     * @return void
+     */
+    public function prepareCreateImportFaculty($attributes)
+    {
+        $imports = $this->storeFacultyRepo->findWhere([
+            'stuff_id' => $attributes['stuff_id'],
+            'faculty_id' => $attributes['faculty_id'],
+            'date_import' => $attributes['date_import']
+        ]);
+        if (!empty($imports)) {
+            foreach ($imports as $import) {
+                $detail = $this->detailImStoreRepo->find($import->detail_import_store_id);
+                $detail->quantity += $import->quantity;
+                $detail->save();
+                $this->storeFacultyRepo->delete($import->id);
+            }
+        }
     }
 }

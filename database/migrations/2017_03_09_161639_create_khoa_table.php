@@ -17,6 +17,7 @@ class CreateKhoaTable extends Migration
             $table->increments('id');
             $table->string('faculty_id', 10)->unique();
             $table->string('name', 50)->unique();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }

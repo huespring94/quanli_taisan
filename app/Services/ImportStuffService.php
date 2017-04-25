@@ -135,6 +135,7 @@ class ImportStuffService extends BaseService
     public function createDetailImportStore($request)
     {
         $data = $request->only('quantity', 'price_unit', 'status', 'stuff_id', 'import_store_id');
+        $data['quantity_start'] = $data['quantity'];
         $conditions = [
             'status' => $data['status'],
             'price_unit' => $data['price_unit'],

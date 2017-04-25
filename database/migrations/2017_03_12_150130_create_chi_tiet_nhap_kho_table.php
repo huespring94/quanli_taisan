@@ -15,6 +15,7 @@ class CreateChiTietNhapKhoTable extends Migration
     {
         Schema::create('detail_import_stores', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('quantity_start')->nullable();
             $table->integer('quantity');
             $table->integer('price_unit');
             $table->integer('status');

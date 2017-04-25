@@ -17,6 +17,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+Route::get('/user/profile', 'UserController@getTimeline');
 
 Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('/import-store', 'ImportStoreController');

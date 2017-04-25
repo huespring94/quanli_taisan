@@ -17,6 +17,7 @@ class CreateKhoKhoaTable extends Migration
             $table->increments('id');
             $table->string('store_faculty_id', 30)->unique()->nullable();
             $table->date('date_import');
+            $table->integer('quantity_start')->nullable();
             $table->integer('quantity');
             $table->integer('status');
             $table->string('faculty_id', 20);

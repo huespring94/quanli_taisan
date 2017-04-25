@@ -17,6 +17,7 @@ class CreateKhoPhongTable extends Migration
             $table->increments('id');
             $table->string('store_room_id', 20)->unique()->nullable();
             $table->date('date_import');
+            $table->integer('quantity_start')->nullable();
             $table->integer('quantity');
             $table->integer('status');
             $table->string('room_id', 20);

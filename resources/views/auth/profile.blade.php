@@ -26,13 +26,28 @@ Trang cá nhân
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>Ngày sinh</b> <p class="pull-right">{{Auth::user()->dob}}</p>
+                    <b>Ngày sinh</b>
+                    @if(Auth::user()->dob)
+                    <p class="pull-right"><b>{{ Auth::user()->dob}}</b></p>
+                    @else
+                    <p class="pull-right"><i>Chưa cập nhật</i></p>
+                    @endif
                 </li>
                 <li class="list-group-item">
-                  <b>Email</b> <p class="pull-right">{{Auth::user()->email}}</p>
+                    <b>Email</b> 
+                    @if(Auth::user()->email)
+                    <p class="pull-right"><b>{{ Auth::user()->email}}</b></p>
+                    @else
+                    <p class="pull-right"><i>Chưa cập nhật</i></p>
+                    @endif
                 </li>
                 <li class="list-group-item">
-                  <b>Phone</b> <p class="pull-right">{{Auth::user()->phone}}</p>
+                    <b>Phone</b>
+                    @if(Auth::user()->phone)
+                    <p class="pull-right"><b>{{ Auth::user()->phone}}</b></p>
+                    @else
+                    <p class="pull-right"><i>Chưa cập nhật</i></p>
+                    @endif
                 </li>
                 <li class="list-group-item">
                   <b>Khoa</b> <p class="pull-right"></p>

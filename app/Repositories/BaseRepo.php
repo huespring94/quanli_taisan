@@ -60,6 +60,8 @@ abstract class BaseRepo extends BaseRepository
     
     /**
      * Delete force, not delete soft
+     *
+     * @return void
      */
     public function forceDelete()
     {

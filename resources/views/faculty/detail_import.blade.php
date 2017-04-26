@@ -23,14 +23,21 @@ Nhập tài sản cho khoa
         <div class="box-header">
             <h3 class="box-title">Thông tin nhập</h3>
         </div>
-        <a type="button" href="{{route('import-faculty.create')}}" class="btn bg-orange margin pull-right">
-            <i class="fa fa-plus-circle"></i>
-            Thêm mới</a>
+        
         <div class="box-body">
+            <div class="form-group">
+                <label class="col-sm-4 control-label pull-left">
+                    <i>Ngày nhập</i> {{$importFaculties['import_faculty'][0]->date_import}}
+                </label>
+                    <div class="col-sm-2 pull-right">
+                        <a type="button" href="{{route('import-faculty.create')}}" class="btn bg-orange margin pull-right">
+                            <i class="fa fa-plus-circle"></i>
+                            Thêm mới</a>
+                    </div>
+                </div>
             <table id="example2" class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>Ngày nhập</th>
                         <th>Mã tài sản</th>
                         <th>Mã khoa</th>
                         <th>Khoa</th>
@@ -42,7 +49,6 @@ Nhập tài sản cho khoa
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{$importFaculties['import_faculty'][0]->date_import}}</td>
                         <td>{{$stuff->stuff_id}}</td>
                         <td>{{$faculty->faculty_id}}</td>
                         <td>{{$faculty->name}}</td>

@@ -37,13 +37,6 @@ Nhập tài sản cho khoa
                         <option value="{{$faculty->faculty_id}}">{{$faculty->name}}</option>
                         @endforeach
                     </select>
-                    <div class="has-error">
-                        @foreach ($errors->get('faculty_id') as $error)
-                        <span class="help-block">
-                            {{ $error }}
-                        </span>
-                        @endforeach
-                    </div>
                 </div>
             </div>
             <div class="form-group">

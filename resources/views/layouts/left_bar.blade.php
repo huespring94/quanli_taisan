@@ -22,7 +22,7 @@
       </form>
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="treeview active">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span> {{trans('content.left_bar.generate')}}</span>
             <span class="pull-right-container">

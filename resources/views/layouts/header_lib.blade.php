@@ -19,6 +19,8 @@
    <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{asset('/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css')}}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{asset('/bower_components/AdminLTE/plugins/datatables/dataTables.bootstrap.css')}}">
   @yield('css')
 <!--  <link rel="stylesheet" href="{{asset('/bower_components/AdminLTE/plugins/datepicker/datepicker3.css')}}">
    Bootstrap Color Picker 

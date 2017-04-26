@@ -11,6 +11,7 @@ class DetailImportStore extends Model
     protected $fillable = [
         'id',
         'quantity',
+        'quantity_start',
         'price_unit',
         'status',
         'import_store_id',

@@ -329,6 +329,7 @@ class ImportStuffService extends BaseService
                 $data['quantity'] = $detail->quantity;
                 $quantity = abs($remain);
             }
+            $data['quantity_start'] = $data['quantity'];
             $importFaculty[$key] = $this->storeFacultyRepo->create($data);
             $detail->quantity -= $data['quantity'];
             $detail->save();
@@ -436,14 +437,23 @@ class ImportStuffService extends BaseService
     public function getAllImportFaculty()
     {
         return StoreFaculty::with(['stuff', 'stuff.kindStuff', 'faculty', 'detailImportStore'])
-            ->withTrashed()
-            ->paginate(2);
+            ->withTrashed()->get();
     }
     
+    /**
+     * Get store faculties by faculty id
+     *
+     * @param any $id []
+     *
+     * @return mixed
+     */
     public function getImportFacultyByFaculty($id)
     {
-        return StoreFaculty::with(['stuff', 'stuff.kindStuff', 'faculty', 'detailImportStore'])
-            ->where('faculty_id', '=', $id)
-            ->withTrashed();
+        if ($id != null) {
+            return StoreFaculty::with(['stuff', 'stuff.kindStuff', 'faculty', 'detailImportStore'])
+                    ->where('faculty_id', '=', $id)
+                    ->withTrashed()->get();
+        }
+        return $this->getAllImportFaculty();
     }
 }

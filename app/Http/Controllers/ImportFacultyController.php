@@ -37,8 +37,9 @@ class ImportFacultyController extends Controller
      */
     public function index()
     {
+        $faculties = $this->facultyRoomService->getAllFaculties();
         $importFacs = $this->importStuffService->getAllImportFaculty();
-        return view('faculty.index', ['importFacs' => $importFacs]);
+        return view('faculty.index', ['importFacs' => $importFacs, 'faculties' => $faculties]);
     }
 
     /**
@@ -130,10 +131,25 @@ class ImportFacultyController extends Controller
     public function destroy(Request $request)
     {
         $result = $this->importStuffService->prepareCreateImportFaculty($request->all());
-        if($result) {
+        if ($result) {
             dd('thanh cong');
         } else {
             dd('ko the xoa');
         }
+    }
+    
+    /**
+     * Get import faculty by faculty id
+     *
+     * @param Request $request []
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getImportFacultyByFaculty(Request $request)
+    {
+        $faculties = $this->facultyRoomService->getAllFaculties();
+        $importFacs = $this->importStuffService->getImportFacultyByFaculty($request->all()['faculty_id']);
+        $facultyId = $request->all()['faculty_id'];
+        return view('faculty.index', ['importFacs' => $importFacs, 'faculties' => $faculties, 'facultyId' => $facultyId]);
     }
 }

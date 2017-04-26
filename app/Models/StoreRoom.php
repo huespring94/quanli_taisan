@@ -29,4 +29,14 @@ class StoreRoom extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    /**
+     * Get the store faculty that owns the store room.
+     *
+     * @return StoreFaculty
+     */
+    public function storeFaculty()
+    {
+        return $this->belongsTo(StoreFaculty::class, 'store_faculty_id', 'store_faculty_id');
+    }
 }

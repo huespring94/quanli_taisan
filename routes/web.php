@@ -17,6 +17,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+Route::get('/user/profile', 'UserController@getTimeline');
 
 Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('/import-store', 'ImportStoreController');
@@ -24,6 +25,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::post('/update-detail-store/{id}', 'DetailImportStoreController@update');
     Route::get('/delete-detail-store/{id}', 'DetailImportStoreController@destroy');
     Route::resource('/import-faculty', 'ImportFacultyController');
+    Route::post('/store-faculty', 'ImportFacultyController@getImportFacultyByFaculty');
     Route::post('/delete-import-faculty', 'ImportFacultyController@destroy');
 });
 

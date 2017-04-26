@@ -23,6 +23,16 @@ class Stuff extends Model
      */
     public function detailImportStores()
     {
-        return $this->hasMany('App\Models\DetailImportStore');
+        return $this->hasMany(DetailImportStore::class);
+    }
+    
+    /**
+     * Get the kind of stuff that owns the stuff.
+     *
+     * @return KindStuff
+     */
+    public function kindStuff()
+    {
+        return $this->belongsTo(KindStuff::class, 'kind_stuff_id', 'kind_stuff_id');
     }
 }

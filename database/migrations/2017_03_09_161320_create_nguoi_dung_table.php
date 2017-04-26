@@ -20,11 +20,11 @@ class CreateNguoiDungTable extends Migration
             $table->string('lastname', 50);
             $table->string('avatar');
             $table->date('dob')->nullable();
-            $table->string('phone', 11)->nullable();
+            $table->string('phone', 20)->nullable();
             $table->string('email')->unique();
             $table->string('address', 500)->nullable();
             $table->integer('role_id')->unsigned();
-            $table->string('faculty_id', 10)->nullable();
+            $table->string('faculty_id', 20)->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

@@ -57,4 +57,14 @@ abstract class BaseRepo extends BaseRepository
         }
         return \DB::table($this->model->getTable())->insert($data);
     }
+    
+    /**
+     * Delete force, not delete soft
+     *
+     * @return void
+     */
+    public function forceDelete()
+    {
+        \DB::table($this->model->getTable())->forceDelete();
+    }
 }

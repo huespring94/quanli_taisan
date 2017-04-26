@@ -15,7 +15,7 @@ class CreateKhoaTable extends Migration
     {
         Schema::create('faculties', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('faculty_id', 10)->unique();
+            $table->string('faculty_id', 20)->unique();
             $table->string('name', 50)->unique();
             $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Role;
 
 class RoleSeeder extends Seeder
 {
@@ -13,16 +14,16 @@ class RoleSeeder extends Seeder
     {
         DB::table('roles')->insert([
             [
-                'name' => 'Kế toán vật tư',
+                'name' => Role::ROLE_ADMIN,
             ],
             [
-                'name' => 'Quản lí CSVC phòng',
+                'name' => Role::ROLE_ACCOUNTANT,
             ],
             [
-                'name' => 'Quản lí CSVC khoa',
+                'name' => Role::ROLE_FACULTY,
             ],
             [
-                'name' => 'Admin'
+                'name' => Role::ROLE_ROOM
             ]
         ]);
     }

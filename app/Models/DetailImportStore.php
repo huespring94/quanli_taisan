@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DetailImportStore extends Model
 {
+    use SoftDeletes;
+    
     protected $table = 'detail_import_stores';
     
     protected $fillable = [
@@ -14,6 +17,7 @@ class DetailImportStore extends Model
         'quantity_start',
         'price_unit',
         'status',
+        'status_start',
         'import_store_id',
         'stuff_id',
         'supplier_id'
@@ -26,7 +30,7 @@ class DetailImportStore extends Model
      */
     public function importStore()
     {
-        return $this->belongsTo('App\Models\ImportStore');
+        return $this->belongsTo(ImportStore::class);
     }
     
     /**
@@ -36,7 +40,7 @@ class DetailImportStore extends Model
      */
     public function stuff()
     {
-        return $this->belongsTo('App\Models\Stuff', 'stuff_id', 'stuff_id');
+        return $this->belongsTo(Stuff::class, 'stuff_id', 'stuff_id');
     }
     
     /**
@@ -46,6 +50,6 @@ class DetailImportStore extends Model
      */
     public function storeFaculties()
     {
-        return $this->hasMany('App\Models\StoreFaculty');
+        return $this->hasMany(StoreFaculty::class);
     }
 }

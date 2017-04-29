@@ -35,6 +35,9 @@ Danh sách tài sản của các khoa
 <div class="box">
     <div class="box-header">
         <h3 class="box-title">Danh sách tài sản</h3>
+        <button type="button" class="btn bg-navy margin pull-right">
+                <i class="fa fa-download"></i>
+                In danh sách tài sản khoa</button>
     </div>
     <div class="box-body">
         <table id="mydata" class="table table-bordered table-striped">
@@ -59,7 +62,7 @@ Danh sách tài sản của các khoa
                     <td>{{$importFac->stuff->name}}</td>
                     <td>{{$importFac->quantity}}</td>
                     <td align="right">{{number_format($importFac->quantity * $importFac->detailImportStore->price_unit)}}</td>
-                    <td>{{$importFac->status}}</td>
+                    <td>{{$importFac->detailImportStore->status}}</td>
                     <td></td>
                 </tr>
                 @endforeach

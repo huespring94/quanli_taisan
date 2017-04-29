@@ -19,7 +19,7 @@ class CreateKhoPhongTable extends Migration
             $table->date('date_import');
             $table->integer('quantity_start')->nullable();
             $table->integer('quantity');
-            $table->integer('status');
+//            $table->integer('status');
             $table->string('room_id', 20);
             $table->string('store_faculty_id', 20);
             $table->string('stuff_id', 100);

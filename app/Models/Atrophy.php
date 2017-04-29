@@ -13,5 +13,15 @@ class Atrophy extends Model
         'name',
         'description',
         'atrophy_rate'
-     ];
+    ];
+    
+    /**
+     * Get the atrophy that owns the stuff.
+     *
+     * @return array
+     */
+    public function stuffs()
+    {
+        return $this->hasMany(Stuff::class);
+    }
 }

@@ -11,13 +11,10 @@ class StoreRoom extends Model
     
     protected $table = 'store_rooms';
     
-    const TT_MOI = 'moi';
-    const TT_DA_SU_DUNG = 'da su dung';
-    
     protected $fillable = [
         'id',
         'date_import',
-        'status',
+//        'status',
         'room_id',
         'store_faculty_id',
         'user_id'

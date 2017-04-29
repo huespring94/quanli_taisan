@@ -14,4 +14,14 @@ class Supplier extends Model
         'address',
         'description',
     ];
+    
+    /**
+     * Get supplier that owns the stuffs.
+     *
+     * @return Stuff
+     */
+    public function stuffs()
+    {
+        return $this->hasMany(Stuff::class, 'supplier_id', 'supplier_id');
+    }
 }

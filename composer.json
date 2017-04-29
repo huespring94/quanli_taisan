@@ -27,11 +27,6 @@
         ],
         "psr-4": {
             "App\\": "app/"
-        },
-        "scripts": {
-            "compile": [
-                "bower install"
-            ]
         }
     },
     "autoload-dev": {

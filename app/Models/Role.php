@@ -11,8 +11,8 @@ class Role extends Model
     public $timestamps = true;
     
     const ROLE_ADMIN = 'Admin';
-    const ROLE_FACULTY = 'Khoa';
-    const ROLE_ROOM = 'Phòng';
+    const ROLE_FACULTY = 'Quản lí CSVC khoa';
+    const ROLE_ROOM = 'Quản lí CSVC phòng';
     const ROLE_ACCOUNTANT = 'Kế toán';
 
     protected $fillable = [

@@ -5,15 +5,14 @@ use Faker\Factory as Faker;
 use App\Models\Role;
 use App\Models\Faculty;
 
-class UserSeeder extends Seeder
-{
+class UserSeeder extends Seeder {
+
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run()
-    {
+    public function run() {
         $faker = Faker::create('vi_VN');
         $facultyIds = Faculty::all()->pluck('faculty_id');
         DB::table('users')->insert([
@@ -72,4 +71,5 @@ class UserSeeder extends Seeder
             ]);
         }
     }
+
 }

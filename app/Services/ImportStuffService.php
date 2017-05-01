@@ -136,6 +136,7 @@ class ImportStuffService extends BaseService
     {
         $data = $request->only('quantity', 'price_unit', 'status', 'stuff_id', 'import_store_id');
         $data['quantity_start'] = $data['quantity'];
+        $data['status_start'] = $data['status'];
         $conditions = [
             'status' => $data['status'],
             'price_unit' => $data['price_unit'],
@@ -143,7 +144,7 @@ class ImportStuffService extends BaseService
             'import_store_id' => $data['import_store_id']
         ];
         $this->detailImStoreRepo->deleteOrCreate($conditions, $data);
-        return $this->detailImStoreRepo->with(['stuff'])->findByField('import_store_id', $data['import_store_id']);
+        return $this->detailImStoreRepo->with(['stuff', 'stuff.supplier'])->findByField('import_store_id', $data['import_store_id']);
     }
 
     /**
@@ -157,6 +158,8 @@ class ImportStuffService extends BaseService
     public function updateDetailImportStore($request, $id)
     {
         $data = $request->only('quantity', 'price_unit', 'status', 'stuff_id', 'import_store_id');
+        $data['quantity_start'] = $data['quantity'];
+        $data['status_start'] = $data['status'];
         $this->detailImStoreRepo->update($data, $id);
         return $this->detailImStoreRepo->with(['stuff'])->findByField('import_store_id', $data['import_store_id']);
     }
@@ -226,7 +229,7 @@ class ImportStuffService extends BaseService
      */
     public function getStuffById($id)
     {
-        return $this->stuffRepo->with('kindStuff')->findByField('stuff_id', $id)->first();
+        return $this->stuffRepo->with(['kindStuff', 'supplier', 'atrophy'])->findByField('stuff_id', $id)->first();
     }
 
     /**
@@ -455,5 +458,21 @@ class ImportStuffService extends BaseService
                     ->withTrashed()->get();
         }
         return $this->getAllImportFaculty();
+    }
+    
+    /**
+     * Delete import stỏe which empty detail import
+     *
+     * @return void
+     */
+    public function deleteEmptyImportStore()
+    {
+        $importStores = $this->importStoreRepo
+            ->findWhere([['created_at', '<', Carbon::now()->subDay()->format(config('define.timestamp_format'))]]);
+        foreach ($importStores as $importStore) {
+            if(count($this->detailImStoreRepo->findByField('import_store_id', $importStore->id)) == 0) {
+                $importStore->delete();
+            }
+        }
     }
 }

@@ -13,6 +13,10 @@ class FacultySeeder extends Seeder
     public function run()
     {
         $faker = Faker::create('vi_VN');
+        DB::table('faculties')->insert([
+                'faculty_id' => 'CNTT',
+                'name' => 'Công nghệ thông tin'
+        ]);
         for ($i = 0; $i < 10; $i++)
         {
             DB::table('faculties')->insert([

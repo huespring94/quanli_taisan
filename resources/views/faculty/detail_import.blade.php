@@ -43,7 +43,9 @@ Nhập tài sản cho khoa
                         <th>Khoa</th>
                         <th>Loại tài sản</th>
                         <th>Tài sản</th>
+                        <th>Nguồn cung cấp</th>
                         <th>Số lượng</th>
+                        <th>Tỷ lệ hao mòn</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -54,7 +56,11 @@ Nhập tài sản cho khoa
                         <td>{{$faculty->name}}</td>
                         <td>{{$stuff->kindStuff->name}}</td>
                         <td>{{$stuff->name}}</td>
+                        <td>{{$stuff->supplier->name}}</td>
                         <td>{{$quantity}}</td>
+                        <td>
+                            <span class="badge bg-info">{{$stuff->atrophy->atrophy_rate}}%</span>
+                        </td>
                         <td>
                             <a id="detail-import-delete" class="btn bg-red pull-right" data-toggle="modal" data-target="#myModal">
                                 <i class="fa fa-trash"></i></a>
@@ -118,10 +124,10 @@ Nhập tài sản cho khoa
                         <td>{{number_format($importFaculties['detail'][$key]->price_unit)}}</td>
                         <td>{{number_format($detail->quantity * $importFaculties['detail'][$key]->price_unit)}} </td>
                         <td>
-                            @if ($detail->status <= 20)
-                            <span class="badge bg-red">{{$detail->status}}%</span>
+                            @if ($importFaculties['detail'][$key]->status <= 20)
+                            <span class="badge bg-red">{{$importFaculties['detail'][$key]->status}}%</span>
                             @else
-                            <span class="badge bg-light-blue">{{$detail->status}}%</span>
+                            <span class="badge bg-light-blue">{{$importFaculties['detail'][$key]->status}}%</span>
                             @endif
                         </td>
                     </tr>

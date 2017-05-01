@@ -22,49 +22,49 @@ class ImportStuffService extends BaseService
      * @var KindStuff
      */
     protected $kindStuffRepo;
-
+    
     /**
      * Stuff repository
      *
      * @var StuffRepository
      */
     protected $stuffRepo;
-
+    
     /**
      * Import store repository
      *
      * @var ImportStoreRepository
      */
     protected $importStoreRepo;
-
+    
     /**
      * Detail import store repository
      *
      * @var DetailImportStoreRepository
      */
     protected $detailImStoreRepo;
-
+    
     /**
      * Store faculty repository
      *
      * @var StoreFacultyRepository
      */
     protected $storeFacultyRepo;
-
+    
     /**
      * Store room repository
      *
      * @var StoreRoomRepository
      */
     protected $storeRoomRepository;
-
+    
     /**
      * Supplier repository
      *
      * @var SupplierRepository
      */
     protected $supplierRepository;
-
+    
     /**
      * Constructor of import stuff service
      *
@@ -94,7 +94,7 @@ class ImportStuffService extends BaseService
         $this->storeRoomRepository = $storeRoomRepository;
         $this->supplierRepository = $supplierRepository;
     }
-
+    
     /**
      * Get all import store
      *
@@ -104,7 +104,7 @@ class ImportStuffService extends BaseService
     {
         return $this->importStoreRepo->all();
     }
-
+    
     /**
      * Create import store
      *
@@ -124,7 +124,7 @@ class ImportStuffService extends BaseService
         $condition = array_only($array, ['store_id', 'date_import', 'user_id']);
         return $this->importStoreRepo->updateOrCreate($condition, $array);
     }
-
+    
     /**
      * Create detail import store
      *
@@ -136,6 +136,7 @@ class ImportStuffService extends BaseService
     {
         $data = $request->only('quantity', 'price_unit', 'status', 'stuff_id', 'import_store_id');
         $data['quantity_start'] = $data['quantity'];
+        $data['status_start'] = $data['status'];
         $conditions = [
             'status' => $data['status'],
             'price_unit' => $data['price_unit'],
@@ -143,9 +144,9 @@ class ImportStuffService extends BaseService
             'import_store_id' => $data['import_store_id']
         ];
         $this->detailImStoreRepo->deleteOrCreate($conditions, $data);
-        return $this->detailImStoreRepo->with(['stuff'])->findByField('import_store_id', $data['import_store_id']);
+        return $this->detailImStoreRepo->with(['stuff', 'stuff.supplier'])->findByField('import_store_id', $data['import_store_id']);
     }
-
+    
     /**
      * Update detail import store
      *
@@ -157,10 +158,12 @@ class ImportStuffService extends BaseService
     public function updateDetailImportStore($request, $id)
     {
         $data = $request->only('quantity', 'price_unit', 'status', 'stuff_id', 'import_store_id');
+        $data['quantity_start'] = $data['quantity'];
+        $data['status_start'] = $data['status'];
         $this->detailImStoreRepo->update($data, $id);
         return $this->detailImStoreRepo->with(['stuff'])->findByField('import_store_id', $data['import_store_id']);
     }
-
+    
     /**
      * Create stuff
      *
@@ -172,7 +175,7 @@ class ImportStuffService extends BaseService
     {
         return $this->stuffRepo->create($data);
     }
-
+    
     /**
      * Get all of stuffs
      *
@@ -182,7 +185,7 @@ class ImportStuffService extends BaseService
     {
         return $this->kindStuffRepo->all();
     }
-
+    
     /**
      * Get all of kind of stuffs
      *
@@ -192,7 +195,7 @@ class ImportStuffService extends BaseService
     {
         return $this->stuffRepo->all();
     }
-
+    
     /**
      * Create kind of stuff
      *
@@ -204,7 +207,7 @@ class ImportStuffService extends BaseService
     {
         return $this->kindStuffRepo->create($data);
     }
-
+    
     /**
      * Get stuff by id kind of stuff
      *
@@ -216,7 +219,7 @@ class ImportStuffService extends BaseService
     {
         return $this->stuffRepo->findByField('kind_stuff_id', $kindStuffId);
     }
-
+    
     /**
      * Get stuff by stuff id
      *
@@ -226,9 +229,9 @@ class ImportStuffService extends BaseService
      */
     public function getStuffById($id)
     {
-        return $this->stuffRepo->with('kindStuff')->findByField('stuff_id', $id)->first();
+        return $this->stuffRepo->with(['kindStuff', 'supplier', 'atrophy'])->findByField('stuff_id', $id)->first();
     }
-
+    
     /**
      * Get import store with user and stor by id import store
      *
@@ -240,7 +243,7 @@ class ImportStuffService extends BaseService
     {
         return $this->importStoreRepo->with(['store', 'user'])->find($id);
     }
-
+    
     /**
      * Get import store by id import store
      *
@@ -252,7 +255,7 @@ class ImportStuffService extends BaseService
     {
         return $this->importStoreRepo->find($id);
     }
-
+    
     /**
      * Calculate amount by id of import store
      *
@@ -264,7 +267,7 @@ class ImportStuffService extends BaseService
     {
         return $this->detailImStoreRepo->countAmountImportStore($id);
     }
-
+    
     /**
      * Get detail store with stuff which has quantity greater than zero
      *
@@ -274,7 +277,7 @@ class ImportStuffService extends BaseService
     {
         return $this->detailImStoreRepo->with('stuff')->findWhere([['quantity', '>', '0']]);
     }
-
+    
     /**
      * Get quantity by stuff id
      *
@@ -286,7 +289,7 @@ class ImportStuffService extends BaseService
     {
         return $this->detailImStoreRepo->getQuantityByStuffId($id);
     }
-
+    
     /**
      * Create import store faculty
      *
@@ -344,7 +347,7 @@ class ImportStuffService extends BaseService
             'amount' => $amount
         ];
     }
-
+    
     /**
      * Get detail import store by import store id
      *
@@ -356,7 +359,7 @@ class ImportStuffService extends BaseService
     {
         return $this->detailImStoreRepo->findByField('import_store_id', $id);
     }
-
+    
     /**
      * Get detail import store by id
      *
@@ -368,7 +371,7 @@ class ImportStuffService extends BaseService
     {
         return $this->detailImStoreRepo->find($id);
     }
-
+    
     /**
      * Delete detail import store
      *
@@ -388,7 +391,7 @@ class ImportStuffService extends BaseService
         }
         return $detail;
     }
-
+    
     /**
      * Delete import store
      *
@@ -400,7 +403,7 @@ class ImportStuffService extends BaseService
     {
         $this->importStoreRepo->delete($id);
     }
-
+    
     /**
      * Prepare by the way delete import faculty if have before insert
      *
@@ -428,7 +431,7 @@ class ImportStuffService extends BaseService
         }
         return false;
     }
-
+    
     /**
      * Get all store faculties, with trashed
      *
@@ -455,5 +458,21 @@ class ImportStuffService extends BaseService
                     ->withTrashed()->get();
         }
         return $this->getAllImportFaculty();
+    }
+    
+    /**
+     * Delete import stỏe which empty detail import
+     *
+     * @return void
+     */
+    public function deleteEmptyImportStore()
+    {
+        $importStores = $this->importStoreRepo
+            ->findWhere([['created_at', '<', Carbon::now()->subDay()->format(config('define.timestamp_format'))]]);
+        foreach ($importStores as $importStore) {
+            if(count($this->detailImStoreRepo->findByField('import_store_id', $importStore->id)) == 0) {
+                $importStore->delete();
+            }
+        }
     }
 }

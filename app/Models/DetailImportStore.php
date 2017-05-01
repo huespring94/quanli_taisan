@@ -26,7 +26,7 @@ class DetailImportStore extends Model
      */
     public function importStore()
     {
-        return $this->belongsTo('App\Models\ImportStore');
+        return $this->belongsTo(ImportStore::class);
     }
     
     /**
@@ -36,7 +36,7 @@ class DetailImportStore extends Model
      */
     public function stuff()
     {
-        return $this->belongsTo('App\Models\Stuff', 'stuff_id', 'stuff_id');
+        return $this->belongsTo(Stuff::class, 'stuff_id', 'stuff_id');
     }
     
     /**
@@ -46,6 +46,6 @@ class DetailImportStore extends Model
      */
     public function storeFaculties()
     {
-        return $this->hasMany('App\Models\StoreFaculty');
+        return $this->hasMany(StoreFaculty::class);
     }
 }

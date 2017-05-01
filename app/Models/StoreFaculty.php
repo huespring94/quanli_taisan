@@ -16,7 +16,7 @@ class StoreFaculty extends Model
         'date_import',
         'quantity',
         'quantity_start',
-        'status',
+//        'status',
         'faculty_id',
         'stuff_id',
 //        'user_id',

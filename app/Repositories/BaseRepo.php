@@ -36,7 +36,9 @@ abstract class BaseRepo extends BaseRepository
     {
         $detailImport = $this->findByField($attributes, $datas);
         if (!empty($detailImport->toArray())) {
-            $this->deleteWhere($datas);
+            foreach ($detailImport as $detail) {
+                $detail->forceDelete();
+            }
         }
         return $this->create($datas);
     }

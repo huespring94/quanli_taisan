@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\User;
+use App\Services\AtrophyService;
 
 class AtrophyCommand extends Command
 {
@@ -22,13 +23,23 @@ class AtrophyCommand extends Command
     protected $description = 'Command description';
 
     /**
+     * Atrophy service
+     *
+     * @var AtrophyService
+     */
+    private $atrophyService;
+
+    /**
      * Create a new command instance.
+     *
+     * @param AtrophyService $atrophyService []
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(AtrophyService $atrophyService)
     {
         parent::__construct();
+        $this->atrophyService = $atrophyService;
     }
 
     /**
@@ -38,7 +49,6 @@ class AtrophyCommand extends Command
      */
     public function handle()
     {
-        User::where('id', 10)->delete();
-        $this->info('success ');
+        $this->atrophyService->updateStatusStuff();
     }
 }

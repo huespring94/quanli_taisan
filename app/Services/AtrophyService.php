@@ -52,11 +52,11 @@ class AtrophyService
     }
     
     /**
-     * Update status stuff
+     * Update status stuff for store
      *
      * @return void
      */
-    public function updateStatusStuff()
+    public function updateStatusStuffForStore()
     {
         $importStores = $this->importStoreRepo
             ->with(['detailImportStores', 'detailImportStores.stuff.atrophy'])
@@ -69,7 +69,31 @@ class AtrophyService
                     $rateDown = round($numYears) * $detail->stuff->atrophy->atrophy_rate;
                     $detail->status = $detail->status_start - $rateDown;
                     $detail->save();
+                    $this->storeFacultyRepo->updateStatus($detail);
+                    $this->storeRoomRepo->updateStatus($detail);
                 }
+            }
+        }
+    }
+    
+    /**
+     * Update status stuff
+     *
+     * @return void
+     */
+    public function updateStatusStuff()
+    {
+        $storeFacs = $this->storeFacultyRepo
+            ->with(['storeRooms', 'detailImportStore.stuff.atrophy'])
+            ->findWhere([['date_import', '<', Carbon::now()->subYear()->format(config('define.date_format'))]]);
+        foreach ($storeFacs as $storeFac) {
+            $lenghtDays = Carbon::now()->diffInDays(Carbon::parse($storeFac->date_import));
+            $numYears = $lenghtDays / 365;
+            if ($numYears > 0) {
+                    $rateDown = round($numYears) * $storeFac->detailImportStore->stuff->atrophy->atrophy_rate;
+                    $storeFac->status = $storeFac->status_start - $rateDown;
+                    $storeFac->save();
+                    $this->storeRoomRepo->updateStatusFaculty($storeFac);
             }
         }
     }

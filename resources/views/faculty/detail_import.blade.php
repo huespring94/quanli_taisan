@@ -117,10 +117,10 @@ Nhập tài sản cho khoa
                         <td>{{number_format($importFaculties['detail'][$key]->price_unit)}}</td>
                         <td>{{number_format($detail->quantity * $importFaculties['detail'][$key]->price_unit)}} </td>
                         <td>
-                            @if ($detail->status <= 20)
-                            <span class="badge bg-red">{{$detail->status}}%</span>
+                            @if ($importFaculties['detail'][$key]->status <= 20)
+                            <span class="badge bg-red">{{$importFaculties['detail'][$key]->status}}%</span>
                             @else
-                            <span class="badge bg-light-blue">{{$detail->status}}%</span>
+                            <span class="badge bg-light-blue">{{$importFaculties['detail'][$key]->status}}%</span>
                             @endif
                         </td>
                     </tr>

@@ -16,6 +16,7 @@ class DetailImportStore extends Model
         'quantity',
         'quantity_start',
         'price_unit',
+        'status_start',
         'status',
         'import_store_id',
         'stuff_id',

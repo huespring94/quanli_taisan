@@ -309,7 +309,6 @@ class ImportStuffService extends BaseService
             }
             $arr = [
                 'date_import' => Carbon::now()->format(config('define.date_format')),
-                'status' => $detail->status,
                 'detail_import_store_id' => $detail->id
             ];
             $data = array_merge($data, $arr);
@@ -321,7 +320,7 @@ class ImportStuffService extends BaseService
                 $quantity = abs($remain);
             }
             $data['quantity_start'] = $data['quantity'];
-            $importFaculty[$key] = $this->storeFacultyRepo->create($data);
+            $importFaculty[$key] = $this->storeFacultyRepo->deleteOrCreate($conditions, $data);
             $detail->quantity -= $data['quantity'];
             $detail->save();
             $detailImport[] = $detail;

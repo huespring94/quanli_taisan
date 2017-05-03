@@ -14,7 +14,11 @@ function myFunction() {
 }
 
 $(document).ready(function () {
-    $(".mydata").DataTable();
+    $("#mydata").DataTable();
+});
+
+$(document).ready(function () {
+    $("#mydata-add").DataTable();
 });
 
 

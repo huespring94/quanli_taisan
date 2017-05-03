@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\FacultyRepository;
 use App\Repositories\RoomRepository;
+use App\Repositories\StoreFacultyRepository;
 
 class FacultyRoomService extends BaseService
 {
@@ -11,16 +12,24 @@ class FacultyRoomService extends BaseService
     
     private $roomRepo;
     
+    private $storeFacultyRepo;
+    
     /**
      * Constructor faculty room service
      *
-     * @param FacultyRepository $facultyRepo []
-     * @param RoomRepository    $roomRepo    []
+     * @param FacultyRepository      $facultyRepo      []
+     * @param RoomRepository         $roomRepo         []
+     * @param StoreFacultyRepository $storeFacultyRepo []
      */
-    public function __construct(FacultyRepository $facultyRepo, RoomRepository $roomRepo)
-    {
+    public function __construct(
+        FacultyRepository $facultyRepo,
+        RoomRepository $roomRepo,
+        StoreFacultyRepository $storeFacultyRepo
+    ) {
+    
         $this->facultyRepo = $facultyRepo;
         $this->roomRepo = $roomRepo;
+        $this->storeFacultyRepo = $storeFacultyRepo;
     }
     
     /**
@@ -41,17 +50,5 @@ class FacultyRoomService extends BaseService
     public function getAllRoom()
     {
         return $this->roomRepo->all();
-    }
-    
-    /**
-     * Get faculty by faculty id
-     *
-     * @param any $facultyId []
-     *
-     * @return object
-     */
-    public function getFacultyById($facultyId)
-    {
-        return $this->facultyRepo->findByField('faculty_id', $facultyId)->first();
     }
 }

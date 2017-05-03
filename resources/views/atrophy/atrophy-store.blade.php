@@ -18,7 +18,7 @@ Thiết bị trong kho
                 <h3 class="box-title">Thiết bị hết hạn</h3>
             </div>
             <div class="box-body">
-                <table class="table table-bordered table-striped mydata">
+                <table id="mydata" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>Mã TB</th>
@@ -82,7 +82,7 @@ Thiết bị trong kho
                 Chi tiết</a>
             </div>
             <div class="box-body">
-                <table class="table table-bordered table-striped mydata">
+                <table id="mydata-add" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>Ngày SD</th>

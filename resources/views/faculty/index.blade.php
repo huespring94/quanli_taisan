@@ -47,7 +47,6 @@ Danh sách tài sản của các khoa
                     <th>Số lượng</th>
                     <th>Thành tiền</th>
                     <th>Tỷ lệ % CL</th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody align="center">
@@ -59,8 +58,13 @@ Danh sách tài sản của các khoa
                     <td>{{$importFac->stuff->name}}</td>
                     <td>{{$importFac->quantity}}</td>
                     <td align="right">{{number_format($importFac->quantity * $importFac->detailImportStore->price_unit)}}</td>
-                    <td>{{$importFac->status}}</td>
-                    <td></td>
+                    <td>
+                        @if ($importFac->detailImportStore->status <= 20)
+                        <span class="badge bg-red">{{$importFac->detailImportStore->status}}%</span>
+                        @else
+                        <span class="badge bg-light-blue">{{$importFac->detailImportStore->status}}%</span>
+                        @endif
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

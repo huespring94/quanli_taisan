@@ -4,7 +4,6 @@
 <script src="{{asset('/bower_components/AdminLTE/bootstrap/js/bootstrap.min.js')}}"></script>
 <!-- iCheck -->
 <script src="{{asset('/bower_components/AdminLTE/plugins/iCheck/icheck.min.js')}}"></script>
-
 <!-- SlimScroll -->
 <script src="{{asset('/bower_components/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
 <!-- FastClick -->
@@ -20,11 +19,7 @@
 <!-- Custom -->
 <script src="{{asset('/js/handle.js')}}"></script>
 <script src="{{asset('/js/custom.js')}}"></script>
-<script>
-   $(document).ready(function () {
-        $("#mydata").DataTable();
-    });
-</script>
+<script src="{{asset('/js/mess.js')}}"></script>
 @yield('js')
 </body>
 </html>

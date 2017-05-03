@@ -6,7 +6,8 @@ use Carbon\Carbon;
 use App\Repositories\ImportStoreRepository;
 use App\Repositories\DetailImportStoreRepository;
 use App\Repositories\AtrophyRepository;
-use App\Repositories\LiquidationRepository;
+//use App\Repositories\LiquidationRepository;
+use App\Services\LiquidationService;
 use App\Repositories\StoreFacultyRepository;
 use App\Repositories\StoreRoomRepository;
 
@@ -18,33 +19,43 @@ class AtrophyService
     
     private $importStoreRepo;
     
-    private $liquidationRepo;
+    private $liquidationService;
     
     private $storeFacultyRepo;
     
     private $storeRoomRepo;
+   
     /**
      * Constructor for atrophy service
      *
-     * @param DetailImportStoreRepository $detailImportStoreRepo []
-     * @param AtrophyRepository           $atrophyRepo           []
+     * @param ImportStoreRepository       $importStoreRepo    []
+     * @param DetailImportStoreRepository $detailIStoreRepo   []
+     * @param AtrophyRepository           $atrophyRepo        []
+     * @param LiquidationService          $liquidationService []
+     * @param StoreFacultyRepository      $storeFacultyRepo   []
+     * @param StoreRoomRepository         $storeRoomRepo      []
      */
     public function __construct(
         ImportStoreRepository $importStoreRepo,
-        DetailImportStoreRepository $detailIStoreRepo, 
+        DetailImportStoreRepository $detailIStoreRepo,
         AtrophyRepository $atrophyRepo,
-        LiquidationRepository $liquidationRepo,
+        LiquidationService $liquidationService,
         StoreFacultyRepository $storeFacultyRepo,
-        StoreRoomRepository $storeRoomRepo)
-    {
+        StoreRoomRepository $storeRoomRepo
+    ) {
         $this->importStoreRepo = $importStoreRepo;
-        $this->$detailIStoreRepo = $detailIStoreRepo;
+        $this->detailIStoreRepo = $detailIStoreRepo;
         $this->atrophyRepo = $atrophyRepo;
-        $this->liquidationRepo = $liquidationRepo;
+        $this->liquidationService = $liquidationService;
         $this->storeFacultyRepo = $storeFacultyRepo;
         $this->storeRoomRepo = $storeRoomRepo;
     }
     
+    /**
+     * Update status stuff
+     *
+     * @return void
+     */
     public function updateStatusStuff()
     {
         $importStores = $this->importStoreRepo
@@ -54,7 +65,6 @@ class AtrophyService
             $lenghtDays = Carbon::now()->diffInDays(Carbon::parse($importStore->date_import));
             $numYears = $lenghtDays / 365;
             if ($numYears > 0) {
-                \Log::debug('$numYears');
                 foreach ($importStore->detailImportStores as $detail) {
                     $rateDown = round($numYears) * $detail->stuff->atrophy->atrophy_rate;
                     $detail->status = $detail->status_start - $rateDown;
@@ -64,23 +74,28 @@ class AtrophyService
         }
     }
     
-    public function removeToLiquordation($detail)
-    {
-        if ($detail->status < config('constant.rate_deadline')) {
-           $detail->delete();
-           $datas = [
-                'quantity' => $detail->quantity_start,
-                'detail_import_store_id' => $detail->id,
-                'date_liquidation' => Carbon::now()->format(config('define.date_format'))
-           ];
-           $this->liquidationRepo->create($datas);
-        }
-    }
-    
-    public function updateQuantityStoreFacultyAndRoom($detail)
+    /**
+     * Update quantity store
+     *
+     * @param DetailImportStore $detail []
+     *
+     * @return void
+     */
+    public function updateQuantityStore($detail)
     {
         $this->storeFacultyRepo->update(['quantity' => 0], $detail->id);
         $this->storeFacultyRepo->deleteWhere(['detail_import_store_id' => $detail->id]);
 //        $this->storeFacultyRepo->whereHas('', $closure)
+    }
+    
+    
+    /**
+     * Get all atrophy
+     *
+     * @return array
+     */
+    public function getAllAtrophies()
+    {
+        return $this->atrophyRepo->all()->orderBy('created_at', 'desc');
     }
 }

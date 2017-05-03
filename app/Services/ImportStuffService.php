@@ -165,18 +165,6 @@ class ImportStuffService extends BaseService
     }
     
     /**
-     * Create stuff
-     *
-     * @param Request $data []
-     *
-     * @return object
-     */
-    public function createStuff($data)
-    {
-        return $this->stuffRepo->create($data);
-    }
-    
-    /**
      * Get all of stuffs
      *
      * @return array
@@ -470,7 +458,7 @@ class ImportStuffService extends BaseService
         $importStores = $this->importStoreRepo
             ->findWhere([['created_at', '<', Carbon::now()->subDay()->format(config('define.timestamp_format'))]]);
         foreach ($importStores as $importStore) {
-            if(count($this->detailImStoreRepo->findByField('import_store_id', $importStore->id)) == 0) {
+            if (count($this->detailImStoreRepo->findByField('import_store_id', $importStore->id)) == 0) {
                 $importStore->delete();
             }
         }

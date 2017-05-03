@@ -1,4 +1,4 @@
-<body class="hold-transition skin-blue layout-boxed sidebar-mini">
+<body onload="myFunction()" class="hold-transition skin-blue layout-boxed sidebar-mini">
 
     <header class="main-header">
         <!-- Logo -->
@@ -48,14 +48,15 @@
                     </li>
                     <!-- Notifications: style can be found in dropdown.less -->
                     <li class="dropdown notifications-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                         <!--class="dropdown-toggle" data-toggle="dropdown"-->
+                        <a href="{{url('admin/atrophy-store')}}">
                             <i class="fa fa-bell-o"></i>
-                            <span class="label label-warning">10</span>
+                            <span id="messages-expire" class="label label-warning"></span>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 10 notifications</li>
+<!--                        <ul class="dropdown-menu">
+                            <li class="header">Thông báo</li>
                             <li>
-                                <!-- inner menu: contains the actual data -->
+                                 inner menu: contains the actual data 
                                 <ul class="menu">
                                     <li>
                                         <a href="#">
@@ -65,7 +66,7 @@
                                 </ul>
                             </li>
                             <li class="footer"><a href="#">View all</a></li>
-                        </ul>
+                        </ul>-->
                     </li>
                     <!-- Tasks: style can be found in dropdown.less -->
                     <li class="dropdown tasks-menu">

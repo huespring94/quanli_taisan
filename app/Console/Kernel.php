@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\AtrophyCommand::class,
-        Commands\DeleteImportEmpty::class,
+        Commands\DeleteImportEmptyCommand::class,
     ];
     
     /**
@@ -27,6 +27,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('command:delete-empty-import')->monthly();
-        $schedule->command('command:atrophy')->everyMinute();
+//        $schedule->command('command:atrophy')->everyMinute();
     }
 }

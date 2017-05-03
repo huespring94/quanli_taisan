@@ -67,4 +67,14 @@ abstract class BaseRepo extends BaseRepository
     {
         \DB::table($this->model->getTable())->forceDelete();
     }
+    
+    /**
+     * Get all include soft deleted object
+     *
+     * @return void
+     */
+    public function withTrashed()
+    {
+        \DB::table($this->model->getTable())->withTrashed();
+    }
 }

@@ -14,6 +14,7 @@ class Role extends Model
     const ROLE_FACULTY = 'Quản lí CSVC khoa';
     const ROLE_ROOM = 'Quản lí CSVC phòng';
     const ROLE_ACCOUNTANT = 'Kế toán';
+    const ROLE_USER = 'Thành viên';
 
     protected $fillable = [
         'id',

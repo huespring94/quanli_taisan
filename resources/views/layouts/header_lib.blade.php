@@ -21,6 +21,8 @@
   <link rel="stylesheet" href="{{asset('/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css')}}">
   <!-- DataTables -->
   <link rel="stylesheet" href="{{asset('/bower_components/AdminLTE/plugins/datatables/dataTables.bootstrap.css')}}">
+  <!--Custom-->
+  <link rel="stylesheet" href="{{asset('/css/custom.css')}}">
   @yield('css')
 <!--  <link rel="stylesheet" href="{{asset('/bower_components/AdminLTE/plugins/datepicker/datepicker3.css')}}">
    Bootstrap Color Picker 

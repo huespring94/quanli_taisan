@@ -62,7 +62,6 @@ Nhập tài sản cho khoa
                 <div class="modal fade" id="myModal" role="dialog">
                     <div class="modal-dialog">
 
-                        Modal content
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -118,10 +117,10 @@ Nhập tài sản cho khoa
                         <td>{{number_format($importFaculties['detail'][$key]->price_unit)}}</td>
                         <td>{{number_format($detail->quantity * $importFaculties['detail'][$key]->price_unit)}} </td>
                         <td>
-                            @if ($detail->status <= 20)
-                            <span class="badge bg-red">{{$detail->status}}%</span>
+                            @if ($importFaculties['detail'][$key]->status <= 20)
+                            <span class="badge bg-red">{{$importFaculties['detail'][$key]->status}}%</span>
                             @else
-                            <span class="badge bg-light-blue">{{$detail->status}}%</span>
+                            <span class="badge bg-light-blue">{{$importFaculties['detail'][$key]->status}}%</span>
                             @endif
                         </td>
                     </tr>

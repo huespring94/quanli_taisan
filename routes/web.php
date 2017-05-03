@@ -27,6 +27,9 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('/import-faculty', 'ImportFacultyController');
     Route::post('/store-faculty', 'ImportFacultyController@getImportFacultyByFaculty');
     Route::post('/delete-import-faculty', 'ImportFacultyController@destroy');
+    Route::get('/atrophy-store', 'AtrophyController@getExpireStuffStore');
+    Route::get('/delete-atrophy-store/{id}', 'AtrophyController@destroy');
+    Route::get('/messages', 'MessageController@getAmountExpireStuff');
 });
 
 Route::group(['middleware' => 'accountant', 'prefix' => 'admin'], function () {

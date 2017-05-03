@@ -19,9 +19,11 @@ class CreateChiTietNhapKhoTable extends Migration
             $table->integer('quantity');
             $table->integer('price_unit');
             $table->integer('status');
+            $table->integer('status_start');
             $table->integer('import_store_id')->unsigned();
             $table->string('stuff_id', 100);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

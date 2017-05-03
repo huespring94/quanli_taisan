@@ -16,4 +16,20 @@ class StoreFacultyRepository extends BaseRepo
     {
         return StoreFaculty::class;
     }
+    
+    /**
+     * Update status in store faculty
+     *
+     * @param DetailImportStore $detail []
+     *
+     * @return void
+     */
+    public function updateStatus($detail)
+    {
+        $storeFaculties = $this->findByField('detail_import_store_id', $detail->id);
+        dd($storeFaculties);
+        foreach ($storeFaculties as $storeFaculty) {
+            $this->update(['status' => $detail->status], $storeFaculty->id);
+        }
+    }
 }

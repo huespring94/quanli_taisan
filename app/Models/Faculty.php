@@ -20,6 +20,6 @@ class Faculty extends Model
      */
     public function storeFaculties()
     {
-        return $this->hasMany('App\Models\StoreFaculty');
+        return $this->hasMany(StoreFaculty::class);
     }
 }

@@ -35,16 +35,6 @@
             <li><a href="../../index2.html"><i class="fa fa-circle-o"></i> {{trans('content.left_bar.s_room')}}</a></li>
           </ul>
         </li>
-        <li>
-          <a href="../mailbox/mailbox.html">
-            <i class="fa fa-envelope"></i> <span> {{trans('content.left_bar.message')}}</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-yellow">12</small>
-              <small class="label pull-right bg-green">16</small>
-              <small class="label pull-right bg-red">5</small>
-            </span>
-          </a>
-        </li>
         <li class="treeview">
           <a href="{!! url('admin/import-store/create') !!}">
             <i class="fa fa-edit"></i> <span> {{trans('content.left_bar.import')}}</span>

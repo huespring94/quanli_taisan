@@ -3,17 +3,16 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\User;
-use App\Services\AtrophyService;
+use App\Services\ImportStuffService;
 
-class AtrophyCommand extends Command
+class DeleteImportEmptyCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:atrophy';
+    protected $signature = 'command:delete-empty-import';
 
     /**
      * The console command description.
@@ -23,23 +22,21 @@ class AtrophyCommand extends Command
     protected $description = 'Command description';
 
     /**
-     * Atrophy service
+     * Import stuff service
      *
-     * @var AtrophyService
+     * @var ImportStuffService
      */
-    private $atrophyService;
-
+    private $importStuffService;
+    
     /**
      * Create a new command instance.
      *
-     * @param AtrophyService $atrophyService []
-     *
-     * @return void
+     * @param ImportStuffService $importStuffService []
      */
-    public function __construct(AtrophyService $atrophyService)
+    public function __construct(ImportStuffService $importStuffService)
     {
         parent::__construct();
-        $this->atrophyService = $atrophyService;
+        $this->importStuffService = $importStuffService;
     }
 
     /**
@@ -49,6 +46,8 @@ class AtrophyCommand extends Command
      */
     public function handle()
     {
-        $this->atrophyService->updateStatusStuff();
+        $this->importStuffService->deleteEmptyImportStore();
+        $this->info('deleted');
+        \Log::debug('deleted');
     }
 }

@@ -36,7 +36,9 @@ abstract class BaseRepo extends BaseRepository
     {
         $detailImport = $this->findByField($attributes, $datas);
         if (!empty($detailImport->toArray())) {
-            $this->deleteWhere($datas);
+            foreach ($detailImport as $detail) {
+                $detail->forceDelete();
+            }
         }
         return $this->create($datas);
     }
@@ -66,5 +68,15 @@ abstract class BaseRepo extends BaseRepository
     public function forceDelete()
     {
         \DB::table($this->model->getTable())->forceDelete();
+    }
+    
+    /**
+     * Get all include soft deleted object
+     *
+     * @return void
+     */
+    public function withTrashed()
+    {
+        \DB::table($this->model->getTable())->withTrashed();
     }
 }

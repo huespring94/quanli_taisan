@@ -23,7 +23,7 @@ class ImportStore extends Model
      */
     public function store()
     {
-        return $this->belongsTo('App\Models\Store');
+        return $this->belongsTo(Store::class);
     }
     
     /**
@@ -33,7 +33,7 @@ class ImportStore extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
     }
     
     /**
@@ -43,6 +43,6 @@ class ImportStore extends Model
      */
     public function detailImportStores()
     {
-        return $this->hasMany('App\Models\DetailImportStore');
+        return $this->hasMany(DetailImportStore::class);
     }
 }

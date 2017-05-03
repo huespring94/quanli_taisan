@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class DetailImportStore extends Model
 {
+    use SoftDeletes;
+    
     protected $table = 'detail_import_stores';
     
     protected $fillable = [
@@ -13,11 +16,19 @@ class DetailImportStore extends Model
         'quantity',
         'quantity_start',
         'price_unit',
+        'status_start',
         'status',
         'import_store_id',
         'stuff_id',
         'supplier_id'
     ];
+    
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
     
     /**
      * Get the import store that owns the detail import store.
@@ -26,7 +37,7 @@ class DetailImportStore extends Model
      */
     public function importStore()
     {
-        return $this->belongsTo('App\Models\ImportStore');
+        return $this->belongsTo(ImportStore::class);
     }
     
     /**
@@ -36,7 +47,7 @@ class DetailImportStore extends Model
      */
     public function stuff()
     {
-        return $this->belongsTo('App\Models\Stuff', 'stuff_id', 'stuff_id');
+        return $this->belongsTo(Stuff::class, 'stuff_id', 'stuff_id');
     }
     
     /**
@@ -46,6 +57,16 @@ class DetailImportStore extends Model
      */
     public function storeFaculties()
     {
-        return $this->hasMany('App\Models\StoreFaculty');
+        return $this->hasMany(StoreFaculty::class);
+    }
+    
+    /**
+     * Get the liquidation for detail import store.
+     *
+     * @return Liquidation
+     */
+    public function liquidations()
+    {
+        return $this->hasMany(Liquidation::class);
     }
 }

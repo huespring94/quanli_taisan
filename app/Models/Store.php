@@ -15,7 +15,7 @@ class Store extends Model
         'name'
     ];
     
-    /**
+     /**
      * Get the import stores for store.
      *
      * @return ImportStore

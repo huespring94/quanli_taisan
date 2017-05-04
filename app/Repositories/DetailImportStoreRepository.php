@@ -19,7 +19,7 @@ class DetailImportStoreRepository extends BaseRepo
     }
 
     /**
-     * Calculate quantity in table detail import store by stuff id
+     * Calculate quantity in table by stuff id
      *
      * @param mixed $id []
      *
@@ -27,7 +27,9 @@ class DetailImportStoreRepository extends BaseRepo
      */
     public function getQuantityByStuffId($id)
     {
-        return DB::table('detail_import_stores')->where('stuff_id', '=', $id)->sum('quantity');
+        return \DB::table($this->model->getTable())
+            ->where('stuff_id', '=', $id)
+            ->sum('quantity');
     }
     
     /**

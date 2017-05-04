@@ -2,10 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Input;
+use Session;
 use Illuminate\Http\Request;
+use App\Services\FacultyRoomService;
+use App\Services\StuffFacultyService;
+use App\Http\Requests\PostImportRoomRequest;
 
 class ImportRoomController extends Controller
 {
+    private $facultyRoomService;
+
+    private $stuffFacultyService;
+    
+    /**
+     * Constructor of faculty room service
+     *
+     * @param FacultyRoomService  $facultyRoomService  []
+     * @param StuffFacultyService $stuffFacultyService []
+     */
+    public function __construct(FacultyRoomService $facultyRoomService,
+        StuffFacultyService $stuffFacultyService)
+    {
+        $this->facultyRoomService = $facultyRoomService;
+        $this->stuffFacultyService = $stuffFacultyService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,19 +45,39 @@ class ImportRoomController extends Controller
      */
     public function create()
     {
-        return '';
+        $user = auth('web')->user();
+        $rooms = $this->facultyRoomService->getRoomByFaculty($user->faculty_id);
+        $stuffs = $this->stuffFacultyService->getStuffInStoreFacutyByFaculty($user->faculty_id);
+        return view('room.create', ['rooms' => $rooms, 'stuffs' => $stuffs]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request []
+     * @param PostImportRoomRequest $request []
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostImportRoomRequest $request)
     {
-        return $request;
+        $user = auth('web')->user();
+        $storeRooms = $this->stuffFacultyService->createImportStoreRoom($request);
+        if (empty($storeRooms)) {
+            Session::flash('msg-i-f', 'Số lượng yêu cầu vượt quá số lượng hiện có');
+            $rooms = $this->facultyRoomService->getRoomByFaculty($user->faculty_id);
+            $stuffs = $this->stuffFacultyService->getStuffInStoreFacutyByFaculty($user->faculty_id);
+            return view('room.create', ['rooms' => $rooms, 'stuffs' => $stuffs]);
+        }
+        $faculty = $this->facultyRoomService->getFacultyById($user->faculty_id);
+        $stuff = $this->importStuffService->getStuffById($request->get('stuff_id'));
+        $quantity = $request->get('quantity');
+        Session::flash('msg', 'success');
+        return view('room.detail-import', [
+            'storeRooms' => $storeRooms,
+            'faculty' => $faculty,
+            'stuff' => $stuff,
+            'quantity' => $quantity
+        ]);
     }
 
     /**
@@ -85,5 +127,16 @@ class ImportRoomController extends Controller
     public function destroy($id)
     {
         return $id;
+    }
+    
+    /**
+     * Get quantity by stuff id
+     *
+     * @return int
+     */
+    public function getQuantityByStuffId()
+    {
+        $id = Input::get('stuff_id');
+        return $this->stuffFacultyService->getQuantityByStuffId($id);
     }
 }

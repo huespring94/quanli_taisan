@@ -17,8 +17,11 @@ class StoreRoom extends Model
     protected $fillable = [
         'id',
         'date_import',
+        'stuff_id',
         'status',
         'room_id',
+        'quantity',
+        'quantity_start',
         'store_faculty_id',
         'user_id'
     ];
@@ -38,5 +41,25 @@ class StoreRoom extends Model
     public function storeFaculty()
     {
         return $this->belongsTo(StoreFaculty::class, 'store_faculty_id', 'store_faculty_id');
+    }
+    
+    /**
+     * Get the faculty that owns the store room.
+     *
+     * @return Faculty
+     */
+    public function faculty()
+    {
+        return $this->belongsTo(Faculty::class, 'faculty_id', 'faculty_id');
+    }
+    
+    /**
+     * Get the stuff that owns the store room.
+     *
+     * @return Stuff
+     */
+    public function stuff()
+    {
+        return $this->belongsTo(Stuff::class, 'stuff_id', 'stuff_id');
     }
 }

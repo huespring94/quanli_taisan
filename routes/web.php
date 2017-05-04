@@ -32,19 +32,15 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::get('/messages', 'MessageController@getAmountExpireStuff');
 });
 
-Route::group(['middleware' => 'accountant', 'prefix' => 'admin'], function () {
+Route::group(['middleware' => 'accountant', 'prefix' => 'acc'], function () {
 
 });
 
-Route::group(['middleware' => 'store', 'prefix' => 'admin'], function () {
-
+Route::group(['middleware' => 'faculty', 'prefix' => 'fac'], function () {
+    Route::resource('/store-room', 'ImportRoomController');
 });
 
-Route::group(['middleware' => 'faculty', 'prefix' => 'admin'], function () {
-
-});
-
-Route::group(['middleware' => 'room', 'prefix' => 'admin'], function () {
+Route::group(['middleware' => 'room', 'prefix' => 'roo'], function () {
 
 });
 
@@ -59,3 +55,4 @@ Route::get('downloadExcel/{type}', 'MaatwebsiteDemoController@downloadExcel');
 Route::post('importExcel', 'MaatwebsiteDemoController@importExcel');
 
 Route::get('detail-import/{id}', 'DetailImportStoreController@getQuantityByStuffId');
+Route::get('amount-stuff-faculty/{id}', 'ImportRoomController@getQuantityByStuffId');

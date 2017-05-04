@@ -15,7 +15,7 @@ class CreateKhoPhongTable extends Migration
     {
         Schema::create('store_rooms', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('store_room_id', 20)->unique()->nullable();
+            $table->string('store_room_id', 50)->unique()->nullable();
             $table->date('date_import');
             $table->integer('quantity_start')->nullable();
             $table->integer('quantity');

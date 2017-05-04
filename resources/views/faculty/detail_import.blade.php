@@ -6,7 +6,7 @@ Nhập tài sản cho khoa
 
 @section('home')
 <li>Kho khoa</li>
-<li class="active">Nhap kho khoa</li>
+<li class="active">Nhập kho khoa</li>
 @stop
 
 @section('content')

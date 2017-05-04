@@ -25,4 +25,14 @@ class Room extends Model
     {
         return $this->belongsTo(Faculty::class, 'faculty_id', 'faculty_id');
     }
+    
+    /**
+     * Get the store room that owns the room.
+     *
+     * @return array StoreRoom
+     */
+    public function storeRooms()
+    {
+        return $this->hasMany(StoreRoom::class);
+    }
 }

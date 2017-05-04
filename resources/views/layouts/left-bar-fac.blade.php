@@ -8,7 +8,7 @@
         </a>
     </li>
     <li class="treeview">
-        <a href="">
+        <a href="{!! url('fac/store-room/index') !!}">
             <i class="fa fa-edit"></i> <span>Danh sách TS</span>
         </a>
     </li>

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Repositories\StoreFacultyRepository;
 use App\Models\StoreFaculty;
 use App\Repositories\StoreRoomRepository;
+use App\Models\Room;
 
 class StuffFacultyService
 {
@@ -75,7 +76,7 @@ class StuffFacultyService
         $importRoom = $storeFaculty = [];
         $amount = 0;
         $quantity = $data['quantity'];
-        $storeFaculties = $this->storeFacultyRepo->findWhere([['faculty_id', '=', $user->faculty_id], ['quantity', '>', '0'], ['stuff_id', '=', $data['stuff_id']]]);
+        $storeFaculties = $this->storeFacultyRepo->with('detailImportStore')->findWhere([['faculty_id', '=', $user->faculty_id], ['quantity', '>', '0'], ['stuff_id', '=', $data['stuff_id']]]);
         foreach ($storeFaculties as $key => $detail) {
             $remain = $detail->quantity - $quantity;
             if ($quantity == 0) {
@@ -100,7 +101,7 @@ class StuffFacultyService
             $storeFaculty[] = $detail;
             $importRoom[$key]->store_room_id = $importRoom[$key]->id . '-' . $data['room_id'] . '-' . $detail['faculty_id'];
             $importRoom[$key]->save();
-            $amount += $detail->price_unit * $data['quantity'];
+            $amount += $detail->detailImportStore->price_unit * $data['quantity'];
         }
         return [
             'import_room' => $importRoom,
@@ -131,5 +132,30 @@ class StuffFacultyService
                 $import->forceDelete();
             }
         }
+    }
+    
+    /**
+     * Get stuff by room id
+     *
+     * @param any $roomId []
+     *
+     * @return array
+     */
+    public function getStuffByRoom($roomId)
+    {
+        return $this->storeRoomRepo->findByField('room_id', $roomId);
+    }
+    
+    /**
+     * Get stuff by room id
+     *
+     * @param any $roomId []
+     *
+     * @return array
+     */
+    public function getStuffAllRoom()
+    {
+        $user = auth()->user();
+        return Room::with('storeRooms')->where('faculty_id', '=', $user->faculty_id)->get();
     }
 }

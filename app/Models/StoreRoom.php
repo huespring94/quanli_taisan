@@ -62,4 +62,14 @@ class StoreRoom extends Model
     {
         return $this->belongsTo(Stuff::class, 'stuff_id', 'stuff_id');
     }
+    
+    /**
+     * Get the room that owns the store room.
+     *
+     * @return Room
+     */
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
 }

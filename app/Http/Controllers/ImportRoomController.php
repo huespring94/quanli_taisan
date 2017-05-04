@@ -8,12 +8,15 @@ use Illuminate\Http\Request;
 use App\Services\FacultyRoomService;
 use App\Services\StuffFacultyService;
 use App\Http\Requests\PostImportRoomRequest;
+use App\Services\ImportStuffService;
 
 class ImportRoomController extends Controller
 {
     private $facultyRoomService;
 
     private $stuffFacultyService;
+    
+    private $importStuffService;
     
     /**
      * Constructor of faculty room service
@@ -22,10 +25,11 @@ class ImportRoomController extends Controller
      * @param StuffFacultyService $stuffFacultyService []
      */
     public function __construct(FacultyRoomService $facultyRoomService,
-        StuffFacultyService $stuffFacultyService)
+        StuffFacultyService $stuffFacultyService, ImportStuffService $importStuffService)
     {
         $this->facultyRoomService = $facultyRoomService;
         $this->stuffFacultyService = $stuffFacultyService;
+        $this->importStuffService = $importStuffService;
     }
 
     /**
@@ -35,7 +39,9 @@ class ImportRoomController extends Controller
      */
     public function index()
     {
-        return '';
+        $rooms = $this->stuffFacultyService->getStuffAllRoom();
+        dd($rooms);
+        return view('room.index', ['rooms' => $rooms]);
     }
 
     /**
@@ -68,13 +74,13 @@ class ImportRoomController extends Controller
             $stuffs = $this->stuffFacultyService->getStuffInStoreFacutyByFaculty($user->faculty_id);
             return view('room.create', ['rooms' => $rooms, 'stuffs' => $stuffs]);
         }
-        $faculty = $this->facultyRoomService->getFacultyById($user->faculty_id);
+        $room = $this->facultyRoomService->getRoomById($request->get('room_id'));
         $stuff = $this->importStuffService->getStuffById($request->get('stuff_id'));
         $quantity = $request->get('quantity');
         Session::flash('msg', 'success');
         return view('room.detail-import', [
             'storeRooms' => $storeRooms,
-            'faculty' => $faculty,
+            'room' => $room,
             'stuff' => $stuff,
             'quantity' => $quantity
         ]);
@@ -89,7 +95,8 @@ class ImportRoomController extends Controller
      */
     public function show($id)
     {
-        return $id;
+        $storeRooms = $this->stuffFacultyService->getStuffByRoom($id);
+        return view('room.index', ['storeRooms' => $storeRooms]);
     }
 
     /**

@@ -15,10 +15,11 @@ class CreateYeuCauTable extends Migration
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('store_room_id', 50);
             $table->integer('quantity');
             $table->string('kind_request', 50);
-            $table->integer('status');
-            $table->string('note', 1000);
+            $table->integer('status')->nullable();
+            $table->string('note', 1000)->nullable();
             $table->timestamps();
         });
     }

@@ -43,8 +43,8 @@ Nhập tài sản cho phòng
                         <th>Mã tài sản</th>
                         <th>Mã phòng</th>
                         <th>Phòng</th>
-                        <th>Loại tài sản</th>
                         <th>Tài sản</th>
+                        <th>Thông số</th>
                         <th>Số lượng</th>
                         <th></th>
                     </tr>
@@ -54,8 +54,8 @@ Nhập tài sản cho phòng
                         <td>{{$stuff->stuff_id}}</td>
                         <td>{{$room->room_id}}</td>
                         <td>{{$room->name}}</td>
-                        <td>{{$stuff->kindStuff->name}}</td>
                         <td>{{$stuff->name}}</td>
+                        <td>{{$stuff->supplier->name}}</td>
                         <td>{{$quantity}}</td>
                         <td>
                             <a id="detail-import-delete" class="btn bg-red pull-right" data-toggle="modal" data-target="#myModal">

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\StoreFaculty;
+use DB;
 
 class StoreFacultyRepository extends BaseRepo
 {
@@ -46,5 +47,43 @@ class StoreFacultyRepository extends BaseRepo
         return \DB::table($this->model->getTable())
             ->where([['stuff_id', '=', $stuffId], ['faculty_id', '=', $facultyId]])
             ->sum('quantity');
+    }
+    
+    /**
+     * Get store faculty by year and faculty group by stuff
+     *
+     * @param any $facultyId []
+     * @param int $year      []
+     *
+     * @return query
+     */
+    public function getStoreFacultyByYear($facultyId, $year)
+    {
+        return StoreFaculty::with(['stuff.supplier', 'stuff.kindStuff', 'faculty', 'detailImportStore'])
+            ->where('faculty_id', '=', $facultyId)
+            ->where('date_import', '>=', $year . '-01-01')
+            ->where('date_import', '<=', $year . '-12-31')
+            ->select('stuff_id', DB::raw('sum(quantity) as quantity, sum(quantity_start) as quantity_start'))
+            ->groupBy('stuff_id');
+    }
+    
+    /**
+     * Get detail store faculty by year and faculty group by stuff
+     *
+     * @param any $facultyId []
+     * @param int $year      []
+     * @param any $stuffId   []
+     *
+     * @return mixed
+     */
+    public function getStoreFacultyByYearDetail($facultyId, $year, $stuffId)
+    {
+        return StoreFaculty::with(['storeRooms', 'stuff.supplier', 'stuff.kindStuff', 'faculty', 'detailImportStore'])
+            ->where('faculty_id', '=', $facultyId)
+            ->where('stuff_id', '=', $stuffId)
+            ->where('date_import', '>=', $year . '-01-01')
+            ->where('date_import', '<=', $year . '-12-31')
+            ->withTrashed()
+            ->get();
     }
 }

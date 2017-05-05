@@ -70,6 +70,7 @@ Nhập chi tiết kho hàng
                         <th>Đơn giá</th>
                         <th>Thành tiền</th>
                         <th>Tên tài sản</th>
+                        <th>Thông số</th>
                         <th>Tỷ lệ còn lại</th>
                         <th></th>
                     </tr>
@@ -83,6 +84,7 @@ Nhập chi tiết kho hàng
                         <td>{{number_format($detail->price_unit)}}</td>
                         <td>{{number_format($detail->quantity * $detail->price_unit)}} </td>
                         <td>{{$detail->stuff->name}}</td>
+                        <td>{{$detail->stuff->supplier->name}}</td>
                         <td><span class="badge bg-light-blue">{{$detail->status}}%</span></td>
                         <td>
                             <a id="detail-import-delete" class="btn bg-red pull-right" data-toggle="modal" data-target="#myModal">

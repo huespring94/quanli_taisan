@@ -20,7 +20,7 @@ class RoomSeeder extends Seeder
             {
                 DB::table('rooms')->insert([
                     'name' => $faker->sentence($nbWords = 1),
-                    'room_id' => $faker->unique()->text($maxNbChars = 10),
+                    'room_id' => $faker->unique()->text($maxNbChars = 5),
                     'faculty_id' => $facultyId
                 ]);
             }

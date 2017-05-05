@@ -41,8 +41,8 @@ Nhập tài sản cho khoa
                         <th>Mã tài sản</th>
                         <th>Mã khoa</th>
                         <th>Khoa</th>
-                        <th>Loại tài sản</th>
                         <th>Tài sản</th>
+                        <th>Thông số</th>
                         <th>Số lượng</th>
                         <th></th>
                     </tr>
@@ -52,8 +52,8 @@ Nhập tài sản cho khoa
                         <td>{{$stuff->stuff_id}}</td>
                         <td>{{$faculty->faculty_id}}</td>
                         <td>{{$faculty->name}}</td>
-                        <td>{{$stuff->kindStuff->name}}</td>
                         <td>{{$stuff->name}}</td>
+                        <td>{{$stuff->supplier->name}}</td>
                         <td>{{$quantity}}</td>
                         <td>
                             <a id="detail-import-delete" class="btn bg-red pull-right" data-toggle="modal" data-target="#myModal">

@@ -144,7 +144,7 @@ class ImportStuffService extends BaseService
             'import_store_id' => $data['import_store_id']
         ];
         $this->detailImStoreRepo->deleteOrCreate($conditions, $data);
-        return $this->detailImStoreRepo->with(['stuff', 'stuff.supplier'])->findByField('import_store_id', $data['import_store_id']);
+        return $this->detailImStoreRepo->with(['stuff.supplier'])->findByField('import_store_id', $data['import_store_id']);
     }
     
     /**
@@ -161,7 +161,7 @@ class ImportStuffService extends BaseService
         $data['quantity_start'] = $data['quantity'];
         $data['status_start'] = $data['status'];
         $this->detailImStoreRepo->update($data, $id);
-        return $this->detailImStoreRepo->with(['stuff'])->findByField('import_store_id', $data['import_store_id']);
+        return $this->detailImStoreRepo->with(['stuff.supplier'])->findByField('import_store_id', $data['import_store_id']);
     }
     
     /**
@@ -263,7 +263,7 @@ class ImportStuffService extends BaseService
      */
     public function getDetailStoreVsStuffNotZero()
     {
-        return $this->detailImStoreRepo->with('stuff')->findWhere([['quantity', '>', '0']]);
+        return $this->detailImStoreRepo->with('stuff.supplier')->findWhere([['quantity', '>', '0']]);
     }
     
     /**
@@ -301,7 +301,7 @@ class ImportStuffService extends BaseService
         $importFaculty = $detailImport = [];
         $amount = 0;
         $quantity = $data['quantity'];
-        $details = $this->detailImStoreRepo->with('importStore')->findWhere([['quantity', '>', '0'], ['stuff_id', '=', $data['stuff_id']]]);
+        $details = $this->detailImStoreRepo->with(['importStore', 'stuff.supplier'])->findWhere([['quantity', '>', '0'], ['stuff_id', '=', $data['stuff_id']]]);
         foreach ($details as $key => $detail) {
             $remain = $detail->quantity - $quantity;
             if ($quantity == 0) {
@@ -324,7 +324,7 @@ class ImportStuffService extends BaseService
             $detail->quantity -= $data['quantity'];
             $detail->save();
             $detailImport[] = $detail;
-            $importFaculty[$key]->store_faculty_id = $importFaculty[$key]->id . ' - ' . $data['faculty_id'];
+            $importFaculty[$key]->store_faculty_id = $importFaculty[$key]->id . '-' . $data['faculty_id'];
             $importFaculty[$key]->save();
             $amount += $detail->price_unit * $data['quantity'];
         }
@@ -426,7 +426,7 @@ class ImportStuffService extends BaseService
      */
     public function getAllImportFaculty()
     {
-        return StoreFaculty::with(['stuff', 'stuff.kindStuff', 'faculty', 'detailImportStore'])
+        return StoreFaculty::with(['stuff.supplier', 'stuff.kindStuff', 'faculty', 'detailImportStore'])
             ->withTrashed()->get();
     }
     
@@ -440,7 +440,7 @@ class ImportStuffService extends BaseService
     public function getImportFacultyByFaculty($id)
     {
         if ($id != null) {
-            return StoreFaculty::with(['stuff', 'stuff.kindStuff', 'faculty', 'detailImportStore'])
+            return StoreFaculty::with(['stuff.supplier', 'stuff.kindStuff', 'faculty', 'detailImportStore'])
                     ->where('faculty_id', '=', $id)
                     ->withTrashed()->get();
         }

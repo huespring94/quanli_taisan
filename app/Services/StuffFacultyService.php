@@ -44,7 +44,7 @@ class StuffFacultyService
      */
     public function getStuffInStoreFacutyByFaculty($facultyId)
     {
-        return StoreFaculty::with('stuff')->where('faculty_id', $facultyId)->select('stuff_id')
+        return StoreFaculty::with('stuff.supplier')->where('faculty_id', $facultyId)->select('stuff_id')
             ->distinct()->get();
     }
     
@@ -192,7 +192,7 @@ class StuffFacultyService
     {
         $user = auth()->user();
         return $this->storeFacultyRepo
-            ->with(['stuff', 'detailImportStore'])
+            ->with(['stuff.supplier', 'detailImportStore'])
             ->findByField('faculty_id', $user->faculty_id);
     }
     
@@ -206,7 +206,7 @@ class StuffFacultyService
     public function getStoreFacultyByStoreFaculty($id)
     {
         return $this->storeFacultyRepo
-            ->with(['stuff', 'detailImportStore'])
+            ->with(['stuff.supplier', 'detailImportStore'])
             ->findByField('store_faculty_id', $id)->first();
     }
 }

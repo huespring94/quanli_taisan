@@ -1,12 +1,12 @@
 @extends('layouts.template_admin')
 
 @section('title_content')
-Nhập tài sản cho khoa
+Nhập tài sản cho phòng
 @stop
 
 @section('home')
 <li>Kho khoa</li>
-<li class="active">Nhập kho khoa</li>
+<li class="active">Nhâp kho phòng</li>
 @stop
 
 @section('content')
@@ -23,24 +23,26 @@ Nhập tài sản cho khoa
         <div class="box-header">
             <h3 class="box-title">Thông tin nhập</h3>
         </div>
-        
+
         <div class="box-body">
             <div class="form-group">
                 <label class="col-sm-4 control-label pull-left">
-                    <i>Ngày nhập</i> {{$importFaculties['import_faculty'][0]->date_import}}
+                    <i>Ngày nhập</i> {{$storeRooms['import_room'][0]->date_import}}
                 </label>
-                    <div class="col-sm-2 pull-right">
-                        <a type="button" href="{{route('import-faculty.create')}}" class="btn bg-orange margin pull-right">
-                            <i class="fa fa-plus-circle"></i>
-                            Thêm mới</a>
-                    </div>
-                </div>
+
+                <a type="button" href="{{route('store-room.create')}}" class="btn bg-orange margin pull-right">
+                    <i class="fa fa-plus-circle"></i>
+                    Thêm mới</a>
+                <a type="button" href="{{route('store-room.show', [$room->room_id])}}" class="btn bg-olive margin pull-right">
+                    <i class="fa fa-list"></i>
+                    Danh sách tài sản phòng</a>
+            </div>
             <table id="example2" class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>Mã tài sản</th>
-                        <th>Mã khoa</th>
-                        <th>Khoa</th>
+                        <th>Mã phòng</th>
+                        <th>Phòng</th>
                         <th>Loại tài sản</th>
                         <th>Tài sản</th>
                         <th>Số lượng</th>
@@ -50,8 +52,8 @@ Nhập tài sản cho khoa
                 <tbody>
                     <tr>
                         <td>{{$stuff->stuff_id}}</td>
-                        <td>{{$faculty->faculty_id}}</td>
-                        <td>{{$faculty->name}}</td>
+                        <td>{{$room->room_id}}</td>
+                        <td>{{$room->name}}</td>
                         <td>{{$stuff->kindStuff->name}}</td>
                         <td>{{$stuff->name}}</td>
                         <td>{{$quantity}}</td>
@@ -71,11 +73,11 @@ Nhập tài sản cho khoa
                                 <h5>Bạn chắc chắn muốn xóa?</h5>
                             </div>
                             <div class="modal-footer">
-                                <form method="POST" action="{{url('admin/delete-import-faculty')}}">
+                                <form method="POST" action="{{url('fac/store-room-delete')}}">
                                     {{ csrf_field() }}
                                     <input name='stuff_id' value="{{$stuff->stuff_id}}" hidden>
-                                    <input name='faculty_id' value="{{$faculty->faculty_id}}" hidden>
-                                    <input name='date_import' value="{{$importFaculties['import_faculty'][0]->date_import}}" hidden>
+                                    <input name='faculty_id' value="{{$room->room_id}}" hidden>
+                                    <input name='date_import' value="{{$storeRooms['import_room'][0]->date_import}}" hidden>
                                     <button type="submit" class="btn btn-default">OK</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 </form>
@@ -92,7 +94,7 @@ Nhập tài sản cho khoa
 
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">Chi tiết nhập kho</h3>
+            <h3 class="box-title">Chi tiết nhập phòng <b>{{$room->name}}</b> </h3>
         </div>
         <div class="box-body">
             <table id="example2" class="table table-bordered table-hover">
@@ -108,19 +110,19 @@ Nhập tài sản cho khoa
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($importFaculties['import_faculty'] as $key => $detail)
+                    @foreach($storeRooms['import_room'] as $key => $detail)
                     <tr>
                         <td>{{$key + 1}}</td>
-                        <td>{{$detail->store_faculty_id}}</td>
+                        <td>{{$detail->store_room_id}}</td>
                         <td>{{$detail->date_import}}</td>
                         <td>{{$detail->quantity}}</td>
-                        <td>{{number_format($importFaculties['detail'][$key]->price_unit)}}</td>
-                        <td>{{number_format($detail->quantity * $importFaculties['detail'][$key]->price_unit)}} </td>
+                        <td>{{number_format($storeRooms['detail'][$key]->detailImportStore->price_unit)}}</td>
+                        <td>{{number_format($detail->quantity * $storeRooms['detail'][$key]->detailImportStore->price_unit)}} </td>
                         <td>
-                            @if ($importFaculties['detail'][$key]->status <= 20)
-                            <span class="badge bg-red">{{$importFaculties['detail'][$key]->status}}%</span>
+                            @if ($storeRooms['detail'][$key]->detailImportStore->status <= 20)
+                            <span class="badge bg-red">{{$storeRooms['detail'][$key]->detailImportStore->status}}%</span>
                             @else
-                            <span class="badge bg-light-blue">{{$importFaculties['detail'][$key]->status}}%</span>
+                            <span class="badge bg-light-blue">{{$storeRooms['detail'][$key]->detailImportStore->status}}%</span>
                             @endif
                         </td>
                     </tr>
@@ -129,7 +131,7 @@ Nhập tài sản cho khoa
                 <tfoot>
                     <tr>
                         <th colspan="5">Tổng tiền</th>
-                        <th colspan="2">{{number_format($importFaculties['amount'])}}</th>
+                        <th colspan="2">{{number_format($storeRooms['amount'])}}</th>
                     </tr>
                 </tfoot>
             </table>
@@ -138,3 +140,4 @@ Nhập tài sản cho khoa
 </div>
 
 @stop
+

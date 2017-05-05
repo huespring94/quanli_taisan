@@ -32,4 +32,19 @@ class StoreFacultyRepository extends BaseRepo
             $this->update(['status' => $detail->status], $storeFaculty->id);
         }
     }
+    
+    /**
+     * Calculate quantity in table by stuff id
+     *
+     * @param any $stuffId   []
+     * @param any $facultyId []
+     *
+     * @return int
+     */
+    public function getQuantityByFacultyStuffId($stuffId, $facultyId)
+    {
+        return \DB::table($this->model->getTable())
+            ->where([['stuff_id', '=', $stuffId], ['faculty_id', '=', $facultyId]])
+            ->sum('quantity');
+    }
 }

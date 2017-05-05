@@ -13,7 +13,7 @@ class PostImportRoomRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class PostImportRoomRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'room_id' => 'required|exists:rooms,room_id',
+            'quantity' => 'required|integer',
+            'stuff_id' => 'required|exists:store_faculties,stuff_id',
         ];
     }
 }

@@ -1,15 +1,20 @@
 <ul class="sidebar-menu">
     <li class="header">MAIN NAVIGATION</li>
     <li class="treeview">
-        <a href="#">
+        <a href="{!! url('fac/store-room/create') !!}">
             <i class="fa fa-dashboard"></i> <span>Nhập TS</span>
             <span class="pull-right-container">
             </span>
         </a>
     </li>
     <li class="treeview">
-        <a href="{!! url('admin/import-store/create') !!}">
-            <i class="fa fa-edit"></i> <span>Danh sách TS</span>
+        <a href="{!! url('fac/store-faculty-list') !!}">
+            <i class="fa fa-edit"></i> <span>Danh sách TS khoa</span>
+        </a>
+    </li>
+    <li class="treeview">
+        <a href="{!! url('fac/store-room-list') !!}">
+            <i class="fa fa-edit"></i> <span>Danh sách TS phòng</span>
         </a>
     </li>
     <li>

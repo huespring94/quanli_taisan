@@ -22,4 +22,14 @@ class Faculty extends Model
     {
         return $this->hasMany(StoreFaculty::class);
     }
+    
+    /**
+     * Get the room that chilren the faculty.
+     *
+     * @return array StoreRoom
+     */
+    public function rooms()
+    {
+        return $this->hasMany(Room::class, 'faculty_id', 'faculty_id');
+    }
 }

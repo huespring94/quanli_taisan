@@ -18,6 +18,7 @@
 <script src="{{asset('/bower_components/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
 <!-- Custom -->
 <script src="{{asset('/js/handle.js')}}"></script>
+<script src="{{asset('/js/handle-fac.js')}}"></script>
 <script src="{{asset('/js/custom.js')}}"></script>
 <script src="{{asset('/js/mess.js')}}"></script>
 @yield('js')

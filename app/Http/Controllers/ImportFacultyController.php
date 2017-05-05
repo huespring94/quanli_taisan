@@ -7,6 +7,7 @@ use App\Services\ImportStuffService;
 use App\Services\FacultyRoomService;
 use App\Http\Requests\PostImportFacultyRequest;
 use Session;
+use App\Services\StuffFacultyService;
 
 class ImportFacultyController extends Controller
 {
@@ -14,20 +15,23 @@ class ImportFacultyController extends Controller
     
     private $facultyRoomService;
 
-
+    private $stuffFacultyService;
+    
     /**
      * Constructor of import faculty store controller
      *
-     * @param ImportStuffService $importStuffService []
-     * @param FacultyRoomService $facultyRoomService []
+     * @param ImportStuffService  $importStuffService  []
+     * @param FacultyRoomService  $facultyRoomService  []
+     * @param StuffFacultyService $stuffFacultyService []
      */
     public function __construct(
         ImportStuffService $importStuffService,
-        FacultyRoomService $facultyRoomService
+        FacultyRoomService $facultyRoomService,
+        StuffFacultyService $stuffFacultyService
     ) {
-    
         $this->importStuffService = $importStuffService;
         $this->facultyRoomService = $facultyRoomService;
+        $this->stuffFacultyService = $stuffFacultyService;
     }
 
     /**
@@ -151,5 +155,16 @@ class ImportFacultyController extends Controller
         $importFacs = $this->importStuffService->getImportFacultyByFaculty($request->all()['faculty_id']);
         $facultyId = $request->all()['faculty_id'];
         return view('faculty.index', ['importFacs' => $importFacs, 'faculties' => $faculties, 'facultyId' => $facultyId]);
+    }
+    
+    /**
+     * Get import faculty by faculty id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getImportFacultyByOwnFaculty()
+    {
+        $importFacs = $this->stuffFacultyService->getImportFacultyByFaculty();
+        return view('faculty.index-faculty', ['importFacs' => $importFacs]);
     }
 }

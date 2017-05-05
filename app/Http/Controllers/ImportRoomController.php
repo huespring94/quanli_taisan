@@ -93,6 +93,21 @@ class ImportRoomController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @param any $id []
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $rooms = $this->facultyRoomService->getRoomByFaculty(auth()->user()->faculty_id);
+        $storeRooms = $this->stuffFacultyService->getImportRoomByRoom($id);
+        $roomId = $id;
+        return view('room.index', ['rooms' => $rooms, 'storeRooms' => $storeRooms, 'roomId' => $roomId]);
+    }
+    
+    /**
+     * Update the specified resource in storage.
+     *
      * @param \Illuminate\Http\Request $request []
      * @param int                      $id      []
      *
@@ -106,13 +121,13 @@ class ImportRoomController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id []
+     * @param Request $request []
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        return $id;
+        $this->stuffFacultyService->prepareCreateImportRoom($request->all());
     }
     
     /**

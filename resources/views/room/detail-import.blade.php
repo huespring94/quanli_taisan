@@ -73,7 +73,7 @@ Nhập tài sản cho phòng
                                 <h5>Bạn chắc chắn muốn xóa?</h5>
                             </div>
                             <div class="modal-footer">
-                                <form method="POST" action="">
+                                <form method="POST" action="{{url('fac/store-room-delete')}}">
                                     {{ csrf_field() }}
                                     <input name='stuff_id' value="{{$stuff->stuff_id}}" hidden>
                                     <input name='faculty_id' value="{{$room->room_id}}" hidden>

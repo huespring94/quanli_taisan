@@ -11,7 +11,7 @@ Danh sách tài sản phòng
 
 @section('content')
 <div class="box">
-    <form class="form-horizontal" role="form" method="POST" action="{{url('fac/store-room')}}">
+    <form class="form-horizontal" role="form" method="POST" action="{{url('fac/store-room-fac')}}">
         {{ csrf_field() }}
         <div class="box-header">
             <div class="form-group">

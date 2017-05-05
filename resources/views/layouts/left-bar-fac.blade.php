@@ -8,8 +8,13 @@
         </a>
     </li>
     <li class="treeview">
-        <a href="{!! url('fac/store-room/index') !!}">
-            <i class="fa fa-edit"></i> <span>Danh sách TS</span>
+        <a href="{!! url('fac/store-faculty-list') !!}">
+            <i class="fa fa-edit"></i> <span>Danh sách TS khoa</span>
+        </a>
+    </li>
+    <li class="treeview">
+        <a href="{!! url('fac/store-room-list') !!}">
+            <i class="fa fa-edit"></i> <span>Danh sách TS phòng</span>
         </a>
     </li>
     <li>

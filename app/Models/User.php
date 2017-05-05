@@ -42,13 +42,23 @@ class User extends Authenticatable
     protected $dates = ['deleted_at'];
     
     /**
-     * Lay phan quyen theo nguoi dung
+     * Get role that own user
      *
      * @return object
      */
     public function role()
     {
-        return $this->belongsTo('App\Models\Role');
+        return $this->belongsTo(Role::class);
+    }
+    
+    /**
+     * Get faculty that own user
+     *
+     * @return object
+     */
+    public function faculty()
+    {
+        return $this->belongsTo(Faculty::class, 'faculty_id', 'faculty_id');
     }
     
     /**

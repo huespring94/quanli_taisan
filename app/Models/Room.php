@@ -33,6 +33,6 @@ class Room extends Model
      */
     public function storeRooms()
     {
-        return $this->hasMany(StoreRoom::class);
+        return $this->hasMany(StoreRoom::class, 'room_id', 'room_id');
     }
 }

@@ -7,6 +7,7 @@ use App\Repositories\StoreFacultyRepository;
 use App\Models\StoreFaculty;
 use App\Repositories\StoreRoomRepository;
 use App\Models\Room;
+use App\Repositories\RoomRepository;
 
 class StuffFacultyService
 {
@@ -15,22 +16,29 @@ class StuffFacultyService
     
     private $storeRoomRepo;
     
+    private $roomRepo;
+
     /**
      * Constructor of stuff faculty service
      *
-     * @param StoreFacultyRepository $storeFacRepo []
+     * @param StoreFacultyRepository $storeFacRepo  []
+     * @param StoreRoomRepository    $storeRoomRepo []
+     * @param RoomRepository         $roomRepo      []
      */
-    public function __construct(StoreFacultyRepository $storeFacRepo,
-        StoreRoomRepository $storeRoomRepo)
-    {
+    public function __construct(
+        StoreFacultyRepository $storeFacRepo,
+        StoreRoomRepository $storeRoomRepo,
+        RoomRepository $roomRepo
+    ) {
         $this->storeFacultyRepo = $storeFacRepo;
         $this->storeRoomRepo = $storeRoomRepo;
+        $this->roomRepo = $roomRepo;
     }
 
     /**
      * Get stuff in store faculty by id faculty
      *
-     * @param any $facultyId
+     * @param any $facultyId []
      *
      * @return array
      */
@@ -149,13 +157,56 @@ class StuffFacultyService
     /**
      * Get stuff by room id
      *
-     * @param any $roomId []
-     *
      * @return array
      */
     public function getStuffAllRoom()
     {
         $user = auth()->user();
-        return Room::with('storeRooms')->where('faculty_id', '=', $user->faculty_id)->get();
+        return $this->storeRoomRepo->with(['room', 'storeFaculty.detailImportStore'])->whereHas('storeFaculty', function ($has) use ($user) {
+            $has->where('faculty_id', '=', $user->faculty_id);
+        })->all();
+    }
+    
+    /**
+     * Get import room by room id
+     *
+     * @param any $roomId []
+     *
+     * @return array
+     */
+    public function getImportRoomByRoom($roomId)
+    {
+        if ($roomId != null) {
+            return $this->storeRoomRepo->with(['room', 'storeFaculty.detailImportStore'])
+                ->findByField('room_id', $roomId);
+        }
+        return $this->getStuffAllRoom();
+    }
+    
+    /**
+     * Get import room by room id
+     *
+     * @return array
+     */
+    public function getImportFacultyByFaculty()
+    {
+        $user = auth()->user();
+        return $this->storeFacultyRepo
+            ->with(['stuff', 'detailImportStore'])
+            ->findByField('faculty_id', $user->faculty_id);
+    }
+    
+    /**
+     * Get import room by room id
+     *
+     * @param any $id []
+     *
+     * @return array
+     */
+    public function getStoreFacultyByStoreFaculty($id)
+    {
+        return $this->storeFacultyRepo
+            ->with(['stuff', 'detailImportStore'])
+            ->findByField('store_faculty_id', $id)->first();
     }
 }

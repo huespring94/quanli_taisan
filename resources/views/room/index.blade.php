@@ -1,7 +1,7 @@
 @extends('layouts.template_admin')
 
 @section('title_content')
-Nhập tài sản cho phòng
+Danh sách tài sản phòng
 @stop
 
 @section('home')
@@ -11,7 +11,7 @@ Nhập tài sản cho phòng
 
 @section('content')
 <div class="box">
-    <form class="form-horizontal" role="form" method="POST" action="">
+    <form class="form-horizontal" role="form" method="POST" action="{{url('fac/store-room')}}">
         {{ csrf_field() }}
         <div class="box-header">
             <div class="form-group">
@@ -41,6 +41,7 @@ Nhập tài sản cho phòng
                 <tr>
                     <th>Mã TB</th>
                     <th>Ngày SD</th>
+                    <th>Phòng</th>
                     <th>Tên tài sản</th>
                     <th>Số lượng</th>
                     <th>Thành tiền</th>
@@ -48,26 +49,22 @@ Nhập tài sản cho phòng
                 </tr>
             </thead>
             <tbody align="center">
-                @foreach ($rooms as $room)
-                <tr>
-                    <td>PHÒNG {{$room->name}}</td>
-                </tr>
-                @foreach ($room->storeRooms as $detail)
+                @foreach ($storeRooms as $detail)
                 <tr>
                     <td>{{$detail->store_room_id}}</td>
                     <td>{{$detail->date_import}}</td>
+                    <td>{{$detail->room->name}}</td>
                     <td>{{$detail->stuff->name}}</td>
                     <td>{{$detail->quantity}}</td>
                     <td align="right">{{number_format($detail->quantity * $detail->storeFaculty->detailImportStore->price_unit)}}</td>
                     <td>
-                        @if ($storeRoom->storeFaculty->detailImportStore->status <= 20)
+                        @if ($detail->storeFaculty->detailImportStore->status <= 20)
                         <span class="badge bg-red">{{$detail->storeFaculty->detailImportStore->status}}%</span>
                         @else
                         <span class="badge bg-light-blue">{{$detail->storeFaculty->detailImportStore->status}}%</span>
                         @endif
                     </td>
                 </tr>
-                @endforeach
                 @endforeach
             </tbody>
         </table>

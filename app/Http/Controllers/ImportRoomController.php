@@ -23,10 +23,14 @@ class ImportRoomController extends Controller
      *
      * @param FacultyRoomService  $facultyRoomService  []
      * @param StuffFacultyService $stuffFacultyService []
+     * @param ImportStuffService  $importStuffService  []
      */
-    public function __construct(FacultyRoomService $facultyRoomService,
-        StuffFacultyService $stuffFacultyService, ImportStuffService $importStuffService)
-    {
+    public function __construct(
+        FacultyRoomService $facultyRoomService,
+        StuffFacultyService $stuffFacultyService,
+        ImportStuffService $importStuffService
+    ) {
+    
         $this->facultyRoomService = $facultyRoomService;
         $this->stuffFacultyService = $stuffFacultyService;
         $this->importStuffService = $importStuffService;
@@ -39,9 +43,9 @@ class ImportRoomController extends Controller
      */
     public function index()
     {
-        $rooms = $this->stuffFacultyService->getStuffAllRoom();
-        dd($rooms);
-        return view('room.index', ['rooms' => $rooms]);
+        $rooms = $this->facultyRoomService->getRoomByFaculty(auth()->user()->faculty_id);
+        $storeRooms = $this->stuffFacultyService->getStuffAllRoom();
+        return view('room.index', ['rooms' => $rooms, 'storeRooms' => $storeRooms]);
     }
 
     /**
@@ -87,31 +91,6 @@ class ImportRoomController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param int $id []
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $storeRooms = $this->stuffFacultyService->getStuffByRoom($id);
-        return view('room.index', ['storeRooms' => $storeRooms]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id []
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        return $id;
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request []
@@ -145,5 +124,20 @@ class ImportRoomController extends Controller
     {
         $id = Input::get('stuff_id');
         return $this->stuffFacultyService->getQuantityByStuffId($id);
+    }
+    
+    /**
+     * Get quantity by stuff id
+     *
+     * @param Request $request []
+     *
+     * @return int
+     */
+    public function getImportRoomByFaculty(Request $request)
+    {
+        $rooms = $this->facultyRoomService->getRoomByFaculty(auth()->user()->faculty_id);
+        $storeRooms = $this->stuffFacultyService->getImportRoomByRoom($request->get('room_id'));
+        $roomId = $request->get('room_id');
+        return view('room.index', ['rooms' => $rooms, 'storeRooms' => $storeRooms, 'roomId' => $roomId]);
     }
 }

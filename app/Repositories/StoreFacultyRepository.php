@@ -36,7 +36,8 @@ class StoreFacultyRepository extends BaseRepo
     /**
      * Calculate quantity in table by stuff id
      *
-     * @param mixed $id []
+     * @param any $stuffId   []
+     * @param any $facultyId []
      *
      * @return int
      */

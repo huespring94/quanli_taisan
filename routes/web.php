@@ -38,6 +38,10 @@ Route::group(['middleware' => 'accountant', 'prefix' => 'acc'], function () {
 
 Route::group(['middleware' => 'faculty', 'prefix' => 'fac'], function () {
     Route::resource('/store-room', 'ImportRoomController');
+    Route::get('/store-room-list', 'ImportRoomController@index');
+    Route::get('/store-faculty-list', 'ImportFacultyController@getImportFacultyByOwnFaculty');
+    Route::post('/store-room', 'ImportRoomController@getImportRoomByFaculty');
+    Route::get('/detail-store-faculty/{id}', 'HistoryImportController@getStoreRoomByStoreFaculty');
 });
 
 Route::group(['middleware' => 'room', 'prefix' => 'roo'], function () {

@@ -87,7 +87,4 @@ class FacultyRoomService extends BaseService
     {
         return $this->roomRepo->findByField('room_id', $id)->first();
     }
-    
-    
-    
 }

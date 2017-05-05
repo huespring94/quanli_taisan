@@ -13,10 +13,7 @@ class AddFkChuyenYeuCauTable extends Migration
      */
     public function up()
     {
-        Schema::table('request_transfers', function (Blueprint $table) {
-            $table->foreign('request_id')
-                ->references('id')->on('requests')
-                ->onUpdate('cascade')->onDelete('NO ACTION');
+        Schema::table('requests', function (Blueprint $table) {
             $table->foreign('store_room_id')
                 ->references('store_room_id')->on('store_rooms')
                 ->onUpdate('cascade')->onDelete('NO ACTION');
@@ -31,7 +28,6 @@ class AddFkChuyenYeuCauTable extends Migration
     public function down()
     {
         Schema::table('request_transfers', function (Blueprint $table) {
-            $table->dropForeign(['request_id']);
             $table->dropForeign(['store_room_id']);
         });
     }

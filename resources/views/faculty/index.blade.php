@@ -44,6 +44,7 @@ Danh sách tài sản của các khoa
                     <th>Ngày SD</th>
                     <th>Khoa</th>
                     <th>Tên tài sản</th>
+                    <th>Thông số</th>
                     <th>Số lượng</th>
                     <th>Thành tiền</th>
                     <th>Tỷ lệ % CL</th>
@@ -56,6 +57,7 @@ Danh sách tài sản của các khoa
                     <td>{{$importFac->date_import}}</td>
                     <td>{{$importFac->faculty->name}}</td>
                     <td>{{$importFac->stuff->name}}</td>
+                    <td>{{$importFac->stuff->supplier->name}}</td>
                     <td>{{$importFac->quantity}}</td>
                     <td align="right">{{number_format($importFac->quantity * $importFac->detailImportStore->price_unit)}}</td>
                     <td>

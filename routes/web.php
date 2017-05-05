@@ -43,6 +43,11 @@ Route::group(['middleware' => 'faculty', 'prefix' => 'fac'], function () {
     Route::get('/store-faculty-list', 'ImportFacultyController@getImportFacultyByOwnFaculty');
     Route::post('/store-room-fac', 'ImportRoomController@getImportRoomByFaculty');
     Route::get('/detail-store-faculty/{id}', 'HistoryImportController@getStoreRoomByStoreFaculty');
+    Route::get('/statis-faculty-year', 'StatisticalController@statisticByFacultyYear');
+    Route::post('/statis-faculty-by-year', 'StatisticalController@statisticByFacultyByYear');
+    Route::get('/statis-room-year', 'StatisticalController@statisticByRoomYear');
+    Route::post('/statis-by-room-year', 'StatisticalController@statisticByRoomByYear');
+    Route::get('/statis-faculty-year-detail/{year}/{stuff}', 'StatisticalController@detailStatisticByFacultyYearStuff');
 });
 
 Route::group(['middleware' => 'room', 'prefix' => 'roo'], function () {

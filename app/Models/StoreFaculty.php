@@ -69,4 +69,14 @@ class StoreFaculty extends Model
     {
         return $this->belongsTo(Stuff::class, 'stuff_id', 'stuff_id');
     }
+    
+    /**
+     * Get the requests that chilren the store faculty.
+     *
+     * @return array Request
+     */
+    public function requests()
+    {
+        return $this->hasMany(Request::class, 'store_type_id', 'store_faculty_id');
+    }
 }

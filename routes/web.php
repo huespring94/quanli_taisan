@@ -29,12 +29,11 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::post('/delete-import-faculty', 'ImportFacultyController@destroy');
     Route::get('/atrophy-store', 'AtrophyController@getExpireStuffStore');
     Route::get('/delete-atrophy-store/{id}', 'AtrophyController@destroy');
-    Route::get('/messages', 'MessageController@getAmountExpireStuff');
+    Route::get('/delete-atrophy-faculty/{id}', 'AtrophyController@destroyFaculty');
+    Route::get('/delete-atrophy-room/{id}', 'AtrophyController@destroyRoom');
 });
 
-Route::group(['middleware' => 'accountant', 'prefix' => 'acc'], function () {
-
-});
+Route::get('/messages', 'MessageController@getAmountExpireStuff');
 
 Route::group(['middleware' => 'faculty', 'prefix' => 'fac'], function () {
     Route::resource('/store-room', 'ImportRoomController');
@@ -48,10 +47,13 @@ Route::group(['middleware' => 'faculty', 'prefix' => 'fac'], function () {
     Route::get('/statis-room-year', 'StatisticalController@statisticByRoomYear');
     Route::post('/statis-by-room-year', 'StatisticalController@statisticByRoomByYear');
     Route::get('/statis-faculty-year-detail/{year}/{stuff}', 'StatisticalController@detailStatisticByFacultyYearStuff');
+    Route::get('/atrophy-store', 'AtrophyController@getExpireStuffStoreFaculty');
+    Route::post('/request-liquidation', 'RequestController@storeFaculty');
 });
 
 Route::group(['middleware' => 'room', 'prefix' => 'roo'], function () {
-
+    Route::get('/atrophy-store', 'AtrophyController@getExpireStuffStore');
+    Route::post('/request-liquidation', 'RequestController@getExpireStuffStoreFaculty');
 });
 
 Route::get('logout', function() {

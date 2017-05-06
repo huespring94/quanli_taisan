@@ -14,6 +14,9 @@ Danh sách tài sản khoa
 <div class="box">
     <div class="box-header">
         <h3 class="box-title">Khoa <b>{{Auth::user()->faculty->name}}</b></h3>
+        <button type="button" class="btn bg-navy margin pull-right">
+                <i class="fa fa-download"></i>
+                Xuất file excel</button>
     </div>
     
     <div class="box-body">
@@ -25,9 +28,10 @@ Danh sách tài sản khoa
                     <th>Ngày SD</th>
                     <th>Tên tài sản</th>
                     <th>Tổng số lượng</th>
-                    <th>Số lượng CL</th>
+                    <th>Số lượng</th>
                     <th>Thành tiền</th>
                     <th>Tỷ lệ % CL</th>
+                    <th>SL thanh lí</th>
                     <th></th>
                 </tr>
             </thead>
@@ -45,6 +49,13 @@ Danh sách tài sản khoa
                         <span class="badge bg-red">{{$importFac->detailImportStore->status}}%</span>
                         @else
                         <span class="badge bg-light-blue">{{$importFac->detailImportStore->status}}%</span>
+                        @endif
+                    </td>
+                    <td>
+                        @if (isset($importFac->liquidation))
+                            {{$importFac->liquidation}}
+                        @else
+                        -
                         @endif
                     </td>
                     <td>

@@ -32,7 +32,7 @@
             </span>
         </a>
         <ul class="treeview-menu">
-            <li><a href=""><i class="fa fa-circle-o"></i> Yêu cầu thanh lí</a></li>
+            <li><a href="{{url('fac/atrophy-store')}}"><i class="fa fa-circle-o"></i> Yêu cầu thanh lí</a></li>
             <li><a href=""><i class="fa fa-circle-o"></i> Yêu cầu điều chuyển</a></li>
           </ul>
     </li>

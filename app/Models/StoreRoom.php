@@ -72,4 +72,14 @@ class StoreRoom extends Model
     {
         return $this->belongsTo(Room::class, 'room_id', 'room_id');
     }
+    
+    /**
+     * Get the requests that chilren the store room.
+     *
+     * @return array Request
+     */
+    public function requests()
+    {
+        return $this->hasMany(Request::class, 'store_type_id', 'store_room_id');
+    }
 }

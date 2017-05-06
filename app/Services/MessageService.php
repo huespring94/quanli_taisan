@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Repositories\DetailImportStoreRepository;
 use App\Repositories\StoreFacultyRepository;
 use App\Repositories\StoreRoomRepository;
+use App\Services\RequestService;
 
 class MessageService extends BaseService
 {
@@ -14,6 +15,8 @@ class MessageService extends BaseService
     
     private $storeRoomRepo;
     
+    private $requestService;
+
     /**
      * Constructor message controller
      *
@@ -24,17 +27,14 @@ class MessageService extends BaseService
     public function __construct(
         DetailImportStoreRepository $detailIStoreRepo,
         StoreFacultyRepository $storeFacultyRepo,
-        StoreRoomRepository $storeRoomRepo
+        StoreRoomRepository $storeRoomRepo,
+        RequestService $requestService
     ) {
         $this->detailIStoreRepo = $detailIStoreRepo;
         $this->storeFacultyRepo = $storeFacultyRepo;
         $this->storeRoomRepo = $storeRoomRepo;
+        $this->requestService = $requestService;
     }
-    
-//    public function getNewRequest()
-//    {
-//        //
-//    }
     
     /**
      * Get expire stuff store
@@ -58,12 +58,25 @@ class MessageService extends BaseService
      */
     public function getExpireStuffStoreFacul()
     {
-        return $this->storeFacultyRepo->findWhere([
-            ['quantity', '>', 0],
-            ['stuff', '<', config('constant.rate_deadline')]
+        $facultyId = auth()->user()->faculty_id;
+        $notLiquidations = $this->requestService->getRequestNotLiquidationByFaculty($facultyId)
+                ->pluck('quantity', 'store_type_id')->all();
+        $storeFaculties = $this->storeFacultyRepo
+            ->with(['stuff', 'detailImportStore'])
+            ->whereHas('detailImportStore', function($has) {
+                $has->where('status', '<', config('constant.rate_deadline'));
+            })
+            ->findWhere([
+            ['faculty_id', '=', $facultyId]
         ]);
+        foreach ($storeFaculties as $storeFaculty) {
+            if (in_array($storeFaculty->store_faculty_id, array_keys($notLiquidations))) {
+                $storeFaculty['num_liquidation'] = $notLiquidations[$storeFaculty->store_faculty_id];
+            }
+        }
+        return $storeFaculties;
     }
-    
+
     /**
      * Get expire stuff room store
      *
@@ -71,12 +84,13 @@ class MessageService extends BaseService
      */
     public function getExpireStuffStoreRoom()
     {
-        return $this->storeRoomRepo->findWhere([
-            ['quantity', '>', 0],
-            ['stuff', '<', config('constant.rate_deadline')]
-        ]);
+        return $this->storeRoomRepo
+                ->with(['stuff', 'storeFaculty.detailImportStore'])
+                ->whereHas('storeFaculty.detailImportStore', function($has) {
+                    $has->where('status', '<', config('constant.rate_deadline'));
+                })->findWhere([['quantity', '>', 0]]);
     }
-    
+
     /**
      * Get amount expire stuff store
      *
@@ -84,6 +98,14 @@ class MessageService extends BaseService
      */
     public function getAmountExpireStuff()
     {
-        return ['store' => count($this->getExpireStuffStore())];
+        $role = auth()->user()->role->name;
+        if($role == config('constant.r_admin') || $role == config('constant.r_accountant')) {
+            return ['store' => count($this->getExpireStuffStore())];
+        } elseif ($role == config('constant.r_faculty') ) {
+            return ['store' => count($this->getExpireStuffStoreFacul())];
+        } elseif ($role == config('constant.r_room') ) {
+            return ['store' => count($this->getExpireStuffStoreRoom())];
+        }
+        return '';
     }
 }

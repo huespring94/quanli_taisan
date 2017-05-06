@@ -301,7 +301,12 @@ class ImportStuffService extends BaseService
         $importFaculty = $detailImport = [];
         $amount = 0;
         $quantity = $data['quantity'];
-        $details = $this->detailImStoreRepo->with(['importStore', 'stuff.supplier'])->findWhere([['quantity', '>', '0'], ['stuff_id', '=', $data['stuff_id']]]);
+        $details = $this->detailImStoreRepo->with(['importStore', 'stuff.supplier'])
+            ->findWhere([
+                ['quantity', '>', '0'], 
+                ['stuff_id', '=', $data['stuff_id']],
+                ['status', '>', config('constant.rate_deadline')]
+            ]);
         foreach ($details as $key => $detail) {
             $remain = $detail->quantity - $quantity;
             if ($quantity == 0) {

@@ -35,6 +35,9 @@ Danh sách tài sản phòng
     <div class="box-header">
         <h3 class="box-title">Danh sách tài sản</h3>
     </div>
+    <button type="button" class="btn bg-navy margin pull-right">
+                <i class="fa fa-download"></i>
+                Xuất file excel</button>
     <div class="box-body">
         <table id="mydata" class="table table-bordered table-striped">
             <thead>

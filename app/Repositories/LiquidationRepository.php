@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Liquidation;
+use DB;
 
 class LiquidationRepository extends BaseRepo
 {
@@ -14,5 +15,36 @@ class LiquidationRepository extends BaseRepo
     public function model()
     {
         return Liquidation::class;
+    }
+    
+    /**
+     * Get all liquidations for store
+     *
+     * @return array
+     */
+    public function getAllLiquidation()
+    {
+        return $this->liquidationRepo->with([
+                    'detailImportStore.stuff',
+                    'detailImportStore.importStore'
+                ])
+                ->orderBy('created_at', 'desc')
+                ->all();
+    }
+    
+    /**
+     * Get store faculty by year and faculty group by stuff
+     *
+     * @return mixed
+     */
+    public function getAllLiquidationShort()
+    {
+        return Liquidation::with([
+                    'detailImportStore.stuff',
+                    'detailImportStore.importStore'
+                ])
+            ->select('detail_import_store_id', DB::raw('sum(quantity) as quantity'))
+            ->groupBy('detail_import_store_id')
+            ->get();
     }
 }

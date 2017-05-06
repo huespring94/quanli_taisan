@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('123456789'),
                 'firstname' => $faker->lastName,
                 'lastname' => $faker->firstName,
-                'avatar' => 'user.jpg',
+                'avatar' => 'user.png',
                 'email' => 'admin@gmail.com',
                 'role_id' => Role::where('name', '=', Role::ROLE_ADMIN)->first()->id,
                 'faculty_id' => $faker->randomElement($facultyIds->toArray()),

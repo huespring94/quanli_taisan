@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use App\Services\BaseService;
 use App\Repositories\LiquidationRepository;
 use App\Repositories\DetailImportStoreRepository;
+use App\Repositories\StoreFacultyRepository;
+use App\Repositories\StoreRoomRepository;
 
 class LiquidationService extends BaseService
 {
@@ -17,6 +19,10 @@ class LiquidationService extends BaseService
     private $liquidationRepo;
     
     private $detailIStoreRepo;
+    
+    private $storeFacultyRepo;
+    
+    private $storeRoomRepo;
 
     /**
      * Constructor of liquidation service
@@ -26,25 +32,45 @@ class LiquidationService extends BaseService
      */
     public function __construct(
         LiquidationRepository $liquidationRepo,
-        DetailImportStoreRepository $detailIStoreRepo
+        DetailImportStoreRepository $detailIStoreRepo,
+        StoreFacultyRepository $storeFacultyRepo,
+        StoreRoomRepository $storeRoomRepo
     ) {
         $this->liquidationRepo = $liquidationRepo;
         $this->detailIStoreRepo = $detailIStoreRepo;
+        $this->storeFacultyRepo = $storeFacultyRepo;
+        $this->storeRoomRepo = $storeRoomRepo;
     }
     
     /**
-     * Get all liquidations
+     * Get all liquidations for store
      *
      * @return array
      */
     public function getAllLiquidation()
     {
-        return $this->liquidationRepo->with([
-                    'detailImportStore.stuff',
-                    'detailImportStore.importStore'
-                ])
-                ->orderBy('created_at', 'desc')
-                ->all();
+        return $this->liquidationRepo->getAllLiquidation();
+    }
+    
+    /**
+     * Get all liquidations for store
+     *
+     * @return array
+     */
+    public function getAllLiquidationShort()
+    {
+        return $this->liquidationRepo->getAllLiquidationShort();
+    }
+    
+    /**
+     * Get all liquidations for faculty
+     *
+     * @return array
+     */
+    public function getAllLiquidationFaculty()
+    {
+        $facultyId = auth()->user()->faculty_id;
+        return $this->storeFacultyRepo->getLiquidation($facultyId);
     }
 
     /**
@@ -57,14 +83,50 @@ class LiquidationService extends BaseService
     public function removeToLiquordation($detailId)
     {
         $detail = $this->detailIStoreRepo->find($detailId);
-        if ($detail->status < config('constant.rate_deadline')) {
-            $datas = [
-                'quantity' => $detail->quantity,
-                'detail_import_store_id' => $detail->id,
-                'date_liquidation' => Carbon::now()->format(config('define.date_format'))
-            ];
-            $detail->delete();
-            $this->liquidationRepo->create($datas);
-        }
+        $datas = [
+            'quantity' => $detail->quantity,
+            'detail_import_store_id' => $detail->id,
+            'date_liquidation' => Carbon::now()->format(config('define.date_format'))
+        ];
+        $detail->delete();
+        $this->liquidationRepo->create($datas);
+    }
+
+    /**
+     * Remove stuff to liquordation and delete in store faculty
+     *
+     * @param any $storeFacultyId Id of store faculty id
+     *
+     * @return void
+     */
+    public function removeToLiquordationFaculty($storeFacultyId)
+    {
+        $storeFaculty = $this->storeFacultyRepo->find($storeFacultyId);
+        $datas = [
+            'quantity' => $storeFaculty->quantity,
+            'detail_import_store_id' => $storeFaculty->detail_import_store_id,
+            'date_liquidation' => Carbon::now()->format(config('define.date_format'))
+        ];
+        $storeFaculty->delete();
+        $this->liquidationRepo->create($datas);
+    }
+    
+    /**
+     * Remove stuff to liquordation and delete in store room
+     *
+     * @param any $storeRoomId Id of store room id
+     *
+     * @return void
+     */
+    public function removeToLiquordationRoom($storeRoomId)
+    {
+        $storeRoom = $this->storeRoomRepo->find($storeRoomId);
+        $datas = [
+            'quantity' => $storeRoom->quantity,
+            'detail_import_store_id' => $storeRoom->detail_import_store_id,
+            'date_liquidation' => Carbon::now()->format(config('define.date_format'))
+        ];
+        $storeRoom->delete();
+        $this->liquidationRepo->create($datas);
     }
 }

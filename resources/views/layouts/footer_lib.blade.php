@@ -20,7 +20,7 @@
 <script src="{{asset('/js/handle.js')}}"></script>
 <script src="{{asset('/js/handle-fac.js')}}"></script>
 <script src="{{asset('/js/custom.js')}}"></script>
-<script src="{{asset('/js/mess.js')}}"></script>
+<script src="{{asset('/js/message.js')}}"></script>
 @yield('js')
 </body>
 </html>

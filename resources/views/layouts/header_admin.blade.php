@@ -48,43 +48,23 @@
                     </li>
                     <!-- Notifications: style can be found in dropdown.less -->
                     <li class="dropdown notifications-menu">
-                         <!--class="dropdown-toggle" data-toggle="dropdown"-->
+                        <!--class="dropdown-toggle" data-toggle="dropdown"-->
+                        @if(Auth::user()->role->name == config('constant.r_admin') || Auth::user()->role->name == config('constant.r_accountant'))
                         <a href="{{url('admin/atrophy-store')}}">
                             <i class="fa fa-bell-o"></i>
                             <span id="messages-expire" class="label label-warning"></span>
                         </a>
-                    </li>
-                    <!-- Tasks: style can be found in dropdown.less -->
-                    <li class="dropdown tasks-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-flag-o"></i>
-                            <span class="label label-danger">9</span>
+                        @elseif (Auth::user()->role->name == config('constant.r_faculty'))
+                        <a href="{{url('fac/atrophy-store')}}">
+                            <i class="fa fa-bell-o"></i>
+                            <span id="messages-expire" class="label label-warning"></span>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 9 tasks</li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    <li><!-- Task item -->
-                                        <a href="#">
-                                            <h3>
-                                                Design some buttons
-                                                <small class="pull-right">20%</small>
-                                            </h3>
-                                            <div class="progress xs">
-                                                <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                    <span class="sr-only">20% Complete</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <!-- end task item -->
-                                </ul>
-                            </li>
-                            <li class="footer">
-                                <a href="#">View all tasks</a>
-                            </li>
-                        </ul>
+                        @elseif (Auth::user()->role->name == config('constant.r_room'))
+                        <a href="{{url('roo/atrophy-store')}}">
+                            <i class="fa fa-bell-o"></i>
+                            <span id="messages-expire" class="label label-warning"></span>
+                        </a>
+                        @endif
                     </li>
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">

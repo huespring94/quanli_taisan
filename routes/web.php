@@ -62,6 +62,7 @@ Route::get('logout', function() {
 
 Route::get('importExport', 'MaatwebsiteDemoController@importExport');
 Route::get('downloadExcel/{type}', 'MaatwebsiteDemoController@downloadExcel');
+Route::get('d-detail/{id}', 'ExportExcelController@downloadDetailImportStoreById');
 Route::post('importExcel', 'MaatwebsiteDemoController@importExcel');
 
 Route::get('detail-import/{id}', 'DetailImportStoreController@getQuantityByStuffId');

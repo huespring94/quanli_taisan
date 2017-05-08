@@ -107,8 +107,29 @@ class RequestService
     }
     
     /**
-     * 
-     * @param type $facultyId []
+     * Get all request liquidation by room
+     *
+     * @param any $roomId []
+     *
+     * @return mixed
+     */
+    public function getRequestAllLiquidationByRoom($roomId)
+    {
+        return $this->requestRepository
+            ->with('storeRoom.stuff')
+            ->whereHas('storeRoom', function ($has) use ($roomId) {
+                $has->where('room_id', '=', $roomId);
+            })
+            ->findWhere([
+                ['type', '=', Request::TYPE_ROOM],
+                ['kind_request', '=', Request::KIND_REQ_ONE]
+            ]);
+    }
+    
+    /**
+     * Get request liquidation by faculty
+     *
+     * @param any $facultyId []
      *
      * @return mixed
      */
@@ -122,6 +143,27 @@ class RequestService
             ->findWhere([
                 ['status', '=', 1],
                 ['type', '=', Request::TYPE_FACULTY],
+                ['kind_request', '=', Request::KIND_REQ_ONE]
+            ]);
+    }
+    
+    /**
+     * Get request liquidation by room
+     *
+     * @param any $roomId []
+     *
+     * @return mixed
+     */
+    public function getRequestLiquidationByRoom($roomId)
+    {
+        return $this->requestRepository
+            ->with('storeRoom.stuff')
+            ->whereHas('storeRoom', function ($has) use ($roomId) {
+                $has->where('room_id', '=', $roomId);
+            })
+            ->findWhere([
+                ['status', '=', 1],
+                ['type', '=', Request::TYPE_ROOM],
                 ['kind_request', '=', Request::KIND_REQ_ONE]
             ]);
     }

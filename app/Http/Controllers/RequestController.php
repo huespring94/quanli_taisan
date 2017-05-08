@@ -19,6 +19,14 @@ class RequestController extends Controller
     
     private $stuffFacService;
 
+    /**
+     * Constructor for request controller
+     *
+     * @param RequestService $requestService         []
+     * @param MessageService $messageService         []
+     * @param LiquidationService $liquidationService []
+     * @param StuffFacultyService $stuffFacService   []
+     */
     public function __construct(
         RequestService $requestService,
         MessageService $messageService,
@@ -32,6 +40,13 @@ class RequestController extends Controller
         $this->stuffFacService = $stuffFacService;
     }
 
+    /**
+     * Create request
+     *
+     * @param Request $request []
+     *
+     * @return Reponse
+     */
     public function storeFaculty(Request $request)
     {
         $storeTypeId = $this->requestService->createRequest($request);

@@ -44,7 +44,7 @@ class ImportRoomController extends Controller
     public function index()
     {
         $rooms = $this->facultyRoomService->getRoomByFaculty(auth()->user()->faculty_id);
-        $storeRooms = $this->stuffFacultyService->getStuffAllRoom();
+        $storeRooms = $this->stuffFacultyService->getImportRoomAllByRoom($rooms->first()->room_id);
         return view('room.index', ['rooms' => $rooms, 'storeRooms' => $storeRooms]);
     }
 
@@ -151,7 +151,7 @@ class ImportRoomController extends Controller
     public function getImportRoomByFaculty(Request $request)
     {
         $rooms = $this->facultyRoomService->getRoomByFaculty(auth()->user()->faculty_id);
-        $storeRooms = $this->stuffFacultyService->getImportRoomByRoom($request->get('room_id'));
+        $storeRooms = $this->stuffFacultyService->getImportRoomAllByRoom($request->get('room_id'));
         $roomId = $request->get('room_id');
         return view('room.index', ['rooms' => $rooms, 'storeRooms' => $storeRooms, 'roomId' => $roomId]);
     }

@@ -16,14 +16,15 @@ class StoreRoom extends Model
     
     protected $fillable = [
         'id',
+        'store_room_id',
         'date_import',
-        'stuff_id',
-        'status',
-        'room_id',
-        'quantity',
         'quantity_start',
+        'quantity',
+        'room_id',
         'store_faculty_id',
-        'user_id'
+        'stuff_id',
+//        'status',
+//        'user_id'
     ];
     
     /**

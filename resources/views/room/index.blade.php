@@ -18,7 +18,6 @@ Danh sách tài sản phòng
                 <label class="col-sm-2 control-label">Chọn phòng</label>
                 <div class="col-sm-6">
                     <select name="room_id" class="form-control">
-                        <option value="">Chọn phòng</option>
                         @foreach($rooms as $room)
                         <option {{!isset($roomId) ? '' : ($roomId == $room->room_id ? "selected" : '')}} value="{{$room->room_id}}">{{$room->name}}</option>
                         @endforeach
@@ -34,10 +33,10 @@ Danh sách tài sản phòng
 <div class="box">
     <div class="box-header">
         <h3 class="box-title">Danh sách tài sản</h3>
+        <button type="button" class="btn bg-navy margin pull-right">
+                    <i class="fa fa-download"></i>
+                    Xuất file excel</button>
     </div>
-    <button type="button" class="btn bg-navy margin pull-right">
-                <i class="fa fa-download"></i>
-                Xuất file excel</button>
     <div class="box-body">
         <table id="mydata" class="table table-bordered table-striped">
             <thead>
@@ -47,9 +46,10 @@ Danh sách tài sản phòng
                     <th>Phòng</th>
                     <th>Tên tài sản</th>
                     <th>Thông số</th>
-                    <th>Số lượng</th>
+                    <th>Số lượng CL</th>
                     <th>Thành tiền</th>
                     <th>Tỷ lệ % CL</th>
+                    <th>Thanh lí</th>
                 </tr>
             </thead>
             <tbody align="center">
@@ -67,6 +67,17 @@ Danh sách tài sản phòng
                         <span class="badge bg-red">{{$detail->storeFaculty->detailImportStore->status}}%</span>
                         @else
                         <span class="badge bg-light-blue">{{$detail->storeFaculty->detailImportStore->status}}%</span>
+                        @endif
+                    </td>
+                    <td>
+                        @if (isset($detail->liquidation_quantity))
+                            @if($detail->liquidation_status)
+                            <i>Đã thanh lí ({{$detail->liquidation_quantity}})</i>
+                            @else
+                            <i>Đang chờ ({{$detail->liquidation_quantity}})</i>
+                            @endif
+                        @else
+                        -
                         @endif
                     </td>
                 </tr>

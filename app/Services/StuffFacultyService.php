@@ -170,14 +170,28 @@ class StuffFacultyService
     /**
      * Get stuff by room id
      *
+     * @param any $roomId []
+     *
      * @return array
      */
-    public function getStuffAllRoom()
+    public function getImportRoomAllByRoom($roomId)
     {
-        $user = auth()->user();
-        return $this->storeRoomRepo->with(['room', 'storeFaculty.detailImportStore'])->whereHas('storeFaculty', function ($has) use ($user) {
-            $has->where('faculty_id', '=', $user->faculty_id);
-        })->all();
+        $requestQs = $this->requestService->getRequestAllLiquidationByRoom($roomId)
+            ->pluck('quantity', 'store_type_id')->all();
+        $requestSs = $this->requestService->getRequestAllLiquidationByRoom($roomId)
+            ->pluck('status', 'store_type_id')->all();
+        $storeRooms = $this->storeRoomRepo
+            ->with(['room', 'storeFaculty.detailImportStore', 'stuff.supplier'])
+            ->whereHas('storeFaculty', function($has) use ($roomId) {
+                $has->where('room_id', '=', $roomId);
+            })->all();
+        foreach ($storeRooms as $storeRoom) {
+            if (in_array($storeRoom->store_room_id, array_keys($requestQs))) {
+                $storeRoom['liquidation_quantity'] = $requestQs[$storeRoom->store_room_id];
+                $storeRoom['liquidation_status'] = $requestSs[$storeRoom->store_room_id];
+            }
+        }
+        return $storeRooms;
     }
     
     /**
@@ -189,11 +203,16 @@ class StuffFacultyService
      */
     public function getImportRoomByRoom($roomId)
     {
-        if ($roomId != null) {
-            return $this->storeRoomRepo->with(['room', 'storeFaculty.detailImportStore'])
+        $requests = $this->requestService->getRequestLiquidationByRoom($roomId)
+            ->pluck('quantity', 'store_type_id')->all();
+        $storeRooms = $this->storeRoomRepo->with(['room', 'storeFaculty.detailImportStore', 'stuff.supplier'])
                 ->findByField('room_id', $roomId);
+        foreach ($storeRooms as $storeRoom) {
+            if (in_array($storeRoom->store_room_id, array_keys($requests))) {
+                $storeRoom['liquidation'] = $requests[$storeRoom->store_room_id];
+            }
         }
-        return $this->getStuffAllRoom();
+        return $storeRooms;
     }
     
     /**

@@ -12,7 +12,7 @@ Thống kê tài sản theo khoa
 @section('content')
 
 <div class="box">
-    <form class="form-horizontal" role="form" method="POST" action="{{url('fac/statis-faculty-by-year')}}">
+    <form class="form-horizontal" role="form" method="POST" action="{{route('statis-faculty-by-year')}}">
         {{ csrf_field() }}
         <div class="box-header">
             <div class="form-group">

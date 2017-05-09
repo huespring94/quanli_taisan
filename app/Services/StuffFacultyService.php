@@ -184,7 +184,7 @@ class StuffFacultyService
             ->with(['room', 'storeFaculty.detailImportStore', 'stuff.supplier'])
             ->whereHas('storeFaculty', function($has) use ($roomId) {
                 $has->where('room_id', '=', $roomId);
-            })->all();
+            })->orderBy('created_at', 'desc')->all();
         foreach ($storeRooms as $storeRoom) {
             if (in_array($storeRoom->store_room_id, array_keys($requestQs))) {
                 $storeRoom['liquidation_quantity'] = $requestQs[$storeRoom->store_room_id];
@@ -261,4 +261,6 @@ class StuffFacultyService
         return $this->storeFacultyRepo
             ->findWhere([['faculty_id', '=', $facultyId], ['quantity', '>', 0]]);
     }
+    
+    
 }

@@ -38,16 +38,40 @@ Route::get('/messages', 'MessageController@getAmountExpireStuff');
 Route::group(['middleware' => 'faculty', 'prefix' => 'fac'], function () {
     Route::resource('/store-room', 'ImportRoomController');
     Route::post('/store-room-delete', 'ImportRoomController@destroy');
-    Route::get('/store-room-list', 'ImportRoomController@index');
-    Route::get('/store-faculty-list', 'ImportFacultyController@getImportFacultyByOwnFaculty');
-    Route::post('/store-room-fac', 'ImportRoomController@getImportRoomByFaculty');
+    Route::get('/store-room-list', [
+        'as' => 'store-room-list',
+        'uses' => 'ImportRoomController@index'
+    ]);
+    Route::get('/store-faculty-list', [
+        'as' => 'store-faculty-list',
+        'uses' => 'ImportFacultyController@getImportFacultyByOwnFaculty'
+    ]);
+    Route::post('/store-room-fac',  [
+        'as' => 'store-room-fac',
+        'uses' => 'ImportRoomController@getImportRoomByFaculty'
+    ]);
     Route::get('/detail-store-faculty/{id}', 'HistoryImportController@getStoreRoomByStoreFaculty');
-    Route::get('/statis-faculty-year', 'StatisticalController@statisticByFacultyYear');
-    Route::post('/statis-faculty-by-year', 'StatisticalController@statisticByFacultyByYear');
-    Route::get('/statis-room-year', 'StatisticalController@statisticByRoomYear');
-    Route::post('/statis-by-room-year', 'StatisticalController@statisticByRoomByYear');
+    Route::get('/statis-faculty-year', [
+        'as' => 'statis-faculty-year',
+        'uses' => 'StatisticalController@statisticByFacultyYear'
+    ]);
+    Route::post('/statis-faculty-by-year', [
+        'as' => 'statis-faculty-by-year',
+        'uses' => 'StatisticalController@statisticByFacultyByYear'
+    ]);
+    Route::get('/statis-room-year', [
+        'as' => 'statis-room-year',
+        'uses' => 'StatisticalController@statisticByRoomYear'
+    ]);
+    Route::post('/statis-by-room-year', [
+        'as' => 'statis-by-room-year',
+        'uses' => 'StatisticalController@statisticByRoomByYear'
+    ]);
     Route::get('/statis-faculty-year-detail/{year}/{stuff}', 'StatisticalController@detailStatisticByFacultyYearStuff');
-    Route::get('/atrophy-store', 'AtrophyController@getExpireStuffStoreFaculty');
+    Route::get('/atrophy-store', [
+        'as' => 'atrophy-store',
+        'uses' => 'AtrophyController@getExpireStuffStoreFaculty'
+    ]);
     Route::post('/request-liquidation', 'RequestController@storeFaculty');
 });
 

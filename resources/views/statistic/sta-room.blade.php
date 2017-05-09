@@ -12,7 +12,7 @@ Thống kê theo phòng
 @section('content')
 
 <div class="box">
-    <form class="form-horizontal" role="form" method="POST" action="{{url('fac/statis-by-room-year')}}">
+    <form class="form-horizontal" role="form" method="POST" action="{{route('statis-by-room-year')}}">
         {{ csrf_field() }}
         <div class="box-header">
             <div class="form-group">

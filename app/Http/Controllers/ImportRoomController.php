@@ -100,7 +100,7 @@ class ImportRoomController extends Controller
     public function show($id)
     {
         $rooms = $this->facultyRoomService->getRoomByFaculty(auth()->user()->faculty_id);
-        $storeRooms = $this->stuffFacultyService->getImportRoomByRoom($id);
+        $storeRooms = $this->stuffFacultyService->getImportRoomAllByRoom($id);
         $roomId = $id;
         return view('room.index', ['rooms' => $rooms, 'storeRooms' => $storeRooms, 'roomId' => $roomId]);
     }

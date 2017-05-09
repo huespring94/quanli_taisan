@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use App\Models\Role;
 use App\Models\Faculty;
+use App\Models\Room;
 
 class UserSeeder extends Seeder
 {
@@ -55,16 +56,17 @@ class UserSeeder extends Seeder
                 'email' => 'quanliphong@gmail.com',
                 'role_id' => Role::where('name', '=', Role::ROLE_ROOM)->first()->id,
                 'faculty_id' => Faculty::first()->faculty_id,
+                'room_id' => Room::first()->room_id,
                 'remember_token' => str_random(10)
             ]
         ]);
         $roleIds = Role::all()->pluck('id');
-        for ($i = 0; $i < 6; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             DB::table('users')->insert([
                 'password' => bcrypt('123456789'),
                 'firstname' => $faker->lastName,
                 'lastname' => $faker->firstName,
-                'avatar' => 'user.jpg',
+                'avatar' => 'user.png',
                 'email' => $faker->unique()->userName . '@gmail.com',
                 'role_id' => $faker->randomElement($roleIds->toArray()),
                 'faculty_id' => $faker->randomElement($facultyIds->toArray()),

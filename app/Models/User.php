@@ -22,7 +22,9 @@ class User extends Authenticatable
         'dob',
         'phone',
         'email',
-        'address'
+        'address',
+        'faculty_id',
+        'room_id'
     ];
     
     protected $hidden = [
@@ -69,5 +71,15 @@ class User extends Authenticatable
     public function importStores()
     {
         return $this->hasMany('App\Models\ImportStore');
+    }
+    
+    /**
+     * Get role that own user
+     *
+     * @return object
+     */
+    public function room()
+    {
+        return $this->belongsTo(Room::class, 'room_id', 'room_id');
     }
 }

@@ -303,7 +303,7 @@ class ImportStuffService extends BaseService
         $quantity = $data['quantity'];
         $details = $this->detailImStoreRepo->with(['importStore', 'stuff.supplier'])
             ->findWhere([
-                ['quantity', '>', '0'], 
+                ['quantity', '>', '0'],
                 ['stuff_id', '=', $data['stuff_id']],
                 ['status', '>', config('constant.rate_deadline')]
             ]);

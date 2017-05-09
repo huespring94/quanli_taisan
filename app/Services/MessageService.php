@@ -6,6 +6,7 @@ use App\Repositories\DetailImportStoreRepository;
 use App\Repositories\StoreFacultyRepository;
 use App\Repositories\StoreRoomRepository;
 use App\Services\RequestService;
+use App\Services\FacultyRoomService;
 
 class MessageService extends BaseService
 {
@@ -16,6 +17,8 @@ class MessageService extends BaseService
     private $storeRoomRepo;
     
     private $requestService;
+    
+    private $facRoomService;
 
     /**
      * Constructor message controller
@@ -23,17 +26,21 @@ class MessageService extends BaseService
      * @param DetailImportStoreRepository $detailIStoreRepo []
      * @param StoreFacultyRepository      $storeFacultyRepo []
      * @param StoreRoomRepository         $storeRoomRepo    []
+     * @param RequestService              $requestService   []
+     * @param FacultyRoomService          $facRoomService   []
      */
     public function __construct(
         DetailImportStoreRepository $detailIStoreRepo,
         StoreFacultyRepository $storeFacultyRepo,
         StoreRoomRepository $storeRoomRepo,
-        RequestService $requestService
+        RequestService $requestService,
+        FacultyRoomService $facRoomService
     ) {
         $this->detailIStoreRepo = $detailIStoreRepo;
         $this->storeFacultyRepo = $storeFacultyRepo;
         $this->storeRoomRepo = $storeRoomRepo;
         $this->requestService = $requestService;
+        $this->facRoomService = $facRoomService;
     }
     
     /**
@@ -63,12 +70,12 @@ class MessageService extends BaseService
                 ->pluck('quantity', 'store_type_id')->all();
         $storeFaculties = $this->storeFacultyRepo
             ->with(['stuff', 'detailImportStore'])
-            ->whereHas('detailImportStore', function($has) {
+            ->whereHas('detailImportStore', function ($has) {
                 $has->where('status', '<', config('constant.rate_deadline'));
             })
             ->findWhere([
             ['faculty_id', '=', $facultyId]
-        ]);
+            ]);
         foreach ($storeFaculties as $storeFaculty) {
             if (in_array($storeFaculty->store_faculty_id, array_keys($notLiquidations))) {
                 $storeFaculty['num_liquidation'] = $notLiquidations[$storeFaculty->store_faculty_id];
@@ -84,11 +91,23 @@ class MessageService extends BaseService
      */
     public function getExpireStuffStoreRoom()
     {
-        return $this->storeRoomRepo
-                ->with(['stuff', 'storeFaculty.detailImportStore'])
-                ->whereHas('storeFaculty.detailImportStore', function($has) {
-                    $has->where('status', '<', config('constant.rate_deadline'));
-                })->findWhere([['quantity', '>', 0]]);
+        $roomId = $this->facRoomService->getRoomByUser(auth()->user()->id)->room_id;
+        $notLiquidations = $this->requestService->getRequestAllLiquidationByRoom($roomId)
+                ->pluck('quantity', 'store_type_id')->all();
+        $storeRooms = $this->storeRoomRepo
+            ->with(['stuff', 'storeFaculty.detailImportStore'])
+            ->whereHas('storeFaculty.detailImportStore', function ($has) {
+                $has->where('status', '<', config('constant.rate_deadline'));
+            })
+            ->findWhere([
+            ['room_id', '=', $roomId]
+            ]);
+        foreach ($storeRooms as $storeRoom) {
+            if (in_array($storeRoom->store_room_id, array_keys($notLiquidations))) {
+                $storeRoom['num_liquidation'] = $notLiquidations[$storeRoom->store_room_id];
+            }
+        }
+        return $storeRooms;
     }
 
     /**
@@ -99,11 +118,11 @@ class MessageService extends BaseService
     public function getAmountExpireStuff()
     {
         $role = auth()->user()->role->name;
-        if($role == config('constant.r_admin') || $role == config('constant.r_accountant')) {
+        if ($role == config('constant.r_admin') || $role == config('constant.r_accountant')) {
             return ['store' => count($this->getExpireStuffStore())];
-        } elseif ($role == config('constant.r_faculty') ) {
+        } elseif ($role == config('constant.r_faculty')) {
             return ['store' => count($this->getExpireStuffStoreFacul())];
-        } elseif ($role == config('constant.r_room') ) {
+        } elseif ($role == config('constant.r_room')) {
             return ['store' => count($this->getExpireStuffStoreRoom())];
         }
         return '';

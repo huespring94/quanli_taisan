@@ -55,12 +55,12 @@
                             <span id="messages-expire" class="label label-warning"></span>
                         </a>
                         @elseif (Auth::user()->role->name == config('constant.r_faculty'))
-                        <a href="{{url('fac/atrophy-store')}}">
+                        <a href="{{route('atrophy-store-faculty')}}">
                             <i class="fa fa-bell-o"></i>
                             <span id="messages-expire" class="label label-warning"></span>
                         </a>
                         @elseif (Auth::user()->role->name == config('constant.r_room'))
-                        <a href="{{url('roo/atrophy-store')}}">
+                        <a href="{{route('atrophy-store-room')}}">
                             <i class="fa fa-bell-o"></i>
                             <span id="messages-expire" class="label label-warning"></span>
                         </a>

@@ -8,6 +8,7 @@ use App\Services\MessageService;
 use App\Services\LiquidationService;
 use App\Services\StuffFacultyService;
 use App\Services\RequestService;
+use App\Services\FacultyRoomService;
 
 class AtrophyController extends Controller
 {
@@ -20,27 +21,33 @@ class AtrophyController extends Controller
     private $stuffFacService;
     
     private $requestService;
+    
+    private $facRoomService;
 
     /**
      * Constructor atrophy controller
      *
-     * @param AtrophyService         $atrophyService     []
-     * @param MessageService         $messageService     []
-     * @param LiquidationService     $liquidationService []
-     * @param StoreFacultyRepository $storeFacultyRepo   []
+     * @param AtrophyService      $atrophyService     []
+     * @param MessageService      $messageService     []
+     * @param LiquidationService  $liquidationService []
+     * @param StuffFacultyService $stuffFacService    []
+     * @param RequestService      $requestService     []
+     * @param FacultyRoomService  $facRoomService     []
      */
     public function __construct(
         AtrophyService $atrophyService,
         MessageService $messageService,
         LiquidationService $liquidationService,
         StuffFacultyService $stuffFacService,
-        RequestService $requestService
+        RequestService $requestService,
+        FacultyRoomService $facRoomService
     ) {
         $this->atrophyService = $atrophyService;
         $this->messageService = $messageService;
         $this->liquidationService = $liquidationService;
         $this->stuffFacService = $stuffFacService;
         $this->requestService = $requestService;
+        $this->facRoomService = $facRoomService;
     }
     
     /**
@@ -82,7 +89,13 @@ class AtrophyController extends Controller
      */
     public function getExpireStuffStoreRoom()
     {
-        //
+        $roomId = $this->facRoomService->getRoomByUser(auth()->user()->id)->room_id;
+        $atrophyStores = $this->messageService->getExpireStuffStoreRoom();
+        $waitLiquidations = $this->requestService->getRequestNotLiquidationByRoom($roomId);
+        return view('atrophy.atrophy-room', [
+            'atrophyStores' => $atrophyStores,
+            'liquidations' => $waitLiquidations,
+        ]);
     }
 
     /**
@@ -122,8 +135,6 @@ class AtrophyController extends Controller
     }
     /**
      * Move to liquidation
-     *
-     * @param any $id []
      *
      * @return Reponse
      */

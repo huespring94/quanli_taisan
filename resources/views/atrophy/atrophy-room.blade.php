@@ -2,9 +2,6 @@
 
 @section('title_content')
 Thiết bị trong kho 
-<a class="btn bg-blue" data-toggle="modal" data-target="#myModalCustom">
-    Gửi yêu cầu tùy chọn
-    <i class="fa fa-send"></i></a>
 @stop
 
 @section('home')
@@ -46,7 +43,7 @@ Thiết bị trong kho
                     <tbody align="center">
                         @foreach($atrophyStores as $atrophyStore)
                         <tr>
-                            <td>{{$atrophyStore->store_faculty_id}}</td>
+                            <td>{{$atrophyStore->store_room_id}}</td>
                             <td>{{$atrophyStore->date_import}}</td>
                             <td>{{$atrophyStore->stuff->name}}</td>
                             <td>
@@ -56,11 +53,11 @@ Thiết bị trong kho
                                 {{$atrophyStore->quantity}}
                                 @endif
                             </td>
-                            <td>{{$atrophyStore->detailImportStore->status}}
-                                @if ($atrophyStore->detailImportStore->status <= 20)
-                                <span class="badge bg-warning">{{$atrophyStore->detailImportStore->status}}%</span>
+                            <td>
+                                @if ($atrophyStore->storeFaculty->detailImportStore->status <= 20)
+                                <span class="badge bg-warning">{{$atrophyStore->storeFaculty->detailImportStore->status}}%</span>
                                 @else
-                                <span class="badge bg-light-blue">{{$atrophyStore->detailImportStore->status}}%</span>
+                                <span class="badge bg-light-blue">{{$atrophyStore->storeFaculty->detailImportStore->status}}%</span>
                                 @endif
                             </td>
                             <td>
@@ -76,7 +73,7 @@ Thiết bị trong kho
                 </table>
             </div>
 
-            <form class="form-horizontal" method="POST" action="{{route('request-liquidation-faculty')}}">
+            <form class="form-horizontal" method="POST" action="{{route('request-liquidation-room')}}">
                 {{ csrf_field() }}
                 <div class="modal fade" id="myModal" role="dialog">
                     <div class="modal-dialog">
@@ -91,7 +88,7 @@ Thiết bị trong kho
                                     <div class="col-sm-6">
                                         <select name="store_type_id" class="form-control">
                                             @foreach($atrophyStores as $atrophyStore)
-                                            <option value="{{$atrophyStore->store_faculty_id}}">{{$atrophyStore->store_faculty_id}}</option>
+                                            <option value="{{$atrophyStore->store_room_id}}">{{$atrophyStore->store_room_id}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -150,8 +147,8 @@ Thiết bị trong kho
                     <tbody align="center">
                         @foreach($liquidations as $liquidation)
                         <tr>
-                            <td>{{$liquidation->storeFaculty->date_import}}</td>
-                            <td>{{$liquidation->storeFaculty->stuff->name}}</td>
+                            <td>{{$liquidation->storeRoom->date_import}}</td>
+                            <td>{{$liquidation->storeRoom->stuff->name}}</td>
                             <td>{{$liquidation->quantity}}</td>
                         </tr>
                         @endforeach
@@ -164,58 +161,5 @@ Thiết bị trong kho
     <!-- /.col (right) -->
 </div>
 
-
-<form class="form-horizontal" method="POST" action="{{url('fac/request-liquidation')}}">
-    {{ csrf_field() }}
-    <div class="modal fade" id="myModalCustom" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Thanh lí</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Chọn mã thiết bị</label>
-                        <div class="col-sm-6">
-                            <select name="store_type_id" class="form-control">
-                                @foreach($storeFaculties as $storeFaculty)
-                                <option value="{{$storeFaculty->store_faculty_id}}">{{$storeFaculty->store_faculty_id}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Số lượng</label>
-                        <div class="col-sm-6">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-database"></i>
-                                </span>
-                                <input type="number" min="1" name="quantity" class="form-control pull-right">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Ghi chú</label>
-                        <div class="col-sm-6">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-sticky-note"></i>
-                                </span>
-                                <input type="text" name="note" class="form-control pull-right">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-default">OK</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
 @stop
 

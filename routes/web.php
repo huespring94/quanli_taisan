@@ -69,15 +69,28 @@ Route::group(['middleware' => 'faculty', 'prefix' => 'fac'], function () {
     ]);
     Route::get('/statis-faculty-year-detail/{year}/{stuff}', 'StatisticalController@detailStatisticByFacultyYearStuff');
     Route::get('/atrophy-store', [
-        'as' => 'atrophy-store',
+        'as' => 'atrophy-store-faculty',
         'uses' => 'AtrophyController@getExpireStuffStoreFaculty'
     ]);
-    Route::post('/request-liquidation', 'RequestController@storeFaculty');
+    Route::post('/request-liquidation', [
+        'as' => 'request-liquidation-faculty',
+        'uses' => 'RequestController@storeFaculty'
+    ]);
 });
 
 Route::group(['middleware' => 'room', 'prefix' => 'roo'], function () {
-    Route::get('/atrophy-store', 'AtrophyController@getExpireStuffStore');
-    Route::post('/request-liquidation', 'RequestController@getExpireStuffStoreFaculty');
+    Route::get('/atrophy-store', [
+        'as' => 'atrophy-store-room',
+        'uses' => 'AtrophyController@getExpireStuffStoreRoom'
+    ]);
+    Route::post('/request-liquidation', [
+        'as' => 'request-liquidation-room',
+        'uses' => 'RequestController@storeRoom'
+    ]);
+    Route::get('/store-room-user', [
+        'as' => 'store-room-user',
+        'uses' => 'ImportRoomController@getImportRoomByRoom'
+    ]);
 });
 
 Route::get('logout', function() {

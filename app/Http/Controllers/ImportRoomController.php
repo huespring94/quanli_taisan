@@ -146,7 +146,7 @@ class ImportRoomController extends Controller
      *
      * @param Request $request []
      *
-     * @return int
+     * @return Response
      */
     public function getImportRoomByFaculty(Request $request)
     {
@@ -154,5 +154,17 @@ class ImportRoomController extends Controller
         $storeRooms = $this->stuffFacultyService->getImportRoomAllByRoom($request->get('room_id'));
         $roomId = $request->get('room_id');
         return view('room.index', ['rooms' => $rooms, 'storeRooms' => $storeRooms, 'roomId' => $roomId]);
+    }
+    
+    /**
+     * Get import room by own user
+     *
+     * @return Response
+     */
+    public function getImportRoomByRoom()
+    {
+        $roomId = $this->facultyRoomService->getRoomByUser(auth()->user()->id)->room_id;
+        $storeRooms = $this->stuffFacultyService->getImportRoomAllByRoom($roomId);
+        return view('room.index-room', ['storeRooms' => $storeRooms]);
     }
 }

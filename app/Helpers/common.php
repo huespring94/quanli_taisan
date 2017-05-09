@@ -16,4 +16,3 @@ function areActiveRoutes(array $routes, $output = "active")
         }
     }
 }
-

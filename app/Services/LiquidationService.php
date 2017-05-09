@@ -29,6 +29,8 @@ class LiquidationService extends BaseService
      *
      * @param LiquidationRepository       $liquidationRepo  []
      * @param DetailImportStoreRepository $detailIStoreRepo []
+     * @param StoreFacultyRepository      $storeFacultyRepo []
+     * @param StoreRoomRepository         $storeRoomRepo    []
      */
     public function __construct(
         LiquidationRepository $liquidationRepo,

@@ -18,13 +18,15 @@ class RequestService
     /**
      * Constructor for request service
      *
-     * @param RequestRepository $requestRepo []
+     * @param RequestRepository      $requestRepo      []
+     * @param StoreFacultyRepository $storeFacultyRepo []
+     * @param StoreRoomRepository    $storeRoomRepo    []
      */
     public function __construct(
         RequestRepository $requestRepo,
         StoreFacultyRepository $storeFacultyRepo,
-        StoreRoomRepository $storeRoomRepo)
-    {
+        StoreRoomRepository $storeRoomRepo
+    ) {
         $this->requestRepository = $requestRepo;
         $this->storeFacultyRepo = $storeFacultyRepo;
         $this->storeRoomRepo = $storeRoomRepo;
@@ -46,18 +48,18 @@ class RequestService
             ['store_type_id', '=', $datas['store_type_id']],
             ['status', '=', 0]
         ])->first();
-        if($requestInfo == null) {
+        if ($requestInfo == null) {
             $requestInfo['quantity'] = 0;
         }
         if ($type == Request::TYPE_ROOM) {
             $storeRoom = $this->storeRoomRepo->findByField('store_room_id', $datas['store_type_id'])->first();
-            if($datas['quantity'] > ($storeRoom->quantity - $requestInfo['quantity'])) {
+            if ($datas['quantity'] > ($storeRoom->quantity - $requestInfo['quantity'])) {
                 return null;
-            } 
+            }
             $datas['type'] = Request::TYPE_ROOM;
         } else {
             $storeFac = $this->storeFacultyRepo->findByField('store_faculty_id', $datas['store_type_id'])->first();
-            if($datas['quantity'] > ($storeFac->quantity - $requestInfo['quantity'])) {
+            if ($datas['quantity'] > ($storeFac->quantity - $requestInfo['quantity'])) {
                 return null;
             }
             $datas['type'] = Request::TYPE_FACULTY;
@@ -73,12 +75,19 @@ class RequestService
         return $datas['store_type_id'];
     }
     
+    /**
+     * Accept request
+     *
+     * @param any $requestId []
+     *
+     * @return void
+     */
     public function acceptRequest($requestId)
     {
         $request = $this->requestRepository->find($requestId);
         $request->status = 1;
         $request->save();
-        if($request->type == Request::TYPE_FACULTY) {
+        if ($request->type == Request::TYPE_FACULTY) {
             $this->storeFacultyRepo->deleteWhere(['store_faculty_id' => $request->store_type_id]);
         } else {
             $this->storeRoomRepo->deleteWhere(['store_room_id' => $request->store_type_id]);
@@ -102,6 +111,27 @@ class RequestService
             ->findWhere([
                 ['status', '=', 0],
                 ['type', '=', Request::TYPE_FACULTY],
+                ['kind_request', '=', Request::KIND_REQ_ONE]
+            ]);
+    }
+    
+    /**
+     * Get request not liquidation by faculty
+     *
+     * @param any $roomId []
+     *
+     * @return mixed
+     */
+    public function getRequestNotLiquidationByRoom($roomId)
+    {
+        return $this->requestRepository
+            ->with('storeRoom.stuff')
+            ->whereHas('storeRoom', function ($has) use ($roomId) {
+                $has->where('room_id', '=', $roomId);
+            })
+            ->findWhere([
+                ['status', '=', 0],
+                ['type', '=', Request::TYPE_ROOM],
                 ['kind_request', '=', Request::KIND_REQ_ONE]
             ]);
     }

@@ -36,7 +36,13 @@ Thiết bị trong kho
                             <td>{{$atrophyStore->importStore->date_import}}</td>
                             <td>{{$atrophyStore->stuff->name}}</td>
                             <td>{{$atrophyStore->quantity}}</td>
-                            <td>{{$atrophyStore->status}}</td>
+                            <td>{{$atrophyStore->status}}
+                                @if ($atrophyStore->status <= 20)
+                                <span class="badge bg-warning">{{$atrophyStore->status}}%</span>
+                                @else
+                                <span class="badge bg-light-blue">{{$atrophyStore->status}}%</span>
+                                @endif
+                            </td>
                             <td>
                                 <a id="detail-import-delete" class="btn bg-green pull-right" data-toggle="modal" data-target="#myModal">
                                     OK</a>
@@ -77,9 +83,9 @@ Thiết bị trong kho
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title">Thiết bị đã thanh lí</h3>
-            <a type="button" href="" class="btn bg-gray-light margin pull-right">
-                <i class="fa fa-angle-double-right"></i>
-                Chi tiết</a>
+                <a type="button" href="" class="btn bg-gray-light margin pull-right">
+                    <i class="fa fa-angle-double-right"></i>
+                    Chi tiết</a>
             </div>
             <div class="box-body">
                 <table id="mydata-add" class="table table-bordered table-striped">

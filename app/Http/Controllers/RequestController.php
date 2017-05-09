@@ -8,6 +8,8 @@ use App\Services\MessageService;
 use App\Services\LiquidationService;
 use App\Services\StuffFacultyService;
 use Session;
+use App\Services\FacultyRoomService;
+use App\Models\Request as Req;
 
 class RequestController extends Controller
 {
@@ -18,26 +20,31 @@ class RequestController extends Controller
     private $liquidationService;
     
     private $stuffFacService;
+    
+    private $facRoomService;
 
     /**
      * Constructor for request controller
      *
-     * @param RequestService $requestService         []
-     * @param MessageService $messageService         []
-     * @param LiquidationService $liquidationService []
-     * @param StuffFacultyService $stuffFacService   []
+     * @param RequestService      $requestService     []
+     * @param MessageService      $messageService     []
+     * @param LiquidationService  $liquidationService []
+     * @param StuffFacultyService $stuffFacService    []
+     * @param FacultyRoomService  $facRoomService     []
      */
     public function __construct(
         RequestService $requestService,
         MessageService $messageService,
         LiquidationService $liquidationService,
-        StuffFacultyService $stuffFacService
-    )
-    {
+        StuffFacultyService $stuffFacService,
+        FacultyRoomService $facRoomService
+    ) {
+    
         $this->requestService = $requestService;
         $this->messageService = $messageService;
         $this->liquidationService = $liquidationService;
         $this->stuffFacService = $stuffFacService;
+        $this->facRoomService = $facRoomService;
     }
 
     /**
@@ -60,6 +67,28 @@ class RequestController extends Controller
             'atrophyStores' => $atrophyStores,
             'liquidations' => $waitLiquidations,
             'storeFaculties' => $storeFaculties
+        ]);
+    }
+    
+    /**
+     * Create request
+     *
+     * @param Request $request []
+     *
+     * @return Reponse
+     */
+    public function storeRoom(Request $request)
+    {
+        $storeTypeId = $this->requestService->createRequest($request, Req::TYPE_ROOM);
+        if ($storeTypeId == null) {
+            Session::flash('msg', 'Số lượng vượt quá số lượng hiện có.');
+        }
+        $roomId = $this->facRoomService->getRoomByUser(auth()->user()->id)->room_id;
+        $atrophyStores = $this->messageService->getExpireStuffStoreRoom();
+        $waitLiquidations = $this->requestService->getRequestNotLiquidationByRoom($roomId);
+        return view('atrophy.atrophy-room', [
+            'atrophyStores' => $atrophyStores,
+            'liquidations' => $waitLiquidations,
         ]);
     }
 }

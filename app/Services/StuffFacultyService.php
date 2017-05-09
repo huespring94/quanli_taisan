@@ -24,9 +24,10 @@ class StuffFacultyService
     /**
      * Constructor of stuff faculty service
      *
-     * @param StoreFacultyRepository $storeFacRepo  []
-     * @param StoreRoomRepository    $storeRoomRepo []
-     * @param RoomRepository         $roomRepo      []
+     * @param StoreFacultyRepository $storeFacRepo   []
+     * @param StoreRoomRepository    $storeRoomRepo  []
+     * @param RoomRepository         $roomRepo       []
+     * @param RequestService         $requestService []
      */
     public function __construct(
         StoreFacultyRepository $storeFacRepo,
@@ -95,7 +96,7 @@ class StuffFacultyService
             })
             ->findWhere([
                 ['faculty_id', '=', $user->faculty_id],
-                ['quantity', '>', '0'], 
+                ['quantity', '>', '0'],
                 ['stuff_id', '=', $data['stuff_id']]
             ]);
         foreach ($storeFaculties as $key => $detail) {
@@ -182,7 +183,7 @@ class StuffFacultyService
             ->pluck('status', 'store_type_id')->all();
         $storeRooms = $this->storeRoomRepo
             ->with(['room', 'storeFaculty.detailImportStore', 'stuff.supplier'])
-            ->whereHas('storeFaculty', function($has) use ($roomId) {
+            ->whereHas('storeFaculty', function ($has) use ($roomId) {
                 $has->where('room_id', '=', $roomId);
             })->orderBy('created_at', 'desc')->all();
         foreach ($storeRooms as $storeRoom) {
@@ -261,6 +262,4 @@ class StuffFacultyService
         return $this->storeFacultyRepo
             ->findWhere([['faculty_id', '=', $facultyId], ['quantity', '>', 0]]);
     }
-    
-    
 }

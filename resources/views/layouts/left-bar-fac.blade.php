@@ -1,5 +1,5 @@
 <ul class="sidebar-menu">
-    <li class="header">MAIN NAVIGATION</li>
+    <li class="header">MENU</li>
     <li class="treeview {{ areActiveRoutes(['store-room.create', 'store-room.store']) }}">
         <a href="{!! route('store-room.create') !!}">
             <i class="fa fa-dashboard"></i> <span>Nhập TS</span>
@@ -24,7 +24,7 @@
             </span>
         </a>
     </li>
-    <li class="{{ areActiveRoutes(['atrophy-store']) }}">
+    <li class="{{ areActiveRoutes(['atrophy-store-faculty', 'request-liquidation-faculty']) }}">
         <a>
             <i class="fa fa-th"></i> <span>Yêu cầu</span>
             <span class="pull-right-container">
@@ -32,7 +32,7 @@
             </span>
         </a>
         <ul class="treeview-menu">
-            <li class="{{ areActiveRoutes(['atrophy-store']) }}"><a href="{{route('atrophy-store')}}"><i class="fa fa-circle-o"></i> Yêu cầu thanh lí</a></li>
+            <li class="{{ areActiveRoutes(['atrophy-store-faculty']) }}"><a href="{{route('atrophy-store-faculty')}}"><i class="fa fa-circle-o"></i> Yêu cầu thanh lí</a></li>
             <li><a href=""><i class="fa fa-circle-o"></i> Yêu cầu điều chuyển</a></li>
           </ul>
     </li>

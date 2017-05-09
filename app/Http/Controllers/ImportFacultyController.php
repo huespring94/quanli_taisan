@@ -167,9 +167,4 @@ class ImportFacultyController extends Controller
         $importFacs = $this->stuffFacultyService->getImportFacultyByFaculty();
         return view('faculty.index-faculty', ['importFacs' => $importFacs]);
     }
-    
-    public function deleteImportFaculty($storeFacultyId)
-    {
-        
-    }
 }

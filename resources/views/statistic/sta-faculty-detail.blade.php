@@ -13,7 +13,7 @@ Thống kê theo khoa
 
 <div class="box">
     <div class="box-header">
-            <h3 class="box-title">Thanh lí tài sản</h3>
+            <h3 class="box-title">Thống kê tài sản</h3>
         </div>
     <div class="box-body">
         <table class="table table-bordered table-striped">

@@ -8,6 +8,7 @@ use App\Models\StoreFaculty;
 use App\Repositories\StoreRoomRepository;
 use App\Models\Room;
 use App\Repositories\RoomRepository;
+use App\Services\RequestService;
 
 class StuffFacultyService
 {
@@ -17,22 +18,27 @@ class StuffFacultyService
     private $storeRoomRepo;
     
     private $roomRepo;
+    
+    private $requestService;
 
     /**
      * Constructor of stuff faculty service
      *
-     * @param StoreFacultyRepository $storeFacRepo  []
-     * @param StoreRoomRepository    $storeRoomRepo []
-     * @param RoomRepository         $roomRepo      []
+     * @param StoreFacultyRepository $storeFacRepo   []
+     * @param StoreRoomRepository    $storeRoomRepo  []
+     * @param RoomRepository         $roomRepo       []
+     * @param RequestService         $requestService []
      */
     public function __construct(
         StoreFacultyRepository $storeFacRepo,
         StoreRoomRepository $storeRoomRepo,
-        RoomRepository $roomRepo
+        RoomRepository $roomRepo,
+        RequestService $requestService
     ) {
         $this->storeFacultyRepo = $storeFacRepo;
         $this->storeRoomRepo = $storeRoomRepo;
         $this->roomRepo = $roomRepo;
+        $this->requestService = $requestService;
     }
 
     /**
@@ -84,7 +90,15 @@ class StuffFacultyService
         $importRoom = $storeFaculty = [];
         $amount = 0;
         $quantity = $data['quantity'];
-        $storeFaculties = $this->storeFacultyRepo->with('detailImportStore')->findWhere([['faculty_id', '=', $user->faculty_id], ['quantity', '>', '0'], ['stuff_id', '=', $data['stuff_id']]]);
+        $storeFaculties = $this->storeFacultyRepo->with('detailImportStore')
+            ->whereHas('detailImportStore', function ($has) {
+                $has->where('status', '>', config('constant.rate_deadline'));
+            })
+            ->findWhere([
+                ['faculty_id', '=', $user->faculty_id],
+                ['quantity', '>', '0'],
+                ['stuff_id', '=', $data['stuff_id']]
+            ]);
         foreach ($storeFaculties as $key => $detail) {
             $remain = $detail->quantity - $quantity;
             if ($quantity == 0) {
@@ -157,14 +171,28 @@ class StuffFacultyService
     /**
      * Get stuff by room id
      *
+     * @param any $roomId []
+     *
      * @return array
      */
-    public function getStuffAllRoom()
+    public function getImportRoomAllByRoom($roomId)
     {
-        $user = auth()->user();
-        return $this->storeRoomRepo->with(['room', 'storeFaculty.detailImportStore'])->whereHas('storeFaculty', function ($has) use ($user) {
-            $has->where('faculty_id', '=', $user->faculty_id);
-        })->all();
+        $requestQs = $this->requestService->getRequestAllLiquidationByRoom($roomId)
+            ->pluck('quantity', 'store_type_id')->all();
+        $requestSs = $this->requestService->getRequestAllLiquidationByRoom($roomId)
+            ->pluck('status', 'store_type_id')->all();
+        $storeRooms = $this->storeRoomRepo
+            ->with(['room', 'storeFaculty.detailImportStore', 'stuff.supplier'])
+            ->whereHas('storeFaculty', function ($has) use ($roomId) {
+                $has->where('room_id', '=', $roomId);
+            })->orderBy('created_at', 'desc')->all();
+        foreach ($storeRooms as $storeRoom) {
+            if (in_array($storeRoom->store_room_id, array_keys($requestQs))) {
+                $storeRoom['liquidation_quantity'] = $requestQs[$storeRoom->store_room_id];
+                $storeRoom['liquidation_status'] = $requestSs[$storeRoom->store_room_id];
+            }
+        }
+        return $storeRooms;
     }
     
     /**
@@ -176,11 +204,16 @@ class StuffFacultyService
      */
     public function getImportRoomByRoom($roomId)
     {
-        if ($roomId != null) {
-            return $this->storeRoomRepo->with(['room', 'storeFaculty.detailImportStore'])
+        $requests = $this->requestService->getRequestLiquidationByRoom($roomId)
+            ->pluck('quantity', 'store_type_id')->all();
+        $storeRooms = $this->storeRoomRepo->with(['room', 'storeFaculty.detailImportStore', 'stuff.supplier'])
                 ->findByField('room_id', $roomId);
+        foreach ($storeRooms as $storeRoom) {
+            if (in_array($storeRoom->store_room_id, array_keys($requests))) {
+                $storeRoom['liquidation'] = $requests[$storeRoom->store_room_id];
+            }
         }
-        return $this->getStuffAllRoom();
+        return $storeRooms;
     }
     
     /**
@@ -191,9 +224,16 @@ class StuffFacultyService
     public function getImportFacultyByFaculty()
     {
         $user = auth()->user();
-        return $this->storeFacultyRepo
-            ->with(['stuff.supplier', 'detailImportStore'])
-            ->findByField('faculty_id', $user->faculty_id);
+        $requests = $this->requestService->getRequestLiquidationByFaculty($user->faculty_id)
+            ->pluck('quantity', 'store_type_id')->all();
+        $storeFaculties = StoreFaculty::with(['stuff.supplier', 'detailImportStore'])
+            ->where('faculty_id', '=', $user->faculty_id)->get();
+        foreach ($storeFaculties as $storeFaculty) {
+            if (in_array($storeFaculty->store_faculty_id, array_keys($requests))) {
+                $storeFaculty['liquidation'] = $requests[$storeFaculty->store_faculty_id];
+            }
+        }
+        return $storeFaculties;
     }
     
     /**
@@ -208,5 +248,18 @@ class StuffFacultyService
         return $this->storeFacultyRepo
             ->with(['stuff.supplier', 'detailImportStore'])
             ->findByField('store_faculty_id', $id)->first();
+    }
+    
+    /**
+     * Get import faculty by faculty id and quantity greater zero
+     *
+     * @param any $facultyId []
+     *
+     * @return array
+     */
+    public function getStoreFacultyByFacultyNotZero($facultyId)
+    {
+        return $this->storeFacultyRepo
+            ->findWhere([['faculty_id', '=', $facultyId], ['quantity', '>', 0]]);
     }
 }

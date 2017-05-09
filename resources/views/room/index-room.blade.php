@@ -5,30 +5,11 @@ Danh sách tài sản phòng
 @stop
 
 @section('home')
-<li>Kho khoa</li>
-<li class="active">Nhâp kho phòng</li>
+<li>Kho phòng</li>
+<li class="active">Danh sách</li>
 @stop
 
 @section('content')
-<div class="box">
-    <form class="form-horizontal" role="form" method="POST" action="{{route('store-room-fac')}}">
-        {{ csrf_field() }}
-        <div class="box-header">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Chọn phòng</label>
-                <div class="col-sm-6">
-                    <select name="room_id" class="form-control">
-                        @foreach($rooms as $room)
-                        <option {{!isset($roomId) ? '' : ($roomId == $room->room_id ? "selected" : '')}} value="{{$room->room_id}}">{{$room->name}}</option>
-                        @endforeach
-                    </select>
-                </div><div class="col-sm-2">
-                    <button type="submit" class="btn btn-info pull-right import_faculty-btn">Tìm kiếm</button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
 
 <div class="box">
     <div class="box-header">

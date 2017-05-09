@@ -87,4 +87,16 @@ class FacultyRoomService extends BaseService
     {
         return $this->roomRepo->findByField('room_id', $id)->first();
     }
+    
+    /**
+     * Get room by user id
+     *
+     * @param any $userId []
+     *
+     * @return object
+     */
+    public function getRoomByUser($userId)
+    {
+        return $this->roomRepo->findByField('user_id', $userId)->first();
+    }
 }

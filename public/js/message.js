@@ -1,6 +1,6 @@
 function myFunction() {
     $.ajax({
-        url: '/admin/messages',
+        url: '/messages',
         type: 'GET',
         dataType: 'html',
         data: {},
@@ -20,6 +20,3 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("#mydata-add").DataTable();
 });
-
-
-

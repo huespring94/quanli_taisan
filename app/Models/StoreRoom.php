@@ -16,14 +16,15 @@ class StoreRoom extends Model
     
     protected $fillable = [
         'id',
+        'store_room_id',
         'date_import',
-        'stuff_id',
-        'status',
-        'room_id',
-        'quantity',
         'quantity_start',
+        'quantity',
+        'room_id',
         'store_faculty_id',
-        'user_id'
+        'stuff_id',
+//        'status',
+//        'user_id'
     ];
     
     /**
@@ -71,5 +72,15 @@ class StoreRoom extends Model
     public function room()
     {
         return $this->belongsTo(Room::class, 'room_id', 'room_id');
+    }
+    
+    /**
+     * Get the requests that chilren the store room.
+     *
+     * @return array Request
+     */
+    public function requests()
+    {
+        return $this->hasMany(Request::class, 'store_type_id', 'store_room_id');
     }
 }

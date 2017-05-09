@@ -36,6 +36,9 @@ Danh sách tài sản của các khoa
     <div class="box-header">
         <h3 class="box-title">Danh sách tài sản</h3>
     </div>
+    <button type="button" class="btn bg-navy margin pull-right">
+                <i class="fa fa-download"></i>
+                Xuất file excel</button>
     <div class="box-body">
         <table id="mydata" class="table table-bordered table-striped">
             <thead>
@@ -62,7 +65,7 @@ Danh sách tài sản của các khoa
                     <td align="right">{{number_format($importFac->quantity * $importFac->detailImportStore->price_unit)}}</td>
                     <td>
                         @if ($importFac->detailImportStore->status <= 20)
-                        <span class="badge bg-red">{{$importFac->detailImportStore->status}}%</span>
+                        <span class="badge bg-warning">{{$importFac->detailImportStore->status}}%</span>
                         @else
                         <span class="badge bg-light-blue">{{$importFac->detailImportStore->status}}%</span>
                         @endif

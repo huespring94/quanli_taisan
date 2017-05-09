@@ -1,5 +1,5 @@
 <ul class="sidebar-menu">
-        <li class="header">MAIN NAVIGATION</li>
+        <li class="header">MENU</li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span> {{trans('content.left_bar.generate')}}</span>

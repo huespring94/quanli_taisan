@@ -10,12 +10,15 @@ Danh sách tài sản khoa
 @stop
 
 @section('content')
-    
+
 <div class="box">
     <div class="box-header">
         <h3 class="box-title">Khoa <b>{{Auth::user()->faculty->name}}</b></h3>
+        <button type="button" class="btn bg-navy margin pull-right">
+            <i class="fa fa-download"></i>
+            Xuất file excel</button>
     </div>
-    
+
     <div class="box-body">
         <caption></caption>
         <table id="mydata" class="table table-bordered table-striped">
@@ -25,16 +28,23 @@ Danh sách tài sản khoa
                     <th>Ngày SD</th>
                     <th>Tên tài sản</th>
                     <th>Tổng số lượng</th>
-                    <th>Số lượng CL</th>
+                    <th>Số lượng</th>
                     <th>Thành tiền</th>
                     <th>Tỷ lệ % CL</th>
+                    <th>SL thanh lí</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody align="center">
                 @foreach ($importFacs as $importFac)
                 <tr>
-                    <td>{{$importFac->store_faculty_id}}</td>
+                    <td>
+                        @if($importFac->quantity < $importFac->quantity_start)
+                        <a href="{{url('fac/detail-store-faculty', [$importFac->store_faculty_id])}}" class="btn bg-gray-light pull-right">
+                            {{$importFac->store_faculty_id}}</a>
+                        @else
+                        {{$importFac->store_faculty_id}}</td>
+                        @endif
                     <td>{{$importFac->date_import}}</td>
                     <td>{{$importFac->stuff->name}}</td>
                     <td>{{$importFac->quantity_start}}</td>
@@ -42,16 +52,21 @@ Danh sách tài sản khoa
                     <td align="right">{{number_format($importFac->quantity * $importFac->detailImportStore->price_unit)}}</td>
                     <td>
                         @if ($importFac->detailImportStore->status <= 20)
-                        <span class="badge bg-red">{{$importFac->detailImportStore->status}}%</span>
+                        <span class="badge bg-warning">{{$importFac->detailImportStore->status}}%</span>
                         @else
                         <span class="badge bg-light-blue">{{$importFac->detailImportStore->status}}%</span>
                         @endif
                     </td>
                     <td>
-                        @if($importFac->quantity < $importFac->quantity_start)
-                        <a href="{{url('fac/detail-store-faculty', [$importFac->store_faculty_id])}}" class="btn bg-gray-light pull-right">
-                                <i class="fa fa-angle-double-right"></i>Chi tiết</a>
+                        @if (isset($importFac->liquidation))
+                        {{$importFac->liquidation}}
+                        @else
+                        -
                         @endif
+                    </td>
+                    <td>
+                        <a href="" class="btn bg-red pull-right">
+                            <i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
                 @endforeach

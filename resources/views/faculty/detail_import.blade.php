@@ -104,7 +104,7 @@ Nhập tài sản cho khoa
                         <th>SL có</th>
                         <th>Đơn giá</th>
                         <th>Thành tiền</th>
-                        <th>Tỷ lệ còn lại</th>
+                        <th>Tỷ lệ % CL</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -118,7 +118,7 @@ Nhập tài sản cho khoa
                         <td>{{number_format($detail->quantity * $importFaculties['detail'][$key]->price_unit)}} </td>
                         <td>
                             @if ($importFaculties['detail'][$key]->status <= 20)
-                            <span class="badge bg-red">{{$importFaculties['detail'][$key]->status}}%</span>
+                            <span class="badge bg-warning">{{$importFaculties['detail'][$key]->status}}%</span>
                             @else
                             <span class="badge bg-light-blue">{{$importFaculties['detail'][$key]->status}}%</span>
                             @endif

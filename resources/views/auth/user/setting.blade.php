@@ -1,4 +1,4 @@
-<div class="tab-pane" id="settings">
+<div class="active tab-pane" id="settings">
     <form class="form-horizontal">
         <div class="form-group">
             <label for="inputName" class="col-sm-2 control-label">Mã tài khoản</label>

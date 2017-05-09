@@ -86,4 +86,20 @@ class StoreFacultyRepository extends BaseRepo
             ->withTrashed()
             ->get();
     }
+    
+    /**
+     * Get liquidation in faculty
+     *
+     * @param any $facultyId []
+     *
+     * @return mixed
+     */
+    public function getLiquidation($facultyId)
+    {
+        return StoreFaculty::with(['storeRooms', 'stuff.supplier', 'stuff.kindStuff', 'faculty', 'detailImportStore'])
+            ->where('faculty_id', '=', $facultyId)
+            ->orderBy('created_at', 'desc')
+            ->onlyTrashed()
+            ->get();
+    }
 }

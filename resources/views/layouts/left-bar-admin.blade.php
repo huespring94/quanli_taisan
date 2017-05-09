@@ -1,5 +1,5 @@
 <ul class="sidebar-menu">
-        <li class="header">MAIN NAVIGATION</li>
+        <li class="header">MENU</li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span> {{trans('content.left_bar.generate')}}</span>
@@ -47,7 +47,7 @@
             <li><a href="collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
           </ul>
         </li>
-        <li class="treeview">
+        <li class="treeview {{ areActiveRoutes(['import-faculty.index', 'import-faculty.create']) }}">
           <a href="#">
             <i class="fa fa-files-o"></i>
             <span> {{trans('content.left_bar.s_faculty')}}</span>
@@ -56,8 +56,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{route('import-faculty.index') }}"><i class="fa fa-circle-o"></i> Danh sách TS kho</a></li>
-            <li><a href="{!! url('admin/import-faculty/create') !!}"><i class="fa fa-circle-o"></i> Nhập kho</a></li>
+            <li class="{{ areActiveRoutes(['import-faculty.index']) }}"><a href="{{route('import-faculty.index') }}"><i class="fa fa-circle-o"></i> Danh sách TS kho</a></li>
+            <li class="{{ areActiveRoutes(['import-faculty.create']) }}"><a href="{!! url('admin/import-faculty/create') !!}"><i class="fa fa-circle-o"></i> Nhập kho</a></li>
             <li><a href="fixed.html"><i class="fa fa-circle-o"></i> Lịch sử nhập</a></li>
             <li><a href="collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Thống kê</a></li>
           </ul>

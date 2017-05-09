@@ -13,6 +13,9 @@ Danh sách tài sản phòng
 <div class="box">
     <div class="box-header">
         <h3 class="box-title">Thông tin tài sản khoa được chuyển cho các phòng</h3>
+        <a type="button" href="{!! url('fac/store-faculty-list') !!}" class="btn bg-olive margin pull-right">
+                <i class="fa fa-arrow-circle-left"></i>
+                Quay lại</a>
     </div>
 
     <div class="box-body">

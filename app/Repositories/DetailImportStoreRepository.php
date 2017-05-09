@@ -29,6 +29,7 @@ class DetailImportStoreRepository extends BaseRepo
     {
         return \DB::table($this->model->getTable())
             ->where('stuff_id', '=', $id)
+            ->where('status', '>', config('constant.rate_deadline'))
             ->sum('quantity');
     }
     

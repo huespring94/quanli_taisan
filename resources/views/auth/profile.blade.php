@@ -53,6 +53,12 @@ Trang cá nhân
                             <b>Khoa</b> 
                             <p class="pull-right"><b>{{Auth::user()->faculty->name }}</b></p>
                         </li>
+                        @if (Auth::user()->role->name == Config::get('constant.r_room'))
+                        <li class="list-group-item">
+                            <b>Phòng</b> 
+                            <p class="pull-right"><b>{{$room->name}}</b></p>
+                        </li>
+                        @endif
                     </ul>
 
                     <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
@@ -64,19 +70,9 @@ Trang cá nhân
         <div class="col-md-9">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>
-                    <li><a href="#timeline" data-toggle="tab">Timeline</a></li>
-                    <li><a href="#settings" data-toggle="tab">Settings</a></li>
+                    <li class="active"><a href="#settings" data-toggle="tab">Settings</a></li>
                 </ul>
                 <div class="tab-content">
-
-                    @include ('auth.user.activity')
-
-                    <!-- /.tab-pane -->
-
-                    @include ('auth.user.timeline')
-
-                    <!-- /.tab-pane -->
 
                     @include ('auth.user.setting')
 

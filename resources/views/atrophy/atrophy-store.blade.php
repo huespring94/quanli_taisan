@@ -36,7 +36,7 @@ Thiết bị trong kho
                             <td>{{$atrophyStore->importStore->date_import}}</td>
                             <td>{{$atrophyStore->stuff->name}}</td>
                             <td>{{$atrophyStore->quantity}}</td>
-                            <td>{{$atrophyStore->status}}
+                            <td>
                                 @if ($atrophyStore->status <= 20)
                                 <span class="badge bg-warning">{{$atrophyStore->status}}%</span>
                                 @else

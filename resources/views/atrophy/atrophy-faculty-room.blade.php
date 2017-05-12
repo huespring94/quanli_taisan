@@ -56,7 +56,7 @@ Thiết bị trong kho
                                 {{$atrophyStore->quantity}}
                                 @endif
                             </td>
-                            <td>{{$atrophyStore->detailImportStore->status}}
+                            <td>
                                 @if ($atrophyStore->detailImportStore->status <= 20)
                                 <span class="badge bg-warning">{{$atrophyStore->detailImportStore->status}}%</span>
                                 @else

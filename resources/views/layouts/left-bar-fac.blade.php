@@ -7,7 +7,7 @@
             </span>
         </a>
     </li>
-    <li class="{{ areActiveRoutes(['store-faculty-list']) }}">
+    <li class="{{ areActiveRoutes(['store-faculty-list', 'detail-store-faculty']) }}">
         <a href="{!! route('store-faculty-list') !!}">
             <i class="fa fa-edit"></i> <span>Danh sách TS khoa</span>
         </a>
@@ -17,11 +17,9 @@
             <i class="fa fa-edit"></i> <span>Danh sách TS phòng</span>
         </a>
     </li>
-    <li>
-        <a href="">
+    <li class="{{ areActiveRoutes(['liquidation-faculty']) }}">
+        <a href="{{route('liquidation-faculty')}}">
             <i class="fa fa-th"></i> <span>Danh sách TS thanh lí</span>
-            <span class="pull-right-container">
-            </span>
         </a>
     </li>
     <li class="{{ areActiveRoutes(['atrophy-store-faculty', 'request-liquidation-faculty']) }}">

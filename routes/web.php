@@ -11,7 +11,7 @@
  */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -50,7 +50,10 @@ Route::group(['middleware' => 'faculty', 'prefix' => 'fac'], function () {
         'as' => 'store-room-fac',
         'uses' => 'ImportRoomController@getImportRoomByFaculty'
     ]);
-    Route::get('/detail-store-faculty/{id}', 'HistoryImportController@getStoreRoomByStoreFaculty');
+    Route::get('/detail-store-faculty/{id}', [
+        'as' => 'detail-store-faculty',
+        'uses' => 'HistoryImportController@getStoreRoomByStoreFaculty'
+    ]);
     Route::get('/statis-faculty-year', [
         'as' => 'statis-faculty-year',
         'uses' => 'StatisticalController@statisticByFacultyYear'
@@ -75,6 +78,10 @@ Route::group(['middleware' => 'faculty', 'prefix' => 'fac'], function () {
     Route::post('/request-liquidation', [
         'as' => 'request-liquidation-faculty',
         'uses' => 'RequestController@storeFaculty'
+    ]);
+    Route::get('/liquidation-faculty', [
+        'as' => 'liquidation-faculty',
+        'uses' => 'LiquidationController@getLiquiByFaculty'
     ]);
 });
 

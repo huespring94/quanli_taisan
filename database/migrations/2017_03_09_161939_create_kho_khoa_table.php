@@ -15,7 +15,7 @@ class CreateKhoKhoaTable extends Migration
     {
         Schema::create('store_faculties', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('store_faculty_id', 30)->unique()->nullable();
+            $table->string('store_faculty_id', 50)->unique()->nullable();
             $table->date('date_import');
             $table->integer('quantity_start')->nullable();
             $table->integer('quantity');

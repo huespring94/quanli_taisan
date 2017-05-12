@@ -31,7 +31,7 @@ Danh sách tài sản khoa
                     <th>Số lượng</th>
                     <th>Thành tiền</th>
                     <th>Tỷ lệ % CL</th>
-                    <th>SL thanh lí</th>
+                    <th>Thanh lí</th>
                     <th></th>
                 </tr>
             </thead>
@@ -40,7 +40,7 @@ Danh sách tài sản khoa
                 <tr>
                     <td>
                         @if($importFac->quantity < $importFac->quantity_start)
-                        <a href="{{url('fac/detail-store-faculty', [$importFac->store_faculty_id])}}" class="btn bg-gray-light pull-right">
+                        <a href="{{route('detail-store-faculty', [$importFac->store_faculty_id])}}" class="btn bg-gray-light pull-right">
                             {{$importFac->store_faculty_id}}</a>
                         @else
                         {{$importFac->store_faculty_id}}</td>
@@ -58,8 +58,12 @@ Danh sách tài sản khoa
                         @endif
                     </td>
                     <td>
-                        @if (isset($importFac->liquidation))
-                        {{$importFac->liquidation}}
+                        @if (isset($importFac->liquidation_quantity))
+                        @if($importFac->liquidation_status)
+                        <i>Đã thanh lí ({{$importFac->liquidation_quantity}})</i>
+                        @else
+                        <i>Đang chờ ({{$importFac->liquidation_quantity}})</i>
+                        @endif
                         @else
                         -
                         @endif

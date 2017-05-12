@@ -178,6 +178,26 @@ class RequestService
     }
     
     /**
+     * Get request liquidation by faculty
+     *
+     * @param any $facultyId []
+     *
+     * @return mixed
+     */
+    public function getRequestAllLiquidationByFaculty($facultyId)
+    {
+        return $this->requestRepository
+            ->with('storeFaculty.stuff')
+            ->whereHas('storeFaculty', function ($has) use ($facultyId) {
+                $has->where('faculty_id', '=', $facultyId);
+            })
+            ->findWhere([
+                ['type', '=', Request::TYPE_FACULTY],
+                ['kind_request', '=', Request::KIND_REQ_ONE]
+            ]);
+    }
+    
+    /**
      * Get request liquidation by room
      *
      * @param any $roomId []

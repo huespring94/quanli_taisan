@@ -6,6 +6,7 @@ use App\Repositories\RequestRepository;
 use App\Models\Request;
 use App\Repositories\StoreFacultyRepository;
 use App\Repositories\StoreRoomRepository;
+use App\Services\LiquidationService;
 
 class RequestService
 {
@@ -14,6 +15,8 @@ class RequestService
     private $storeFacultyRepo;
     
     private $storeRoomRepo;
+    
+    private $liquiService;
 
     /**
      * Constructor for request service
@@ -25,11 +28,13 @@ class RequestService
     public function __construct(
         RequestRepository $requestRepo,
         StoreFacultyRepository $storeFacultyRepo,
-        StoreRoomRepository $storeRoomRepo
+        StoreRoomRepository $storeRoomRepo,
+        LiquidationService $liquiService
     ) {
         $this->requestRepository = $requestRepo;
         $this->storeFacultyRepo = $storeFacultyRepo;
         $this->storeRoomRepo = $storeRoomRepo;
+        $this->liquiService = $liquiService;
     }
     
     /**
@@ -87,10 +92,24 @@ class RequestService
         $request = $this->requestRepository->find($requestId);
         $request->status = 1;
         $request->save();
+        $this->liquiService->createLiquidationByRequest($requestId);
         if ($request->type == Request::TYPE_FACULTY) {
             $this->storeFacultyRepo->deleteWhere(['store_faculty_id' => $request->store_type_id]);
         } else {
             $this->storeRoomRepo->deleteWhere(['store_room_id' => $request->store_type_id]);
+        }
+    }
+    
+    /**
+     * Accept all request
+     *
+     * @return void
+     */
+    public function acceptAllRequest()
+    {
+        $requests = $this->requestRepository->all();
+        foreach($requests as $request) {
+            $this->acceptRequest($request->id);
         }
     }
     
@@ -214,6 +233,21 @@ class RequestService
             ->findWhere([
                 ['status', '=', 1],
                 ['type', '=', Request::TYPE_ROOM],
+                ['kind_request', '=', Request::KIND_REQ_ONE]
+            ]);
+    }
+    
+    /**
+     * Get request liquidation by room
+     *
+     * @return mixed
+     */
+    public function getRequestAllLiquidation()
+    {
+        return $this->requestRepository
+            ->with(['storeRoom.stuff', 'storeFaculty.stuff'])
+            ->findWhere([
+                ['status', '=', 0],
                 ['kind_request', '=', Request::KIND_REQ_ONE]
             ]);
     }

@@ -8,6 +8,7 @@ use App\Repositories\LiquidationRepository;
 use App\Repositories\DetailImportStoreRepository;
 use App\Repositories\StoreFacultyRepository;
 use App\Repositories\StoreRoomRepository;
+use App\Repositories\RequestRepository;
 
 class LiquidationService extends BaseService
 {
@@ -23,6 +24,8 @@ class LiquidationService extends BaseService
     private $storeFacultyRepo;
     
     private $storeRoomRepo;
+    
+    private $requestRepo;
 
     /**
      * Constructor of liquidation service
@@ -31,17 +34,20 @@ class LiquidationService extends BaseService
      * @param DetailImportStoreRepository $detailIStoreRepo []
      * @param StoreFacultyRepository      $storeFacultyRepo []
      * @param StoreRoomRepository         $storeRoomRepo    []
+     * @param RequestRepository           $requestRepo      []
      */
     public function __construct(
         LiquidationRepository $liquidationRepo,
         DetailImportStoreRepository $detailIStoreRepo,
         StoreFacultyRepository $storeFacultyRepo,
-        StoreRoomRepository $storeRoomRepo
+        StoreRoomRepository $storeRoomRepo,
+        RequestRepository $requestRepo
     ) {
         $this->liquidationRepo = $liquidationRepo;
         $this->detailIStoreRepo = $detailIStoreRepo;
         $this->storeFacultyRepo = $storeFacultyRepo;
         $this->storeRoomRepo = $storeRoomRepo;
+        $this->requestRepo = $requestRepo;
     }
     
     /**
@@ -129,6 +135,25 @@ class LiquidationService extends BaseService
             'date_liquidation' => Carbon::now()->format(config('define.date_format'))
         ];
         $storeRoom->delete();
+        $this->liquidationRepo->create($datas);
+    }
+    
+    /**
+     * Create liquidation by request
+     *
+     * @param type $requestId []
+     *
+     * @return void
+     */
+    public function createLiquidationByRequest($requestId)
+    {
+        $request = $this->requestRepo->find($requestId);
+        $datas = [
+            'date_liquidation' => Carbon::now()->format(config('define.date_format')),
+            'quantity' => $request->quantity,
+            'store_liquidation_id' => $request->store_type_id,
+            'store_type' => $request->type,
+        ];
         $this->liquidationRepo->create($datas);
     }
 }

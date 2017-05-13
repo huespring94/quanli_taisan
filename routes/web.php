@@ -31,6 +31,22 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::get('/delete-atrophy-store/{id}', 'AtrophyController@destroy');
     Route::get('/delete-atrophy-faculty/{id}', 'AtrophyController@destroyFaculty');
     Route::get('/delete-atrophy-room/{id}', 'AtrophyController@destroyRoom');
+    Route::get('/request', [
+        'as' => 'request',
+        'uses' => 'RequestController@getAll'
+    ]);
+    Route::get('/request-accept/{id}', [
+        'as' => 'request-accept',
+        'uses' => 'RequestController@acceptRequest'
+    ]);
+    Route::get('/liquidation', [
+        'as' => 'liquidation',
+        'uses' => 'LiquidationController@getAllLiquidation'
+    ]);
+    Route::get('/request-accept-all', [
+        'as' => 'request-accept-all',
+        'uses' => 'RequestController@acceptAllRequest'
+    ]);
 });
 
 Route::get('/messages', 'MessageController@getAmountExpireStuff');

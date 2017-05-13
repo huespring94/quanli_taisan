@@ -20,4 +20,9 @@ class LiquidationController extends Controller
         return view('atrophy.list-liquidation', ['liquidations' => $liquidations]);
     }
     
+    public function getAllLiquidation()
+    {
+        $liquidations = $this->liquidationService->getAllLiquidation();
+        return view('atrophy.list-liquidation', ['liquidations' => $liquidations]);
+    }
 }

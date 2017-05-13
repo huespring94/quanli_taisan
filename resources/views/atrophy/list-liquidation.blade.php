@@ -1,7 +1,7 @@
 @extends('layouts.template_admin')
 
 @section('title_content')
-Danh sách tài sản thanh lí
+Danh sách đã tài sản thanh lí
 @stop
 
 @section('home')
@@ -12,7 +12,6 @@ Danh sách tài sản thanh lí
 
 <div class="box">
     <div class="box-header">
-        <h3 class="box-title">Khoa <b>{{Auth::user()->faculty->name}}</b></h3>
         <button type="button" class="btn bg-navy margin pull-right">
             <i class="fa fa-download"></i>
             Xuất file excel</button>
@@ -26,6 +25,7 @@ Danh sách tài sản thanh lí
                     <th>Mã TB</th>
                     <th>Ngày TL</th>
                     <th>Số lượng</th>
+                    <th>Ngày SD</th>
                     <th>Tên tài sản</th>
                     <th>Tỷ lệ % CL</th>
                 </tr>
@@ -43,6 +43,7 @@ Danh sách tài sản thanh lí
                     <td>{{$liquidation->quantity}}</td>
                     
                     @if ($liquidation->store_type == config('constant.type_faculty'))
+                        <td>{{$liquidation->storeFaculty->date_import}}</td>
                         <td>{{$liquidation->storeFaculty->stuff->name}}</td>
                         <td>
                         @if ($liquidation->storeFaculty->detailImportStore->status <= 20)
@@ -52,15 +53,17 @@ Danh sách tài sản thanh lí
                         @endif
                         </td>
                     @elseif ($liquidation->store_type == config('constant.type_room'))
+                        <td>{{$liquidation->storeRoom->date_import}}</td>
                         <td>{{$liquidation->storeRoom->stuff->name}}</td>
                         <td>
-                        @if ($liquidation->storeRoom->detailImportStore->status <= 20)
-                        <span class="badge bg-warning">{{$liquidation->storeRoom->detailImportStore->status}}%</span>
+                        @if ($liquidation->storeRoom->storeFaculty->detailImportStore->status <= 20)
+                        <span class="badge bg-warning">{{$liquidation->storeRoom->storeFaculty->detailImportStore->status}}%</span>
                         @else
-                        <span class="badge bg-light-blue">{{$liquidation->storeRoom->detailImportStore->status}}%</span>
+                        <span class="badge bg-light-blue">{{$liquidation->storeRoom->storeFaculty->detailImportStore->status}}%</span>
                         @endif
                         </td>
                     @else
+                        <td>{{$liquidation->detailImportStore->importStore->date_import}}</td>
                         <td>{{$liquidation->detailImportStore->stuff->name}}</td>
                         <td>
                             @if ($liquidation->detailImportStore->status <= 20)

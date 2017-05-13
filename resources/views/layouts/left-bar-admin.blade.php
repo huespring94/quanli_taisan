@@ -27,12 +27,6 @@
     </li>
     <li class="treeview">
         <a href="#">
-            <i class="fa fa-list-alt"></i>
-            <span> Nhập kho phòng</span>
-        </a>
-    </li>
-    <li class="treeview">
-        <a href="#">
             <i class="fa fa-pie-chart"></i>
             <span> {{trans('content.left_bar.statistical')}}</span>
         </a>
@@ -40,6 +34,16 @@
             <li><a href=""><i class="fa fa-circle-o"></i>Kho tổng</a></li>
             <li><a href=""><i class="fa fa-circle-o"></i>Kho khoa</a></li>
             <li><a href=""><i class="fa fa-circle-o"></i>Kho phòng</a></li>
+        </ul>
+    </li>
+    <li class="treeview {{ areActiveRoutes(['request', 'liquidation', 'request-accept-all']) }}">
+        <a href="#">
+            <i class="fa fa-trash-o"></i>
+            <span> Thanh lí </span>
+        </a>
+        <ul class="treeview-menu">
+            <li class="{{ areActiveRoutes(['request', 'request-accept-all']) }}"><a href="{{route('request')}}"><i class="fa fa-circle-o"></i>Yêu cầu thanh lí</a></li>
+            <li class="{{ areActiveRoutes(['liquidation']) }}"><a href="{{route('liquidation')}}"><i class="fa fa-circle-o"></i>Danh sách thanh lí</a></li>
         </ul>
     </li>
 </ul>

@@ -24,9 +24,10 @@ class LiquidationRepository extends BaseRepo
      */
     public function getAllLiquidation()
     {
-        return $this->liquidationRepo->with([
-                    'detailImportStore.stuff',
-                    'detailImportStore.importStore'
+        return $this->with([
+                    'detailImportStore.importStore',
+                    'storeFaculty.stuff', 'storeFaculty.detailImportStore',
+                    'storeRoom.stuff', 'storeRoom.storeFaculty.detailImportStore'
                 ])
                 ->orderBy('created_at', 'desc')
                 ->all();

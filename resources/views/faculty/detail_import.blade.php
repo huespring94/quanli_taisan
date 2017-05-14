@@ -23,18 +23,21 @@ Nhập tài sản cho khoa
         <div class="box-header">
             <h3 class="box-title">Thông tin nhập</h3>
         </div>
-        
+
         <div class="box-body">
             <div class="form-group">
                 <label class="col-sm-4 control-label pull-left">
                     <i>Ngày nhập</i> {{$importFaculties['import_faculty'][0]->date_import}}
                 </label>
-                    <div class="col-sm-2 pull-right">
-                        <a type="button" href="{{route('import-faculty.create')}}" class="btn bg-orange margin pull-right">
-                            <i class="fa fa-plus-circle"></i>
-                            Thêm mới</a>
-                    </div>
+                <div class="col-sm-10 pull-right">
+                    <a type="button" href="{{route('import-faculty.create')}}" class="btn bg-orange margin pull-right">
+                        <i class="fa fa-plus-circle"></i>
+                        Thêm mới</a>
+                    <a href="{{route('store-faculty-show', [$faculty->faculty_id])}}" class="btn bg-olive margin pull-right">
+                        <i class="fa fa-list"></i>
+                        Danh sách tài sản khoa</a>
                 </div>
+            </div>
             <table id="example2" class="table table-bordered table-hover">
                 <thead>
                     <tr>

@@ -23,10 +23,10 @@
             <span>Thống kê</span>
         </a>
     </li>
-    <li class="treeview">
-        <a href="#">
+    <li class="treeview {{areActiveRoutes(['request-liquidation-room'])}}">
+        <a href="{{route('request-liquidation-room')}}">
             <i class="fa fa-newspaper-o"></i>
-            <span>Yêu cầu</span>
+            <span>Yêu cầu thanh lí</span>
         </a>
     </li>
 </ul>

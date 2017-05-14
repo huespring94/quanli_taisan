@@ -97,7 +97,9 @@ class LiquidationService extends BaseService
             'store_liquidation_id' => $detail->id,
             'store_type' => config ('constant.type_school'),
         ];
-        $detail->delete();
+        if($detail->quantity_start == $detail->quantity) {
+            $detail->delete();
+        }
         $this->liquidationRepo->create($datas);
     }
 

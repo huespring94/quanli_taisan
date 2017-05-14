@@ -85,6 +85,7 @@ Thiết bị trong kho
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 <h4 class="modal-title">Thanh lí</h4>
                             </div>
+                            @if(isset($atrophyStores[0]))
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Chọn mã thiết bị</label>
@@ -119,9 +120,16 @@ Thiết bị trong kho
                                     </div>
                                 </div>
                             </div>
+                            @else
+                            <div class="modal-body">
+                                Không có sản phẩm nào.
+                            </div>
+                            @endif
                             <br>
                             <div class="modal-footer">
+                                @if(isset($atrophyStores[0]))
                                 <button type="submit" class="btn btn-default">OK</button>
+                                @endif
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             </div>
                         </div>

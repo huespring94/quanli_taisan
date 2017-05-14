@@ -24,5 +24,17 @@ return [
         'Tên tài sản',
         'Tỷ lệ % CL'
     ],
+    
+    'list' => [
+        'STT',
+        'Mã nhập kho',
+        'Ngày nhập',
+        'Tên tài sản',
+        'Thông số',
+        'Kho',
+        'Số lượng',
+        'Thành tiền',
+        'Tỷ lệ % CL'
+    ],
 ];
 

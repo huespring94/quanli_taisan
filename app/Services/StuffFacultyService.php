@@ -6,9 +6,9 @@ use Carbon\Carbon;
 use App\Repositories\StoreFacultyRepository;
 use App\Models\StoreFaculty;
 use App\Repositories\StoreRoomRepository;
-use App\Models\Room;
 use App\Repositories\RoomRepository;
 use App\Services\RequestService;
+use App\Repositories\DetailImportStoreRepository;
 
 class StuffFacultyService
 {
@@ -20,25 +20,30 @@ class StuffFacultyService
     private $roomRepo;
     
     private $requestService;
+    
+    private $detailRepo;
 
     /**
      * Constructor of stuff faculty service
      *
-     * @param StoreFacultyRepository $storeFacRepo   []
-     * @param StoreRoomRepository    $storeRoomRepo  []
-     * @param RoomRepository         $roomRepo       []
-     * @param RequestService         $requestService []
+     * @param StoreFacultyRepository      $storeFacRepo   []
+     * @param StoreRoomRepository         $storeRoomRepo  []
+     * @param RoomRepository              $roomRepo       []
+     * @param RequestService              $requestService []
+     * @param DetailImportStoreRepository $detailRepo     []
      */
     public function __construct(
         StoreFacultyRepository $storeFacRepo,
         StoreRoomRepository $storeRoomRepo,
         RoomRepository $roomRepo,
-        RequestService $requestService
+        RequestService $requestService,
+        DetailImportStoreRepository $detailRepo
     ) {
         $this->storeFacultyRepo = $storeFacRepo;
         $this->storeRoomRepo = $storeRoomRepo;
         $this->roomRepo = $roomRepo;
         $this->requestService = $requestService;
+        $this->detailRepo = $detailRepo;
     }
 
     /**
@@ -265,5 +270,17 @@ class StuffFacultyService
     {
         return $this->storeFacultyRepo
             ->findWhere([['faculty_id', '=', $facultyId], ['quantity', '>', 0]]);
+    }
+    
+    /**
+     * Get all stuff in store
+     *
+     * @return mixed
+     */
+    public function getAllDetail()
+    {
+        return $this->detailRepo->with(['importStore.store', 'stuff.supplier'])
+            ->findWhere([['quantity', '>', 0]])
+            ->all();
     }
 }

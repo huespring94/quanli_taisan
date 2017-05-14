@@ -32,7 +32,6 @@ Danh sách tài sản khoa
                     <th>Thành tiền</th>
                     <th>Tỷ lệ % CL</th>
                     <th>Thanh lí</th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody align="center">
@@ -67,10 +66,6 @@ Danh sách tài sản khoa
                         @else
                         -
                         @endif
-                    </td>
-                    <td>
-                        <a href="" class="btn bg-red pull-right">
-                            <i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
                 @endforeach

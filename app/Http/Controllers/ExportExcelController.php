@@ -35,7 +35,7 @@ class ExportExcelController extends Controller
     public function downloadDetailImportStoreById($id)
     {
         $importStore = $this->importStuffService->getImportStoreById($id);
-        return Excel::create('KhoaCNTT', function($excel) use ($id, $importStore) {
+        return Excel::create('Đại học bách khoa', function($excel) use ($id, $importStore) {
                 $excel->sheet('Kho-' . $importStore->store->name, function($sheet) use ($id, $importStore) {
                     $sheet->setHeight(4, 20);
                     $sheet->setAutoSize(false);
@@ -81,20 +81,33 @@ class ExportExcelController extends Controller
      */
     public function downloadStatistic()
     {
-        return Excel::create ('Đại học bách khoa', function($excel) {
-                $excel->sheet ('ThanhLi', function($sheet) {
+        $title = 'DANH SÁCH TÀI SẢN THANH LÍ';
+        $liquidations = $this->liquiService->getAllLiquidation();
+        $this->statistic($liquidations, $title);
+    }
+    
+    /**
+     * Use for export excel for liquidation
+     *
+     * @param mixed $liquidations
+     *
+     * @return void
+     */
+    public function statistic($liquidations, $title)
+    {
+        return Excel::create ('Đại học bách khoa', function($excel) use ($title) {
+                $excel->sheet ('ThanhLi', function($sheet) use($title) {
                     $sheet->setHeight (4, 20);
                     $sheet->setAutoSize (false);
-                    $sheet->cell ('C4', function($cell) {
+                    $sheet->cell ('C4', function($cell) use($title){
                         $cell->setFont (array(
                             'family' => 'Times New Roman',
                             'size' => '16',
                             'bold' => false
                         ));
-                        $cell->setValue ('DANH SÁCH TÀI SẢN THANH LÍ');
+                        $cell->setValue ($title);
                     });
                     $sheet->setFontSize (10);
-                    $liquidations = $this->liquiService->getAllLiquidation ();
 
                     $sheet->cells ('A7:H7', function($cells) {
                         $cells->setBackground ('#00ffff');
@@ -140,5 +153,43 @@ class ExportExcelController extends Controller
                     }
                 });
             })->download ('xls');
+    }
+    
+    
+    public function downloadDetailImport()
+    {
+        $details = $this->stuffFacService->getAllDetail();
+        return Excel::create('Đại học bách khoa', function($excel) use ($details) {
+                $excel->sheet('Kho', function($sheet) use ($details) {
+                    $sheet->setHeight(4, 20);
+                    $sheet->setAutoSize(false);
+                    $sheet->cell('C4', function($cell) {
+                        $cell->setFont(array(
+                            'family' => 'Times New Roman',
+                            'size' => '16',
+                            'bold' => false
+                        ));
+                        $cell->setValue('DANH SÁCH TÀI SẢN TỒN KHO');
+                    });
+                    $sheet->setFontSize(10);
+                    $sheet->cells('A6:K6', function($cells) {
+                        $cells->setBackground('#00ffff');
+                    });
+                    $sheet->cells('A5:Z100', function($cells) {
+                        $cells->setAlignment('center');
+                    });
+                    $sheet->row(6, config('structure.list'));
+                    foreach ($details as $key => $data) {
+                        $importedDatas = array($key + 1, $data->id, $data->importStore->date_import,
+                            $data->stuff->name, $data->stuff->supplier->name, $data->importStore->store->name, $data->quantity, number_format($data->quantity * $data->price_unit), $data->status);
+                        $sheet->row($key + 7, $importedDatas);
+                    }
+                });
+            })->download('xls');
+    }
+    
+    public function downloadStuffInFaculty()
+    {
+        
     }
 }

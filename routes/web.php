@@ -25,7 +25,14 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::post('/update-detail-store/{id}', 'DetailImportStoreController@update');
     Route::get('/delete-detail-store/{id}', 'DetailImportStoreController@destroy');
     Route::resource('/import-faculty', 'ImportFacultyController');
-    Route::post('/store-faculty', 'ImportFacultyController@getImportFacultyByFaculty');
+    Route::post('/store-faculty', [
+        'as' => 'store-faculty',
+        'uses' => 'ImportFacultyController@getImportFacultyByFaculty'
+    ]);
+    Route::get('/store-faculty/{id}', [
+        'as' => 'store-faculty-show',
+        'uses' => 'ImportFacultyController@getImportFacultyByFaculty'
+    ]);
     Route::post('/delete-import-faculty', 'ImportFacultyController@destroy');
     Route::get('/atrophy-store', [
         'as' => 'atrophy-store',
@@ -52,6 +59,14 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::get('/request-accept-all', [
         'as' => 'request-accept-all',
         'uses' => 'RequestController@acceptAllRequest'
+    ]);
+    Route::get('/details', [
+        'as' => 'details',
+        'uses' => 'ImportFacultyController@getAllDetail'
+    ]);
+    Route::get('/delete-detail/{id}', [
+        'as' => 'delete-detail',
+        'uses' => 'ImportFacultyController@deleteDetail'
     ]);
 });
 
@@ -94,7 +109,7 @@ Route::group(['middleware' => 'faculty', 'prefix' => 'fac'], function () {
         'uses' => 'StatisticalController@statisticByRoomByYear'
     ]);
     Route::get('/statis-faculty-year-detail/{year}/{stuff}', 'StatisticalController@detailStatisticByFacultyYearStuff');
-    Route::get('/atrophy-store', [
+    Route::get('/atrophy-store-faculty', [
         'as' => 'atrophy-store-faculty',
         'uses' => 'AtrophyController@getExpireStuffStoreFaculty'
     ]);
@@ -132,6 +147,10 @@ Route::get('logout', function() {
 Route::get('download-liquidation', [
     'as'  => 'download-liquidation',
     'uses' => 'ExportExcelController@downloadStatistic'
+]);
+Route::get('download-detail-store', [
+    'as'  => 'download-detail-store',
+    'uses' => 'ExportExcelController@downloadDetailImport'
 ]);
 Route::get('d-detail/{id}', 'ExportExcelController@downloadDetailImportStoreById');
 

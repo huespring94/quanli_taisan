@@ -88,13 +88,14 @@ class LiquidationService extends BaseService
      *
      * @return void
      */
-    public function removeToLiquordation($detailId)
+    public function removeToLiquidation($detailId)
     {
         $detail = $this->detailIStoreRepo->find($detailId);
         $datas = [
+            'date_liquidation' => Carbon::now()->format(config('define.date_format')),
             'quantity' => $detail->quantity,
-            'detail_import_store_id' => $detail->id,
-            'date_liquidation' => Carbon::now()->format(config('define.date_format'))
+            'store_liquidation_id' => $detail->id,
+            'store_type' => config ('constant.type_school'),
         ];
         $detail->delete();
         $this->liquidationRepo->create($datas);

@@ -24,10 +24,3 @@ function myFunction() {
     });
 }
 
-$(document).ready(function () {
-    $("#mydata").DataTable();
-});
-
-$(document).ready(function () {
-    $("#mydata-add").DataTable();
-});

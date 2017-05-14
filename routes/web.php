@@ -27,8 +27,14 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('/import-faculty', 'ImportFacultyController');
     Route::post('/store-faculty', 'ImportFacultyController@getImportFacultyByFaculty');
     Route::post('/delete-import-faculty', 'ImportFacultyController@destroy');
-    Route::get('/atrophy-store', 'AtrophyController@getExpireStuffStore');
-    Route::get('/delete-atrophy-store/{id}', 'AtrophyController@destroy');
+    Route::get('/atrophy-store', [
+        'as' => 'atrophy-store',
+        'uses' => 'AtrophyController@getExpireStuffStore'
+    ]);
+    Route::get('/delete-atrophy-store/{id}', [
+        'as' => 'delete-atrophy-store',
+        'uses' => 'AtrophyController@destroy'
+    ]);
     Route::get('/delete-atrophy-faculty/{id}', 'AtrophyController@destroyFaculty');
     Route::get('/delete-atrophy-room/{id}', 'AtrophyController@destroyRoom');
     Route::get('/request', [
@@ -50,6 +56,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
 });
 
 Route::get('/messages', 'MessageController@getAmountExpireStuff');
+Route::get('/amount-request', 'RequestController@countRequestLiquidation');
 
 Route::group(['middleware' => 'faculty', 'prefix' => 'fac'], function () {
     Route::resource('/store-room', 'ImportRoomController');
@@ -122,10 +129,11 @@ Route::get('logout', function() {
     return redirect('/');
 });
 
-Route::get('importExport', 'MaatwebsiteDemoController@importExport');
-Route::get('downloadExcel/{type}', 'MaatwebsiteDemoController@downloadExcel');
+Route::get('download-liquidation', [
+    'as'  => 'download-liquidation',
+    'uses' => 'ExportExcelController@downloadStatistic'
+]);
 Route::get('d-detail/{id}', 'ExportExcelController@downloadDetailImportStoreById');
-Route::post('importExcel', 'MaatwebsiteDemoController@importExcel');
 
 Route::get('detail-import/{id}', 'DetailImportStoreController@getQuantityByStuffId');
 Route::get('amount-stuff-faculty/{id}', 'ImportRoomController@getQuantityByStuffId');

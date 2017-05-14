@@ -12,9 +12,9 @@ Danh sách đã tài sản thanh lí
 
 <div class="box">
     <div class="box-header">
-        <button type="button" class="btn bg-navy margin pull-right">
+        <a href="{{route('download-liquidation')}}" type="button" class="btn bg-navy margin pull-right">
             <i class="fa fa-download"></i>
-            Xuất file excel</button>
+            Xuất file excel</a>
     </div>
 
     <div class="box-body">
@@ -25,6 +25,7 @@ Danh sách đã tài sản thanh lí
                     <th>Mã TB</th>
                     <th>Ngày TL</th>
                     <th>Số lượng</th>
+                    <th>Địa điểm</th>
                     <th>Ngày SD</th>
                     <th>Tên tài sản</th>
                     <th>Tỷ lệ % CL</th>
@@ -33,16 +34,13 @@ Danh sách đã tài sản thanh lí
             <tbody align="center">
                 @foreach ($liquidations as $liquidation)
                 <tr>
-                    @if($liquidation->store_type == config('constant.type_school'))
-                    <td>{{$liquidation->detail_import_store_id}}</td>
-                    @else
                     <td>{{$liquidation->store_liquidation_id}}</td>
-                    @endif
                     
                     <td>{{$liquidation->date_liquidation}}</td>
                     <td>{{$liquidation->quantity}}</td>
                     
                     @if ($liquidation->store_type == config('constant.type_faculty'))
+                        <td>{{$liquidation->store_type}} - {{$liquidation->storeFaculty->faculty->name}}</td>
                         <td>{{$liquidation->storeFaculty->date_import}}</td>
                         <td>{{$liquidation->storeFaculty->stuff->name}}</td>
                         <td>
@@ -53,6 +51,7 @@ Danh sách đã tài sản thanh lí
                         @endif
                         </td>
                     @elseif ($liquidation->store_type == config('constant.type_room'))
+                        <td>{{$liquidation->store_type}} - {{$liquidation->storeRoom->room->name}}</td>
                         <td>{{$liquidation->storeRoom->date_import}}</td>
                         <td>{{$liquidation->storeRoom->stuff->name}}</td>
                         <td>
@@ -63,6 +62,7 @@ Danh sách đã tài sản thanh lí
                         @endif
                         </td>
                     @else
+                        <td>{{$liquidation->store_type}} - {{$liquidation->detailImportStore->importStore->store->name}}</td>
                         <td>{{$liquidation->detailImportStore->importStore->date_import}}</td>
                         <td>{{$liquidation->detailImportStore->stuff->name}}</td>
                         <td>

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Services\ImportStuffService;
 use App\Services\StuffFacultyService;
+use App\Services\LiquidationService;
 
 class ExportExcelController extends Controller
 {
@@ -13,13 +13,18 @@ class ExportExcelController extends Controller
     private $excel;
     private $importStuffService;
     private $stuffFacService;
+    private $liquiService;
 
     public function __construct(
-    Excel $excel, ImportStuffService $importStuffService, StuffFacultyService $stuffFacService)
+        Excel $excel, 
+        ImportStuffService $importStuffService, 
+        StuffFacultyService $stuffFacService,
+        LiquidationService $liquiService)
     {
         $this->excel = $excel;
         $this->importStuffService = $importStuffService;
         $this->stuffFacService = $stuffFacService;
+        $this->liquiService = $liquiService;
     }
 
     /**
@@ -69,5 +74,71 @@ class ExportExcelController extends Controller
             })->download('xls');
     }
     
-    
+    /**
+     * Download statistic
+     *
+     * @return void
+     */
+    public function downloadStatistic()
+    {
+        return Excel::create ('Đại học bách khoa', function($excel) {
+                $excel->sheet ('ThanhLi', function($sheet) {
+                    $sheet->setHeight (4, 20);
+                    $sheet->setAutoSize (false);
+                    $sheet->cell ('C4', function($cell) {
+                        $cell->setFont (array(
+                            'family' => 'Times New Roman',
+                            'size' => '16',
+                            'bold' => false
+                        ));
+                        $cell->setValue ('DANH SÁCH TÀI SẢN THANH LÍ');
+                    });
+                    $sheet->setFontSize (10);
+                    $liquidations = $this->liquiService->getAllLiquidation ();
+
+                    $sheet->cells ('A7:H7', function($cells) {
+                        $cells->setBackground ('#00ffff');
+                    });
+                    $sheet->cells ('A5:Z100', function($cells) {
+                        $cells->setAlignment ('center');
+                    });
+                    $sheet->row (7, config ('structure.statistic'));
+                    $datas = [];
+                    foreach ($liquidations as $key => $liquidation) {
+                        if ($liquidation->store_type == config ('constant.type_school')) {
+                            $id = $liquidation->detail_import_store_id;
+                        } else {
+                            $id = $liquidation->store_liquidation_id;
+                        }
+                        $dateLiqui = $liquidation->date_liquidation;
+                        $quantity = $liquidation->quantity;
+                        if ($liquidation->store_type == config ('constant.type_faculty')) {
+                            $address = $liquidation->store_type.'-'.$liquidation->storeFaculty->faculty->name;
+                            $dateImport = $liquidation->storeFaculty->date_import;
+                            $nameStuff = $liquidation->storeFaculty->stuff->name;
+                            $rate = $liquidation->storeFaculty->detailImportStore->status;
+                        } elseif ($liquidation->store_type == config ('constant.type_room')) {
+                            $address = $liquidation->store_type.'-'.$liquidation->storeRoom->room->name;
+                            $dateImport = $liquidation->storeRoom->date_import;
+                            $nameStuff = $liquidation->storeRoom->stuff->name;
+                            $rate = $liquidation->storeRoom->storeFaculty->detailImportStore->status;
+                        } else {
+                            $address = $liquidation->store_type.'-'.$liquidation->detailImportStore->importStore->store->name;
+                            $dateImport = $liquidation->detailImportStore->importStore->date_import;
+                            $nameStuff = $liquidation->detailImportStore->stuff->name;
+                            $rate = $liquidation->detailImportStore->status;
+                        }
+                        $importedDatas = array($key + 1,
+                            $id,
+                            $dateLiqui,
+                            $quantity,
+                            $address,
+                            $dateImport,
+                            $nameStuff,
+                            $rate,);
+                        $sheet->row ($key + 8, $importedDatas);
+                    }
+                });
+            })->download ('xls');
+    }
 }

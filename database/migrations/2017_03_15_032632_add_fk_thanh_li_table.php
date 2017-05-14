@@ -14,9 +14,9 @@ class AddFkThanhLiTable extends Migration
     public function up()
     {
         Schema::table('liquidations', function (Blueprint $table) {
-            $table->foreign('detail_import_store_id')
-                ->references('id')->on('detail_import_stores')
-                ->onUpdate('cascade')->onDelete('NO ACTION');
+//            $table->foreign('detail_import_store_id')
+//                ->references('id')->on('detail_import_stores')
+//                ->onUpdate('cascade')->onDelete('NO ACTION');
         });
     }
 
@@ -28,7 +28,7 @@ class AddFkThanhLiTable extends Migration
     public function down()
     {
         Schema::table('liquidations', function (Blueprint $table) {
-            $table->dropForeign(['detail_import_store_id']);
+//            $table->dropForeign(['detail_import_store_id']);
         });
     }
 }

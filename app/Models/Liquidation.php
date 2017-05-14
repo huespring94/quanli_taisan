@@ -10,7 +10,7 @@ class Liquidation extends Model
     
     const TYPE_FACULTY = 'Khoa';
     const TYPE_ROOM = 'Phòng';
-    const TYPE_SCHOOL = 'Trường';
+    const TYPE_STORE = 'Kho';
     
     protected $fillable = [
         'id',
@@ -28,7 +28,7 @@ class Liquidation extends Model
      */
     public function detailImportStore()
     {
-        return $this->belongsTo(DetailImportStore::class)->withTrashed();
+        return $this->belongsTo(DetailImportStore::class, 'store_liquidation_id', 'id')->withTrashed();
     }
     
     /**

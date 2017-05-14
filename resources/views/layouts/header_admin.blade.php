@@ -14,16 +14,18 @@
                 <ul class="nav navbar-nav">
                     <!-- Messages: style can be found in dropdown.less-->
                     <li class="dropdown messages-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        @if(Auth::user()->role->name == config('constant.r_admin') || Auth::user()->role->name == config('constant.r_accountant'))
+                        <a href="{{route('request')}}">
                             <i class="fa fa-envelope-o"></i>
                             <span id="messages-request" class="label label-success"></span>
                         </a>
+                        @endif
                     </li>
                     <!-- Notifications: style can be found in dropdown.less -->
                     <li class="dropdown notifications-menu">
                         <!--class="dropdown-toggle" data-toggle="dropdown"-->
                         @if(Auth::user()->role->name == config('constant.r_admin') || Auth::user()->role->name == config('constant.r_accountant'))
-                        <a href="{{url('admin/atrophy-store')}}">
+                        <a href="{{route('atrophy-store')}}">
                             <i class="fa fa-bell-o"></i>
                             <span id="messages-expire" class="label label-warning"></span>
                         </a>

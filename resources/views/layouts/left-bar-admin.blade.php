@@ -5,7 +5,7 @@
             <i class="fa fa-edit"></i> <span> {{trans('content.left_bar.import')}}</span>
         </a>
     </li>
-    <li class="treeview {{ areActiveRoutes(['import-faculty.index']) }}">
+    <li class="treeview {{ areActiveRoutes(['import-faculty.index', 'atrophy-store', 'delete-atrophy-store']) }}">
         <a href="#">
             <i class="fa fa-circle-o"></i>
             <span>Danh sách tài sản</span>
@@ -15,8 +15,9 @@
         </a>
         <ul class="treeview-menu">
             <li><a href=""><i class="fa fa-database"></i> Kho tổng</a></li>
-            <li class="{{ areActiveRoutes(['import-faculty.index']) }}"><a href="{{route('import-faculty.index')}}"><i class="fa fa-archive"></i> Kho khoa</a></li>
+            <li class="{{ areActiveRoutes(['import-faculty.index'])}}"><a href="{{route('import-faculty.index')}}"><i class="fa fa-archive"></i> Kho khoa</a></li>
             <li><a href=""><i class="fa fa-list-alt"></i> Kho phòng</a></li>
+            <li class="{{ areActiveRoutes(['atrophy-store', 'delete-atrophy-store'])}}"><a href="{{route('atrophy-store')}}"><i class="fa fa-list-alt"></i> Hết hạn</a></li>
         </ul>
     </li>
     <li class="treeview {{ areActiveRoutes(['import-faculty.create']) }}">

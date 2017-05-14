@@ -25,7 +25,7 @@ class LiquidationRepository extends BaseRepo
     public function getAllLiquidation()
     {
         return $this->with([
-                    'detailImportStore.importStore',
+                    'detailImportStore.importStore.store',
                     'storeFaculty.stuff', 'storeFaculty.detailImportStore',
                     'storeRoom.stuff', 'storeRoom.storeFaculty.detailImportStore'
                 ])
@@ -41,8 +41,9 @@ class LiquidationRepository extends BaseRepo
     public function getAllLiquidationShort()
     {
         return Liquidation::with([
-                    'detailImportStore.stuff',
-                    'detailImportStore.importStore'
+                    'detailImportStore.importStore',
+                    'storeFaculty.stuff', 'storeFaculty.detailImportStore',
+                    'storeRoom.stuff', 'storeRoom.storeFaculty.detailImportStore'
                 ])
             ->select('detail_import_store_id', DB::raw('sum(quantity) as quantity'))
             ->groupBy('detail_import_store_id')

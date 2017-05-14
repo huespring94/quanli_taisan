@@ -1,7 +1,10 @@
 @extends('layouts.template_admin')
 
 @section('title_content')
-Thiết bị trong kho 
+Thiết bị trong kho
+<a class="btn bg-blue" data-toggle="modal" data-target="#myModalCustom">
+    Gửi yêu cầu tùy chọn
+    <i class="fa fa-send"></i></a>
 @stop
 
 @section('home')
@@ -83,6 +86,7 @@ Thiết bị trong kho
                                 <h4 class="modal-title">Thanh lí</h4>
                             </div>
                             <div class="modal-body">
+                                @if (isset($atrophyStores[0]))
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Chọn mã thiết bị</label>
                                     <div class="col-sm-6">
@@ -115,10 +119,15 @@ Thiết bị trong kho
                                         </div>
                                     </div>
                                 </div>
+                                @else
+                                Không có sản phẩm nào.
+                                @endif
                             </div>
                             <br>
                             <div class="modal-footer">
+                                @if(isset($atrophyStores[0]))
                                 <button type="submit" class="btn btn-default">OK</button>
+                                @endif
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             </div>
                         </div>

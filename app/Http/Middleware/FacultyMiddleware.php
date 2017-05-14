@@ -19,7 +19,7 @@ class FacultyMiddleware
     public function handle($request, Closure $next)
     {
         if (Auth::user()->role->name !== Role::ROLE_FACULTY) {
-            return redirect('login');
+            return redirect('/');
         }
         return $next($request);
     }

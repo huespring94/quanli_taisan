@@ -104,6 +104,22 @@ class StoreFacultyRepository extends BaseRepo
             ->orderBy('created_at', 'desc')
             ->get();
     }
+    /**
+     * Get liquidation in faculty
+     *
+     * @param any $roomId []
+     *
+     * @return mixed
+     */
+    public function getLiquidationByRoom($roomId)
+    {
+        return Liquidation::with(['storeRoom.stuff'])
+            ->whereHas('storeRoom', function ($has) use ($roomId) {
+                $has->where('room_id', '=', $roomId);
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
     
     /**
      * Get liquidation in faculty

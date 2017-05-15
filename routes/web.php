@@ -136,6 +136,10 @@ Route::group(['middleware' => 'room', 'prefix' => 'roo'], function () {
         'as' => 'store-room-user',
         'uses' => 'ImportRoomController@getImportRoomByRoom'
     ]);
+    Route::get('/liquidation-room', [
+        'as' => 'liquidation-room',
+        'uses' => 'LiquidationController@getLiquiByRoom'
+    ]);
 });
 
 Route::get('logout', function() {

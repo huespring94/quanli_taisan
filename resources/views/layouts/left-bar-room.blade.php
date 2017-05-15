@@ -5,8 +5,8 @@
             <i class="fa fa-th"></i> <span>Danh sách TS phòng</span>
         </a>
     </li>
-    <li class="treeview">
-        <a href="">
+    <li class="treeview {{ areActiveRoutes(['liquidation-room']) }}">
+        <a href="{{route('liquidation-room')}}">
             <i class="fa fa-th"></i> <span>Danh sách TS thanh lí</span>
         </a>
     </li>

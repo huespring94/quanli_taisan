@@ -31,6 +31,17 @@ class LiquidationController extends Controller
     }
     
     /**
+     * Get liquidation by room
+     *
+     * @return Response
+     */
+    public function getLiquiByRoom()
+    {
+        $liquidations = $this->liquidationService->getAllLiquidationRoom();
+        return view('atrophy.list-liquidation', ['liquidations' => $liquidations]);
+    }
+    
+    /**
      * Get all liquidation
      *
      * @return Response

@@ -37,7 +37,7 @@ class StoreFaculty extends Model
      */
     public function detailImportStore()
     {
-        return $this->belongsTo('App\Models\DetailImportStore');
+        return $this->belongsTo('App\Models\DetailImportStore')->withTrashed();
     }
     
     /**

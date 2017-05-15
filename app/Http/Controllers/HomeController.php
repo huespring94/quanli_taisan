@@ -3,17 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\FacultyRoomService;
 
 class HomeController extends Controller
 {
+    private $facRoomService;
+    
     /**
      * Create a new controller instance.
      *
+     * @param FacultyRoomService $facRoomService []
+     *
      * @return void
      */
-    public function __construct()
+    public function __construct(FacultyRoomService $facRoomService)
     {
         $this->middleware('auth');
+        $this->facRoomService = $facRoomService;
     }
 
     /**
@@ -23,6 +29,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $room = $this->facRoomService->getRoomByUser(auth()->user()->id);
+        return view('auth.profile', ['room' => $room]);
     }
 }

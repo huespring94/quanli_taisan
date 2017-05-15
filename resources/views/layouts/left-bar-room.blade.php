@@ -12,7 +12,7 @@
     </li>
     <li class="{{ areActiveRoutes(['atrophy-store-room', 'request-liquidation-room']) }}">
         <a href="{{route('atrophy-store-room')}}">
-            <i class="fa fa-safari"></i> <span>Thanh lí</span>
+            <i class="fa fa-safari"></i> <span>Yêu cầu thanh lí</span>
             <span class="pull-right-container">
             </span>
         </a>
@@ -21,12 +21,6 @@
         <a href="#">
             <i class="fa fa-pie-chart"></i>
             <span>Thống kê</span>
-        </a>
-    </li>
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-newspaper-o"></i>
-            <span>Yêu cầu</span>
         </a>
     </li>
 </ul>

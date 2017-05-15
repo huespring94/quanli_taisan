@@ -67,7 +67,10 @@ class AtrophyService
             if ($numYears > 0) {
                 foreach ($importStore->detailImportStores as $detail) {
                     $rateDown = round($numYears) * $detail->stuff->atrophy->atrophy_rate;
+                    $priceStart = $detail->price_unit * 100 / $detail->status;
                     $detail->status = $detail->status_start - $rateDown;
+                    $detail->save();
+                    $detail->price_unit = $priceStart * $detail->status / 100;
                     $detail->save();
                     $this->storeFacultyRepo->updateStatus($detail);
                     $this->storeRoomRepo->updateStatus($detail);

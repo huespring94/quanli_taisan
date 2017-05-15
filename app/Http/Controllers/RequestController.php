@@ -91,4 +91,53 @@ class RequestController extends Controller
             'liquidations' => $waitLiquidations,
         ]);
     }
+    
+    /**
+     * Get all of requests
+     *
+     * @return Response
+     */
+    public function getAll()
+    {
+        $requests = $this->requestService->getRequestAllLiquidation();
+        return view('atrophy.list-wait-liquidation', ['requests' => $requests]);
+    }
+    
+    /**
+     * Accept request
+     *
+     * @param any $id []
+     *
+     * @return Response
+     */
+    public function acceptRequest($id)
+    {
+        $this->requestService->acceptRequest($id);
+        $requests = $this->requestService->getRequestAllLiquidation();
+        Session::flash('msg', 'Đã thanh lí thành công!');
+        return view('atrophy.list-wait-liquidation', ['requests' => $requests]);
+    }
+    
+    /**
+     * Accept all request
+     *
+     * @return Response
+     */
+    public function acceptAllRequest()
+    {
+        $this->requestService->acceptAllRequest();
+        $requests = $this->requestService->getRequestAllLiquidation();
+        Session::flash('msg', 'Đã thanh lí tất cả thành công!');
+        return view('atrophy.list-wait-liquidation', ['requests' => $requests]);
+    }
+    
+    /**
+     * Caculation request liquidation
+     *
+     * @return int
+     */
+    public function countRequestLiquidation()
+    {
+        return count($this->requestService->getRequestAllLiquidation());
+    }
 }

@@ -18,8 +18,8 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role->name != Role::ROLE_ADMIN) {
-            return redirect('login');
+        if (!Auth::check() && Auth::user()->role->name != Role::ROLE_ADMIN) {
+            return redirect('/');
         }
         return $next($request);
     }

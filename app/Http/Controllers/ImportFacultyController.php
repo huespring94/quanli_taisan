@@ -42,7 +42,7 @@ class ImportFacultyController extends Controller
     public function index()
     {
         $faculties = $this->facultyRoomService->getAllFaculties();
-        $importFacs = $this->importStuffService->getAllImportFaculty();
+        $importFacs = $this->importStuffService->getImportFacultyByFaculty($faculties->first()->faculty_id);
         return view('faculty.index', ['importFacs' => $importFacs, 'faculties' => $faculties]);
     }
 
@@ -89,43 +89,6 @@ class ImportFacultyController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param int $id []
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        return $id;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id []
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        return $id;
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request []
-     * @param int                      $id      []
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        return $request . $id;
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param Request $request []
@@ -152,8 +115,8 @@ class ImportFacultyController extends Controller
     public function getImportFacultyByFaculty(Request $request)
     {
         $faculties = $this->facultyRoomService->getAllFaculties();
-        $importFacs = $this->importStuffService->getImportFacultyByFaculty($request->all()['faculty_id']);
-        $facultyId = $request->all()['faculty_id'];
+        $importFacs = $this->importStuffService->getImportFacultyByFaculty($request->get('faculty_id'));
+        $facultyId = $request->get('faculty_id');
         return view('faculty.index', ['importFacs' => $importFacs, 'faculties' => $faculties, 'facultyId' => $facultyId]);
     }
     
@@ -166,5 +129,30 @@ class ImportFacultyController extends Controller
     {
         $importFacs = $this->stuffFacultyService->getImportFacultyByFaculty();
         return view('faculty.index-faculty', ['importFacs' => $importFacs]);
+    }
+    
+    /**
+     * Get all stuff in store
+     *
+     * @return Response
+     */
+    public function getAllDetail()
+    {
+        $details = $this->stuffFacultyService->getAllDetail();
+        return view('store.index', ['details' => $details]);
+    }
+    
+    /**
+     * Delete detail
+     *
+     * @param any $id []
+     *
+     * @return Response
+     */
+    public function deleteDetail($id)
+    {
+        $this->importStuffService->deleteDetailImportStore($id);
+        $details = $this->stuffFacultyService->getAllDetail();
+        return view('store.index', ['details' => $details]);
     }
 }

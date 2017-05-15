@@ -48,7 +48,7 @@ Nhập kho hàng
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Ngay nhap</label>
+                    <label class="col-sm-2 control-label">Ngày nhập</label>
                     <div class="col-sm-8">
                         <div class="input-group date">
                             <div class="input-group-addon">

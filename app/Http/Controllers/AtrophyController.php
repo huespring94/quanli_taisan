@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\AtrophyService;
 use App\Services\MessageService;
 use App\Services\LiquidationService;
 use App\Services\StuffFacultyService;
 use App\Services\RequestService;
 use App\Services\FacultyRoomService;
+use Session;
 
 class AtrophyController extends Controller
 {
@@ -58,10 +58,8 @@ class AtrophyController extends Controller
     public function getExpireStuffStore()
     {
         $atrophyStores = $this->messageService->getExpireStuffStore();
-        $liquidations = $this->liquidationService->getAllLiquidationShort();
         return view('atrophy.atrophy-store', [
             'atrophyStores' => $atrophyStores,
-            'liquidations' => $liquidations
         ]);
     }
     
@@ -107,12 +105,11 @@ class AtrophyController extends Controller
      */
     public function destroy($id)
     {
-        $this->liquidationService->removeToLiquordation($id);
+        $this->liquidationService->removeToLiquidation($id);
         $atrophyStores = $this->messageService->getExpireStuffStore();
-        $liquidations = $this->liquidationService->getAllLiquidationShort();
+        Session::flash('msg', 'Thanh lí tài sản thành công.');
         return view('atrophy.atrophy-store', [
             'atrophyStores' => $atrophyStores,
-            'liquidations' => $liquidations
         ]);
     }
     

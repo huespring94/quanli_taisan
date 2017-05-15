@@ -2,7 +2,7 @@
 <div class="box-body">
     <div class="form-group">
         <label class="col-sm-2 control-label">Chọn tài sản</label>
-        <div class="col-sm-8">
+        <div class="col-sm-10">
             <select name="stuff_id" class="form-control">
                 <option>Chon</option>
                 @foreach($stuffs as $stuff)
@@ -17,14 +17,14 @@
                 @endforeach
             </div>
         </div>
-        <div class="col-sm-2">
+<!--        <div class="col-sm-2">
             <div class="input-group-addon">
                 <i class="fa fa-plus-circle"></i>
             </div>
             <div class="input-group-btn">
                 <button type="button" class="btn btn-danger">Tạo mới</button>
             </div>
-        </div>
+        </div>-->
     </div>
 
     <div class="form-group">

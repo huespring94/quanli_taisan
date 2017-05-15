@@ -11,6 +11,17 @@ function myFunction() {
         error: function () {
         }
     });
+     $.ajax({
+        url: '/amount-request',
+        type: 'GET',
+        dataType: 'html',
+        data: {},
+        success: function (data) {
+            document.getElementById("messages-request").innerHTML = data;
+        },
+        error: function () {
+        }
+    });
 }
 
 $(document).ready(function () {

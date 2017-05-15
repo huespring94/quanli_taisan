@@ -12,6 +12,7 @@ use App\Repositories\StoreFacultyRepository;
 use App\Repositories\StoreRoomRepository;
 use App\Repositories\SupplierRepository;
 use App\Models\StoreFaculty;
+use App\Repositories\LiquidationRepository;
 
 class ImportStuffService extends BaseService
 {
@@ -65,6 +66,8 @@ class ImportStuffService extends BaseService
      */
     protected $supplierRepository;
     
+    private $liquiRepo;
+
     /**
      * Constructor of import stuff service
      *
@@ -75,6 +78,7 @@ class ImportStuffService extends BaseService
      * @param StoreFacultyRepository      $storeFacultyRepo    []
      * @param StoreRoomRepository         $storeRoomRepository []
      * @param SupplierRepository          $supplierRepository  []
+     * @param LiquidationRepository       $liquiRepo           []
      */
     public function __construct(
         KindStuffRepository $kindStuffRepo,
@@ -83,9 +87,9 @@ class ImportStuffService extends BaseService
         DetailImportStoreRepository $detailImStoreRepo,
         StoreFacultyRepository $storeFacultyRepo,
         StoreRoomRepository $storeRoomRepository,
-        SupplierRepository $supplierRepository
+        SupplierRepository $supplierRepository,
+        LiquidationRepository $liquiRepo
     ) {
-    
         $this->kindStuffRepo = $kindStuffRepo;
         $this->stuffRepo = $stuffRepo;
         $this->importStoreRepo = $importStoreRepo;
@@ -93,6 +97,7 @@ class ImportStuffService extends BaseService
         $this->storeFacultyRepo = $storeFacultyRepo;
         $this->storeRoomRepository = $storeRoomRepository;
         $this->supplierRepository = $supplierRepository;
+        $this->liquiRepo = $liquiRepo;
     }
     
     /**
@@ -374,14 +379,11 @@ class ImportStuffService extends BaseService
     public function deleteDetailImportStore($id)
     {
         $detail = $this->detailImStoreRepo->find($id);
-        $this->detailImStoreRepo->delete($id);
-        $count = $this->importStoreRepo->withCount('detailImportStores')
-                ->find($detail->import_store_id)->detail_import_stores_count;
-        if ($count == 0) {
-            $this->importStoreRepo->delete($detail->import_store_id);
-            return;
+        $liquis = $this->liquiRepo->findByField('store_liquidation_id', $id);
+        foreach ($liquis as $liqui) {
+            $liqui->delete();
         }
-        return $detail;
+        $detail->forceDelete();
     }
     
     /**
@@ -431,7 +433,9 @@ class ImportStuffService extends BaseService
      */
     public function getAllImportFaculty()
     {
-        return StoreFaculty::with(['stuff.supplier', 'stuff.kindStuff', 'faculty', 'detailImportStore'])
+        return StoreFaculty::with(['stuff.supplier',
+            'stuff.kindStuff', 'faculty',
+            'detailImportStore'])
             ->withTrashed()->get();
     }
     
@@ -446,14 +450,14 @@ class ImportStuffService extends BaseService
     {
         if ($id != null) {
             return StoreFaculty::with(['stuff.supplier', 'stuff.kindStuff', 'faculty', 'detailImportStore'])
-                    ->where('faculty_id', '=', $id)
+                ->where('faculty_id', '=', $id)
                     ->withTrashed()->get();
         }
         return $this->getAllImportFaculty();
     }
     
     /**
-     * Delete import stỏe which empty detail import
+     * Delete import store which empty detail import
      *
      * @return void
      */

@@ -1,6 +1,6 @@
 @include ('layouts.header_lib')
 
-<body class="hold-transition">
+<body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
             <a href="{{url('/')}}"><b>Quản lí</b> TSCĐ</a>
@@ -45,9 +45,9 @@
                 </div>
             </form>
 
-            <a class="btn btn-link" href="{{ route('password.request') }}">
+<!--            <a class="btn btn-link" href="{{ route('password.request') }}">
                 Forgot Your Password?
-            </a>
+            </a>-->
             <br>
 
         </div>

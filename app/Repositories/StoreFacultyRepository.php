@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\StoreFaculty;
 use DB;
+use App\Models\Liquidation;
 
 class StoreFacultyRepository extends BaseRepo
 {
@@ -95,6 +96,23 @@ class StoreFacultyRepository extends BaseRepo
      * @return mixed
      */
     public function getLiquidation($facultyId)
+    {
+        return Liquidation::with(['detailImportStore.stuff', 'storeFaculty.stuff', 'storeRoom.stuff'])
+            ->whereHas('storeFaculty', function ($has) use ($facultyId) {
+                $has->where('faculty_id', '=', $facultyId);
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+    
+    /**
+     * Get liquidation in faculty
+     *
+     * @param any $facultyId []
+     *
+     * @return mixed
+     */
+    public function getLiquidationTrashed($facultyId)
     {
         return StoreFaculty::with(['storeRooms', 'stuff.supplier', 'stuff.kindStuff', 'faculty', 'detailImportStore'])
             ->where('faculty_id', '=', $facultyId)

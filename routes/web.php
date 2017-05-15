@@ -11,7 +11,7 @@
  */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -25,15 +25,53 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::post('/update-detail-store/{id}', 'DetailImportStoreController@update');
     Route::get('/delete-detail-store/{id}', 'DetailImportStoreController@destroy');
     Route::resource('/import-faculty', 'ImportFacultyController');
-    Route::post('/store-faculty', 'ImportFacultyController@getImportFacultyByFaculty');
+    Route::post('/store-faculty', [
+        'as' => 'store-faculty',
+        'uses' => 'ImportFacultyController@getImportFacultyByFaculty'
+    ]);
+    Route::get('/store-faculty/{id}', [
+        'as' => 'store-faculty-show',
+        'uses' => 'ImportFacultyController@getImportFacultyByFaculty'
+    ]);
     Route::post('/delete-import-faculty', 'ImportFacultyController@destroy');
-    Route::get('/atrophy-store', 'AtrophyController@getExpireStuffStore');
-    Route::get('/delete-atrophy-store/{id}', 'AtrophyController@destroy');
+    Route::get('/atrophy-store', [
+        'as' => 'atrophy-store',
+        'uses' => 'AtrophyController@getExpireStuffStore'
+    ]);
+    Route::get('/delete-atrophy-store/{id}', [
+        'as' => 'delete-atrophy-store',
+        'uses' => 'AtrophyController@destroy'
+    ]);
     Route::get('/delete-atrophy-faculty/{id}', 'AtrophyController@destroyFaculty');
     Route::get('/delete-atrophy-room/{id}', 'AtrophyController@destroyRoom');
+    Route::get('/request', [
+        'as' => 'request',
+        'uses' => 'RequestController@getAll'
+    ]);
+    Route::get('/request-accept/{id}', [
+        'as' => 'request-accept',
+        'uses' => 'RequestController@acceptRequest'
+    ]);
+    Route::get('/liquidation', [
+        'as' => 'liquidation',
+        'uses' => 'LiquidationController@getAllLiquidation'
+    ]);
+    Route::get('/request-accept-all', [
+        'as' => 'request-accept-all',
+        'uses' => 'RequestController@acceptAllRequest'
+    ]);
+    Route::get('/details', [
+        'as' => 'details',
+        'uses' => 'ImportFacultyController@getAllDetail'
+    ]);
+    Route::get('/delete-detail/{id}', [
+        'as' => 'delete-detail',
+        'uses' => 'ImportFacultyController@deleteDetail'
+    ]);
 });
 
 Route::get('/messages', 'MessageController@getAmountExpireStuff');
+Route::get('/amount-request', 'RequestController@countRequestLiquidation');
 
 Route::group(['middleware' => 'faculty', 'prefix' => 'fac'], function () {
     Route::resource('/store-room', 'ImportRoomController');
@@ -50,7 +88,10 @@ Route::group(['middleware' => 'faculty', 'prefix' => 'fac'], function () {
         'as' => 'store-room-fac',
         'uses' => 'ImportRoomController@getImportRoomByFaculty'
     ]);
-    Route::get('/detail-store-faculty/{id}', 'HistoryImportController@getStoreRoomByStoreFaculty');
+    Route::get('/detail-store-faculty/{id}', [
+        'as' => 'detail-store-faculty',
+        'uses' => 'HistoryImportController@getStoreRoomByStoreFaculty'
+    ]);
     Route::get('/statis-faculty-year', [
         'as' => 'statis-faculty-year',
         'uses' => 'StatisticalController@statisticByFacultyYear'
@@ -68,13 +109,17 @@ Route::group(['middleware' => 'faculty', 'prefix' => 'fac'], function () {
         'uses' => 'StatisticalController@statisticByRoomByYear'
     ]);
     Route::get('/statis-faculty-year-detail/{year}/{stuff}', 'StatisticalController@detailStatisticByFacultyYearStuff');
-    Route::get('/atrophy-store', [
+    Route::get('/atrophy-store-faculty', [
         'as' => 'atrophy-store-faculty',
         'uses' => 'AtrophyController@getExpireStuffStoreFaculty'
     ]);
     Route::post('/request-liquidation', [
         'as' => 'request-liquidation-faculty',
         'uses' => 'RequestController@storeFaculty'
+    ]);
+    Route::get('/liquidation-faculty', [
+        'as' => 'liquidation-faculty',
+        'uses' => 'LiquidationController@getLiquiByFaculty'
     ]);
 });
 
@@ -99,9 +144,15 @@ Route::get('logout', function() {
     return redirect('/');
 });
 
-Route::get('importExport', 'MaatwebsiteDemoController@importExport');
-Route::get('downloadExcel/{type}', 'MaatwebsiteDemoController@downloadExcel');
-Route::post('importExcel', 'MaatwebsiteDemoController@importExcel');
+Route::get('download-liquidation', [
+    'as'  => 'download-liquidation',
+    'uses' => 'ExportExcelController@downloadStatistic'
+]);
+Route::get('download-detail-store', [
+    'as'  => 'download-detail-store',
+    'uses' => 'ExportExcelController@downloadDetailImport'
+]);
+Route::get('d-detail/{id}', 'ExportExcelController@downloadDetailImportStoreById');
 
 Route::get('detail-import/{id}', 'DetailImportStoreController@getQuantityByStuffId');
 Route::get('amount-stuff-faculty/{id}', 'ImportRoomController@getQuantityByStuffId');

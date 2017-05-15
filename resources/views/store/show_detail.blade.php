@@ -24,9 +24,9 @@ Nhập chi tiết kho hàng
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-            <button type="button" class="btn bg-navy margin pull-right">
+            <a href="{{url('d-detail', [$importStore->id])}}" type="button" class="btn bg-navy margin pull-right">
                 <i class="fa fa-download"></i>
-                In đơn nhập hàng</button>
+                In đơn nhập hàng</a>
             <table id="example2" class="table table-bordered table-hover">
                 <thead>
                     <tr>
@@ -41,7 +41,7 @@ Nhập chi tiết kho hàng
                         <td>{{$importStore->id}}</td>
                         <td>{{$importStore->store->name}}</td>
                         <td>{{$importStore->date_import}}</td>
-                        <td>{{$importStore->user->firstname}} {{$importStore->user->lastname}} </td>
+                        <td>{{$importStore->user->lastname}} {{$importStore->user->firstname}} </td>
                     </tr>
                 </tbody>
             </table>

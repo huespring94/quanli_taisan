@@ -22,7 +22,7 @@ class AddFkKhoKhoaTable extends Migration
 //                ->onUpdate('cascade')->onDelete('NO ACTION');
             $table->foreign('detail_import_store_id')
                 ->references('id')->on('detail_import_stores')
-                ->onUpdate('cascade')->onDelete('NO ACTION');
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

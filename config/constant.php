@@ -8,5 +8,9 @@ return [
     'r_faculty' => \App\Models\Role::ROLE_FACULTY,
     'r_room' => \App\Models\Role::ROLE_ROOM,
     'r_user' => \App\Models\Role::ROLE_USER,
+    
+    'type_school' => App\Models\Liquidation::TYPE_STORE,
+    'type_faculty' => App\Models\Liquidation::TYPE_FACULTY,
+    'type_room' => App\Models\Liquidation::TYPE_ROOM,
 ];
 

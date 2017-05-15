@@ -74,7 +74,8 @@ class MessageService extends BaseService
                 $has->where('status', '<', config('constant.rate_deadline'));
             })
             ->findWhere([
-            ['faculty_id', '=', $facultyId]
+                ['quantity', '>', 0],
+                ['faculty_id', '=', $facultyId]
             ]);
         foreach ($storeFaculties as $storeFaculty) {
             if (in_array($storeFaculty->store_faculty_id, array_keys($notLiquidations))) {

@@ -12,14 +12,13 @@ Danh sách tài sản của các khoa
 @section('content')
 
 <div class="box">
-    <form class="form-horizontal" role="form" method="POST" action="{{url('admin/store-faculty')}}">
+    <form class="form-horizontal" role="form" method="POST" action="{{route('store-faculty')}}">
         {{ csrf_field() }}
         <div class="box-header">
             <div class="form-group">
                 <label class="col-sm-2 control-label">Chọn khoa</label>
                 <div class="col-sm-6">
                     <select name="faculty_id" class="form-control">
-                        <option value="">Chọn khoa</option>
                         @foreach($faculties as $faculty)
                         <option {{!isset($facultyId) ? '' : ($facultyId == $faculty->faculty_id ? "selected" : '')}} value="{{$faculty->faculty_id}}">{{$faculty->name}}</option>
                         @endforeach
@@ -35,17 +34,16 @@ Danh sách tài sản của các khoa
 <div class="box">
     <div class="box-header">
         <h3 class="box-title">Danh sách tài sản</h3>
+        <button type="button" class="btn bg-navy margin pull-right">
+            <i class="fa fa-download"></i>
+            Xuất file excel</button>
     </div>
-    <button type="button" class="btn bg-navy margin pull-right">
-                <i class="fa fa-download"></i>
-                Xuất file excel</button>
     <div class="box-body">
         <table id="mydata" class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>Mã TB</th>
                     <th>Ngày SD</th>
-                    <th>Khoa</th>
                     <th>Tên tài sản</th>
                     <th>Thông số</th>
                     <th>Số lượng</th>
@@ -58,7 +56,6 @@ Danh sách tài sản của các khoa
                 <tr>
                     <td>{{$importFac->store_faculty_id}}</td>
                     <td>{{$importFac->date_import}}</td>
-                    <td>{{$importFac->faculty->name}}</td>
                     <td>{{$importFac->stuff->name}}</td>
                     <td>{{$importFac->stuff->supplier->name}}</td>
                     <td>{{$importFac->quantity}}</td>

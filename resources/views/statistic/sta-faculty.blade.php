@@ -37,11 +37,13 @@ Thống kê tài sản theo khoa
             <thead>
                 <tr>
                     <th>STT</th>
+                    <th>Mã TB</th>
                     <th>Tên tài sản</th>
                     <th>Thông số</th>
                     <th>SL nhập</th>
                     <th>SL tồn kho</th>
                     <th>SL thanh lí</th>
+                    <th>Tỷ lệ % CL</th>
                     <th></th>
                 </tr>
             </thead>
@@ -49,11 +51,17 @@ Thống kê tài sản theo khoa
                 @foreach ($importFacs as $key => $importFac)
                 <tr>
                     <td>{{$key + 1}}</td>
+                    <td>{{$importFac->store_faculty_id}}</td>
                     <td>{{$importFac->stuff->name}}</td>
                     <td>{{$importFac->stuff->supplier->name}}</td>
                     <td>{{$importFac->quantity_start}}</td>
                     <td>{{$importFac->quantity}}</td>
-                    <td>{{$importFac->liquidation}}</td>
+                    <td>
+                        @if(isset($importFac->liquidation))
+                        {{$importFac->liquidation}}
+                        @endif
+                    </td>
+                    <td>{{$importFac->detailImportStore->status}}</td>
                     <td>
                         <a href="{{url('fac/statis-faculty-year-detail', [$years['now'], $importFac->stuff_id])}}" class="bg-gray-light margin">
                             <i class="fa fa-angle-double-right"></i>

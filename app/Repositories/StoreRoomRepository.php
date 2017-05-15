@@ -65,7 +65,9 @@ class StoreRoomRepository extends BaseRepo
             ->where('room_id', '=', $roomId)
             ->where('date_import', '>=', $year . '-01-01')
             ->where('date_import', '<=', $year . '-12-31')
-            ->select('stuff_id', DB::raw('sum(quantity) as quantity, sum(quantity_start) as quantity_start'))
-            ->groupBy('stuff_id');
+            ->withTrashed()
+            ->get();
+//            ->select('store_room_id', 'stuff_id', DB::raw('sum(quantity) as quantity, sum(quantity_start) as quantity_start'))
+//            ->groupBy('stuff_id');
     }
 }

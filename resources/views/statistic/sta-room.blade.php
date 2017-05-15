@@ -46,28 +46,30 @@ Thống kê theo phòng
             <thead>
                 <tr>
                     <th>STT</th>
+                    <th>Mã TB</th>
                     <th>Tên tài sản</th>
                     <th>Thông số</th>
                     <th>SL nhập</th>
                     <th>SL sử dụng</th>
                     <th>SL thanh lí</th>
-                    <th></th>
+                    <th>Tỷ lệ % CL</th>
                 </tr>
             </thead>
             <tbody align="center">
                 @foreach ($importRooms as $key => $importRoom)
                 <tr>
                     <td>{{$key + 1}}</td>
+                    <td>{{$importRoom->store_room_id}}</td>
                     <td>{{$importRoom->stuff->name}}</td>
                     <td>{{$importRoom->stuff->supplier->name}}</td>
                     <td>{{$importRoom->quantity_start}}</td>
                     <td>{{$importRoom->quantity}}</td>
-                    <td>{{$importRoom->liquidation}}</td>
                     <td>
-                        <a href="" class="bg-gray-light margin">
-                            <i class="fa fa-angle-double-right"></i>
-                            Chi tiết</a>
+                        @if(isset($importRoom->liquidation))
+                        {{$importRoom->liquidation}}
+                        @endif
                     </td>
+                    <td>{{$importRoom->storeFaculty->detailImportStore->status}}</td>
                 </tr>
                 @endforeach
             </tbody>

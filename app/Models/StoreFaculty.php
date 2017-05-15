@@ -37,7 +37,7 @@ class StoreFaculty extends Model
      */
     public function detailImportStore()
     {
-        return $this->belongsTo('App\Models\DetailImportStore')->withTrashed();
+        return $this->belongsTo(DetailImportStore::class)->withTrashed();
     }
     
     /**
@@ -78,5 +78,15 @@ class StoreFaculty extends Model
     public function requests()
     {
         return $this->hasMany(Request::class, 'store_type_id', 'store_faculty_id');
+    }
+    
+    /**
+     * Get the requests that chilren the store faculty.
+     *
+     * @return array Request
+     */
+    public function liquidations()
+    {
+        return $this->hasMany(Liquidation::class, 'store_liquidation_id', 'store_faculty_id');
     }
 }

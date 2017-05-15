@@ -60,12 +60,14 @@ class StoreFacultyRepository extends BaseRepo
      */
     public function getStoreFacultyByYear($facultyId, $year)
     {
-        return StoreFaculty::with(['stuff.supplier', 'stuff.kindStuff', 'faculty', 'detailImportStore'])
+        return StoreFaculty::with(['stuff.supplier', 'stuff.kindStuff', 'faculty', 'detailImportStore', 'liquidations'])
             ->where('faculty_id', '=', $facultyId)
             ->where('date_import', '>=', $year . '-01-01')
             ->where('date_import', '<=', $year . '-12-31')
-            ->select('stuff_id', DB::raw('sum(quantity) as quantity, sum(quantity_start) as quantity_start'))
-            ->groupBy('stuff_id');
+            ->withTrashed()
+            ->get();
+//            ->select('stuff_id', DB::raw('sum(quantity) as quantity, sum(quantity_start) as quantity_start'))
+//            ->groupBy('stuff_id');
     }
     
     /**

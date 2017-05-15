@@ -12,6 +12,8 @@ class HomeController extends Controller
     /**
      * Create a new controller instance.
      *
+     * @param FacultyRoomService $facRoomService []
+     *
      * @return void
      */
     public function __construct(FacultyRoomService $facRoomService)

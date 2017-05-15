@@ -67,6 +67,6 @@ class DetailImportStore extends Model
      */
     public function liquidations()
     {
-        return $this->hasMany(Liquidation::class,  'store_liquidation_id', 'id');
+        return $this->hasMany(Liquidation::class, 'store_liquidation_id', 'id');
     }
 }

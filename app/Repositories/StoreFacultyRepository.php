@@ -98,7 +98,7 @@ class StoreFacultyRepository extends BaseRepo
     public function getLiquidation($facultyId)
     {
         return Liquidation::with(['detailImportStore.stuff', 'storeFaculty.stuff', 'storeRoom.stuff'])
-            ->whereHas('storeFaculty', function($has) use ($facultyId) {
+            ->whereHas('storeFaculty', function ($has) use ($facultyId) {
                 $has->where('faculty_id', '=', $facultyId);
             })
             ->orderBy('created_at', 'desc')

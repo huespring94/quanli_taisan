@@ -9,17 +9,32 @@ class LiquidationController extends Controller
 {
     private $liquidationService;
     
-    public function __construct (LiquidationService $liquidationService)
+    /**
+     * Constructor of liquidation controller
+     *
+     * @param LiquidationService $liquidationService []
+     */
+    public function __construct(LiquidationService $liquidationService)
     {
         $this->liquidationService = $liquidationService;
     }
     
+    /**
+     * Get liquidation by faculty
+     *
+     * @return Response
+     */
     public function getLiquiByFaculty()
     {
         $liquidations = $this->liquidationService->getAllLiquidationFaculty();
         return view('atrophy.list-liquidation', ['liquidations' => $liquidations]);
     }
     
+    /**
+     * Get all liquidation
+     *
+     * @return Response
+     */
     public function getAllLiquidation()
     {
         $liquidations = $this->liquidationService->getAllLiquidation();

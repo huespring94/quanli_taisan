@@ -121,8 +121,6 @@ class RequestController extends Controller
     /**
      * Accept all request
      *
-     * @param any $id []
-     *
      * @return Response
      */
     public function acceptAllRequest()

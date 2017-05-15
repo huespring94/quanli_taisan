@@ -434,7 +434,7 @@ class ImportStuffService extends BaseService
     public function getAllImportFaculty()
     {
         return StoreFaculty::with(['stuff.supplier',
-            'stuff.kindStuff', 'faculty', 
+            'stuff.kindStuff', 'faculty',
             'detailImportStore'])
             ->withTrashed()->get();
     }

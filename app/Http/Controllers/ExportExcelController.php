@@ -15,12 +15,20 @@ class ExportExcelController extends Controller
     private $stuffFacService;
     private $liquiService;
 
+    /**
+     * Constructor of export excel controller
+     *
+     * @param Excel               $excel              []
+     * @param ImportStuffService  $importStuffService []
+     * @param StuffFacultyService $stuffFacService    []
+     * @param LiquidationService  $liquiService       []
+     */
     public function __construct(
-        Excel $excel, 
-        ImportStuffService $importStuffService, 
+        Excel $excel,
+        ImportStuffService $importStuffService,
         StuffFacultyService $stuffFacService,
-        LiquidationService $liquiService)
-    {
+        LiquidationService $liquiService
+    ) {
         $this->excel = $excel;
         $this->importStuffService = $importStuffService;
         $this->stuffFacService = $stuffFacService;
@@ -30,16 +38,18 @@ class ExportExcelController extends Controller
     /**
      * Download excel for detail import store
      *
-     * @var array
+     * @param any $id []
+     *
+     * @return void
      */
     public function downloadDetailImportStoreById($id)
     {
         $importStore = $this->importStuffService->getImportStoreById($id);
-        return Excel::create('Đại học bách khoa', function($excel) use ($id, $importStore) {
-                $excel->sheet('Kho-' . $importStore->store->name, function($sheet) use ($id, $importStore) {
+        return Excel::create('Đại học bách khoa', function ($excel) use ($id, $importStore) {
+                $excel->sheet('Kho-' . $importStore->store->name, function ($sheet) use ($id, $importStore) {
                     $sheet->setHeight(4, 20);
                     $sheet->setAutoSize(false);
-                    $sheet->cell('C4', function($cell) {
+                    $sheet->cell('C4', function ($cell) {
                         $cell->setFont(array(
                             'family' => 'Times New Roman',
                             'size' => '16',
@@ -58,10 +68,10 @@ class ExportExcelController extends Controller
                         array('Người nhập', $importStore->user->lastname . ' ' . $importStore->user->firstname),
                         array('Tổng tiền', number_format($amount))
                     ));
-                    $sheet->cells('A13:G13', function($cells) {
+                    $sheet->cells('A13:G13', function ($cells) {
                         $cells->setBackground('#00ffff');
                     });
-                    $sheet->cells('A5:Z100', function($cells) {
+                    $sheet->cells('A5:Z100', function ($cells) {
                         $cells->setAlignment('center');
                     });
                     $sheet->row(13, config('structure.title'));
@@ -71,7 +81,7 @@ class ExportExcelController extends Controller
                         $sheet->row($key + 14, $importedDatas);
                     }
                 });
-            })->download('xls');
+        })->download('xls');
     }
     
     /**
@@ -89,48 +99,48 @@ class ExportExcelController extends Controller
     /**
      * Use for export excel for liquidation
      *
-     * @param mixed $liquidations
+     * @param mixed  $liquidations []
+     * @param string $title        []
      *
      * @return void
      */
     public function statistic($liquidations, $title)
     {
-        return Excel::create ('Đại học bách khoa', function($excel) use ($title) {
-                $excel->sheet ('ThanhLi', function($sheet) use($title) {
-                    $sheet->setHeight (4, 20);
-                    $sheet->setAutoSize (false);
-                    $sheet->cell ('C4', function($cell) use($title){
-                        $cell->setFont (array(
+        return Excel::create('Đại học bách khoa', function ($excel) use ($title) {
+                $excel->sheet('ThanhLi', function ($sheet) use ($title) {
+                    $sheet->setHeight(4, 20);
+                    $sheet->setAutoSize(false);
+                    $sheet->cell('C4', function ($cell) use ($title) {
+                        $cell->setFont(array(
                             'family' => 'Times New Roman',
                             'size' => '16',
                             'bold' => false
                         ));
-                        $cell->setValue ($title);
+                        $cell->setValue($title);
                     });
-                    $sheet->setFontSize (10);
+                    $sheet->setFontSize(10);
 
-                    $sheet->cells ('A7:H7', function($cells) {
-                        $cells->setBackground ('#00ffff');
+                    $sheet->cells('A7:H7', function ($cells) {
+                        $cells->setBackground('#00ffff');
                     });
-                    $sheet->cells ('A5:Z100', function($cells) {
-                        $cells->setAlignment ('center');
+                    $sheet->cells('A5:Z100', function ($cells) {
+                        $cells->setAlignment('center');
                     });
-                    $sheet->row (7, config ('structure.statistic'));
-                    $datas = [];
+                    $sheet->row(7, config('structure.statistic'));
                     foreach ($liquidations as $key => $liquidation) {
-                        if ($liquidation->store_type == config ('constant.type_school')) {
+                        if ($liquidation->store_type == config('constant.type_school')) {
                             $id = $liquidation->detail_import_store_id;
                         } else {
                             $id = $liquidation->store_liquidation_id;
                         }
                         $dateLiqui = $liquidation->date_liquidation;
                         $quantity = $liquidation->quantity;
-                        if ($liquidation->store_type == config ('constant.type_faculty')) {
+                        if ($liquidation->store_type == config('constant.type_faculty')) {
                             $address = $liquidation->store_type.'-'.$liquidation->storeFaculty->faculty->name;
                             $dateImport = $liquidation->storeFaculty->date_import;
                             $nameStuff = $liquidation->storeFaculty->stuff->name;
                             $rate = $liquidation->storeFaculty->detailImportStore->status;
-                        } elseif ($liquidation->store_type == config ('constant.type_room')) {
+                        } elseif ($liquidation->store_type == config('constant.type_room')) {
                             $address = $liquidation->store_type.'-'.$liquidation->storeRoom->room->name;
                             $dateImport = $liquidation->storeRoom->date_import;
                             $nameStuff = $liquidation->storeRoom->stuff->name;
@@ -149,21 +159,25 @@ class ExportExcelController extends Controller
                             $dateImport,
                             $nameStuff,
                             $rate,);
-                        $sheet->row ($key + 8, $importedDatas);
+                        $sheet->row($key + 8, $importedDatas);
                     }
                 });
-            })->download ('xls');
+        })->download('xls');
     }
     
-    
+    /**
+     * Download detail impport
+     *
+     * @return void
+     */
     public function downloadDetailImport()
     {
         $details = $this->stuffFacService->getAllDetail();
-        return Excel::create('Đại học bách khoa', function($excel) use ($details) {
-                $excel->sheet('Kho', function($sheet) use ($details) {
+        return Excel::create('Đại học bách khoa', function ($excel) use ($details) {
+                $excel->sheet('Kho', function ($sheet) use ($details) {
                     $sheet->setHeight(4, 20);
                     $sheet->setAutoSize(false);
-                    $sheet->cell('C4', function($cell) {
+                    $sheet->cell('C4', function ($cell) {
                         $cell->setFont(array(
                             'family' => 'Times New Roman',
                             'size' => '16',
@@ -172,10 +186,10 @@ class ExportExcelController extends Controller
                         $cell->setValue('DANH SÁCH TÀI SẢN TỒN KHO');
                     });
                     $sheet->setFontSize(10);
-                    $sheet->cells('A6:K6', function($cells) {
+                    $sheet->cells('A6:K6', function ($cells) {
                         $cells->setBackground('#00ffff');
                     });
-                    $sheet->cells('A5:Z100', function($cells) {
+                    $sheet->cells('A5:Z100', function ($cells) {
                         $cells->setAlignment('center');
                     });
                     $sheet->row(6, config('structure.list'));
@@ -185,11 +199,6 @@ class ExportExcelController extends Controller
                         $sheet->row($key + 7, $importedDatas);
                     }
                 });
-            })->download('xls');
-    }
-    
-    public function downloadStuffInFaculty()
-    {
-        
+        })->download('xls');
     }
 }

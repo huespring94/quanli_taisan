@@ -95,9 +95,9 @@ class LiquidationService extends BaseService
             'date_liquidation' => Carbon::now()->format(config('define.date_format')),
             'quantity' => $detail->quantity,
             'store_liquidation_id' => $detail->id,
-            'store_type' => config ('constant.type_school'),
+            'store_type' => config('constant.type_school'),
         ];
-        if($detail->quantity_start == $detail->quantity) {
+        if ($detail->quantity_start == $detail->quantity) {
             $detail->delete();
         }
         $this->liquidationRepo->create($datas);

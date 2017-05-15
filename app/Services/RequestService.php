@@ -24,6 +24,7 @@ class RequestService
      * @param RequestRepository      $requestRepo      []
      * @param StoreFacultyRepository $storeFacultyRepo []
      * @param StoreRoomRepository    $storeRoomRepo    []
+     * @param LiquidationService     $liquiService     []
      */
     public function __construct(
         RequestRepository $requestRepo,
@@ -108,7 +109,7 @@ class RequestService
     public function acceptAllRequest()
     {
         $requests = $this->requestRepository->all();
-        foreach($requests as $request) {
+        foreach ($requests as $request) {
             $this->acceptRequest($request->id);
         }
     }

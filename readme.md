@@ -6,7 +6,7 @@
 - Bower
 
 ## Hướng dẫn cài đặt:
-
+- Đầu tiên
 ```bash
 git clone git@github.com:huespring94/quanli_taisan.git
 ```

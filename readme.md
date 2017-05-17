@@ -18,11 +18,22 @@ git clone https://github.com/huespring94/quanli_taisan.git
 - Tạo file .env và copy nội dung file .env.example vào 
 
 - Vào thư mục laradock,
-    `sudo docker-compose build`
-    `sudo docker-compose up -d mysql nginx`
-    `sudo docker exec -it laradock_workspace_1 bash`
-    `composer install`
-    `php artisan key:generate`
+
+    ```bash
+    sudo docker-compose build
+    ```
+    ```bash
+    sudo docker-compose up -d mysql nginx
+    ```
+    ```bash
+    sudo docker exec -it laradock_workspace_1 bash
+    ```
+    ```bash
+    composer install
+    ```
+    ```bash
+    php artisan key:generate
+    ```
 
 - Tạo datbaase tên quanli_db
 

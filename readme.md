@@ -16,6 +16,9 @@ git clone https://github.com/huespring94/quanli_taisan.git
  ```
 
 - Tạo file .env và copy nội dung file .env.example vào 
+```bash
+cp .env .env.example
+```
 
 - Vào thư mục laradock,
 

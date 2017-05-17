@@ -37,6 +37,10 @@ git clone https://github.com/huespring94/quanli_taisan.git
 
 - Tạo datbase tên quanli_db
 
-- Gõ ```bash
+- Gõ 
+```bash
 php artisan migrate
+```
+```bash
+php artisan db:seed
 ```

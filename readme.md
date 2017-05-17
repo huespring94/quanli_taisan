@@ -7,7 +7,9 @@
 
 ## Hướng dẫn cài đặt:
 
-- `git clone git@github.com:huespring94/quanli_taisan.git`
+- ```
+git clone git@github.com:huespring94/quanli_taisan.git
+```
     hoặc `git clone https://github.com/huespring94/quanli_taisan.git`
 
 - Tạo file .env và copy nội dung file .env.example vào 

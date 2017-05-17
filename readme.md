@@ -44,3 +44,8 @@ php artisan migrate
 ```bash
 php artisan db:seed
 ```
+
+- Install bower
+```bash
+bower install
+```

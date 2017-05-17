@@ -55,7 +55,10 @@ class StuffFacultyService
      */
     public function getStuffInStoreFacutyByFaculty($facultyId)
     {
-        return StoreFaculty::with('stuff.supplier')->where('faculty_id', $facultyId)->select('stuff_id')
+        return StoreFaculty::with('stuff.supplier')->where('faculty_id', $facultyId)
+            ->whereHas('detailImportStore', function ($has) {
+                $has->where('status', '>', config('constant.rate_deadline'));
+            })->select('stuff_id')
             ->distinct()->get();
     }
     
@@ -282,5 +285,43 @@ class StuffFacultyService
         return $this->detailRepo->with(['importStore.store', 'stuff.supplier'])
             ->findWhere([['quantity', '>', 0]])
             ->all();
+    }
+    
+    /**
+     * Update quantity for store room
+     *
+     * @param Request $request []
+     *
+     * @return boolean
+     */
+    public function updateStoreRoom ($request)
+    {
+        $data = $request->only('quantity', 'id');
+        $storeRoom = $this->storeRoomRepo->find ($data['id']);
+        $storeFaculty = $this->storeFacultyRepo->findByField ('store_faculty_id', $storeRoom->store_faculty_id)->first();
+        if ($data['quantity'] > 0 && $data['quantity'] < $storeFaculty->quantity) {
+            $storeFaculty->quantity += ($storeRoom->quantity - $data['quantity']);
+            $storeFaculty->save ();
+            $storeRoom->quantity = $data['quantity'];
+            $storeRoom->save();
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Delete store room
+     *
+     * @param any $id []
+     *
+     * @return void
+     */
+    public function deleteStoreRoom ($id)
+    {
+        $storeRoom = $this->storeRoomRepo->find($id);
+        $storeFaculty = $this->storeFacultyRepo->findByField ('store_faculty_id', $storeRoom->store_faculty_id)->first();
+        $storeFaculty->quantity += $storeRoom->quantity;
+        $storeFaculty->save ();
+        $storeRoom->forceDelete();
     }
 }

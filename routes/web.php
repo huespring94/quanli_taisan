@@ -113,6 +113,10 @@ Route::group(['middleware' => 'faculty', 'prefix' => 'fac'], function () {
         'as' => 'atrophy-store-faculty',
         'uses' => 'AtrophyController@getExpireStuffStoreFaculty'
     ]);
+    Route::get('/delete-request/{id}', [
+        'as' => 'delete-request',
+        'uses' => 'AtrophyController@deleteWaitLiquidation'
+    ]);
     Route::post('/request-liquidation', [
         'as' => 'request-liquidation-faculty',
         'uses' => 'RequestController@storeFaculty'
@@ -120,6 +124,14 @@ Route::group(['middleware' => 'faculty', 'prefix' => 'fac'], function () {
     Route::get('/liquidation-faculty', [
         'as' => 'liquidation-faculty',
         'uses' => 'LiquidationController@getLiquiByFaculty'
+    ]);
+    Route::post('/update-room', [
+        'as' => 'update-room',
+        'uses' => 'ImportRoomController@updateStoreRoom'
+    ]);
+    Route::get('/delete-room/{id}', [
+        'as' => 'delete-room',
+        'uses' => 'ImportRoomController@deleteStoreRoom'
     ]);
 });
 

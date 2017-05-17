@@ -35,6 +35,8 @@ git clone https://github.com/huespring94/quanli_taisan.git
     php artisan key:generate
     ```
 
-- Tạo datbaase tên quanli_db
+- Tạo datbase tên quanli_db
 
-- Gõ `php artisan migrate`
+- Gõ ```bash
+php artisan migrate
+```

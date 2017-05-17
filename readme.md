@@ -7,7 +7,7 @@
 
 ## Hướng dẫn cài đặt:
 
-- ```
+```bash
 git clone git@github.com:huespring94/quanli_taisan.git
 ```
     hoặc `git clone https://github.com/huespring94/quanli_taisan.git`

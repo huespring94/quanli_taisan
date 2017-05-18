@@ -12,6 +12,7 @@ Thống kê theo phòng
 @section('content')
 
 <div class="box">
+    <h4 class="box-title">Khoa <b>{{Auth::user()->faculty->name}}</b></h4>
     <form class="form-horizontal" role="form" method="POST" action="{{route('statis-by-room-year')}}">
         {{ csrf_field() }}
         <div class="box-header">
@@ -41,6 +42,16 @@ Thống kê theo phòng
 </div>
 
 <div class="box">
+    <div class="box-header">
+        <form method="POST" action="{{route('download-statistic')}}">
+            {{ csrf_field() }}
+            <input name="year" value="{{!isset($years['now']) ? '' : $years['now']}}" hidden>
+            <input name="room_id" value="{{!isset($roomId) ? $rooms[0]->room_id : $roomId}}" hidden>
+            <button type="submit" class="btn bg-navy pull-right">
+            <i class="fa fa-download"></i>
+            Xuất file excel</button>
+        </form>
+    </div>
     <div class="box-body">
         <table class="table table-bordered table-striped">
             <thead>
@@ -49,6 +60,7 @@ Thống kê theo phòng
                     <th>Mã TB</th>
                     <th>Tên tài sản</th>
                     <th>Thông số</th>
+                    <th>Năm SD</th>
                     <th>SL nhập</th>
                     <th>SL sử dụng</th>
                     <th>SL thanh lí</th>
@@ -62,14 +74,23 @@ Thống kê theo phòng
                     <td>{{$importRoom->store_room_id}}</td>
                     <td>{{$importRoom->stuff->name}}</td>
                     <td>{{$importRoom->stuff->supplier->name}}</td>
+                    <td>{{explode('-', $importRoom->date_import)[0]}}</td>
                     <td>{{$importRoom->quantity_start}}</td>
                     <td>{{$importRoom->quantity}}</td>
                     <td>
                         @if(isset($importRoom->liquidation))
                         {{$importRoom->liquidation}}
+                        @else
+                        -
                         @endif
                     </td>
-                    <td>{{$importRoom->storeFaculty->detailImportStore->status}}</td>
+                    <td>
+                        @if ($importRoom->storeFaculty->detailImportStore->status <= 20)
+                        <span class="badge bg-warning">{{$importRoom->storeFaculty->detailImportStore->status}}%</span>
+                        @else
+                        <span class="badge bg-light-blue">{{$importRoom->storeFaculty->detailImportStore->status}}%</span>
+                        @endif
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

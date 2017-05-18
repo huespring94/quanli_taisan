@@ -97,9 +97,8 @@ class StatisticalService extends BaseService
      *
      * @return mixed
      */
-    public function getStoreFacultyByYear($year)
+    public function getStoreFacultyByYear($year, $facultyId)
     {
-        $facultyId = auth()->user()->faculty_id;
         $importExports = $this->storeFacRepo->getStoreFacultyByYear($facultyId, $year);
         $liquidations = $this->liquidationRepo->getLiquidationByYear()->pluck('quantity', 'store_liquidation_id')->all();
         foreach ($importExports as $importExport) {
@@ -142,11 +141,5 @@ class StatisticalService extends BaseService
     public function getStoreFacultyByStoreFaculty($facultyId, $year, $stuffId)
     {
         return $this->storeFacRepo->getStoreFacultyByYearDetail($facultyId, $year, $stuffId);
-    }
-    
-    
-    public function getStatisticByYear()
-    {
-        
     }
 }

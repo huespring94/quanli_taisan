@@ -14,7 +14,7 @@ return [
         'Tỷ lệ % CL'
     ],
     
-    'statistic' => [
+    'liquidation' => [
         'STT',
         'Mã TB',
         'Ngày TL',
@@ -36,5 +36,18 @@ return [
         'Thành tiền',
         'Tỷ lệ % CL'
     ],
+    
+    'statistic' => [
+        'STT',
+        'Mã TB',
+        'Tên tài sản',
+        'Thông số',
+        'Năm SD',
+        'SL nhập',
+        'SL sử dụng',
+        'SL thanh lí',
+        'Tỷ lệ % CL'
+    ],
+    
 ];
 

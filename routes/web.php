@@ -162,6 +162,10 @@ Route::get('logout', function() {
 
 Route::get('download-liquidation', [
     'as'  => 'download-liquidation',
+    'uses' => 'ExportExcelController@downloadLiquidation'
+]);
+Route::post('download-statistic', [
+    'as'  => 'download-statistic',
     'uses' => 'ExportExcelController@downloadStatistic'
 ]);
 Route::get('download-detail-store', [

@@ -35,7 +35,7 @@ class StatisticalController extends Controller
     {
         $user = auth()->user();
         $years = $this->statisService->getYearStoreFacultyByFaculty($user->faculty_id);
-        $importFacs = $this->statisService->getStoreFacultyByYear($years['now']);
+        $importFacs = $this->statisService->getStoreFacultyByYear($years['now'], $user->faculty_id);
         return view('statistic.sta-faculty', ['years' => $years, 'importFacs' => $importFacs]);
     }
     
@@ -65,7 +65,7 @@ class StatisticalController extends Controller
         $user = auth()->user();
         $years = $this->statisService->getYearStoreFacultyByFaculty($user->faculty_id);
         $years['now'] = $request->get('year');
-        $importFacs = $this->statisService->getStoreFacultyByYear($years['now']);
+        $importFacs = $this->statisService->getStoreFacultyByYear($years['now'], $user->faculty_id);
         return view('statistic.sta-faculty', ['years' => $years, 'importFacs' => $importFacs]);
     }
     

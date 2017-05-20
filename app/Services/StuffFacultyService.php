@@ -227,6 +227,8 @@ class StuffFacultyService
     /**
      * Get import room by room id
      *
+     * @param any $facultyId []
+     *
      * @return array
      */
     public function getImportFacultyByFaculty($facultyId)
@@ -293,14 +295,14 @@ class StuffFacultyService
      *
      * @return boolean
      */
-    public function updateStoreRoom ($request)
+    public function updateStoreRoom($request)
     {
         $data = $request->only('quantity', 'id');
-        $storeRoom = $this->storeRoomRepo->find ($data['id']);
-        $storeFaculty = $this->storeFacultyRepo->findByField ('store_faculty_id', $storeRoom->store_faculty_id)->first();
+        $storeRoom = $this->storeRoomRepo->find($data['id']);
+        $storeFaculty = $this->storeFacultyRepo->findByField('store_faculty_id', $storeRoom->store_faculty_id)->first();
         if ($data['quantity'] > 0 && $data['quantity'] < $storeFaculty->quantity) {
             $storeFaculty->quantity += ($storeRoom->quantity - $data['quantity']);
-            $storeFaculty->save ();
+            $storeFaculty->save();
             $storeRoom->quantity = $data['quantity'];
             $storeRoom->save();
             return true;
@@ -315,12 +317,12 @@ class StuffFacultyService
      *
      * @return void
      */
-    public function deleteStoreRoom ($id)
+    public function deleteStoreRoom($id)
     {
         $storeRoom = $this->storeRoomRepo->find($id);
-        $storeFaculty = $this->storeFacultyRepo->findByField ('store_faculty_id', $storeRoom->store_faculty_id)->first();
+        $storeFaculty = $this->storeFacultyRepo->findByField('store_faculty_id', $storeRoom->store_faculty_id)->first();
         $storeFaculty->quantity += $storeRoom->quantity;
-        $storeFaculty->save ();
+        $storeFaculty->save();
         $storeRoom->forceDelete();
     }
 }

@@ -83,6 +83,8 @@ class AtrophyController extends Controller
     /**
      * Get expire stuff in store faculty
      *
+     * @param any $id []
+     *
      * @return Reponse
      */
     public function deleteWaitLiquidation($id)
@@ -147,14 +149,5 @@ class AtrophyController extends Controller
             'atrophyStores' => $atrophyStores,
             'liquidations' => $liquidations
         ]);
-    }
-    /**
-     * Move to liquidation
-     *
-     * @return Reponse
-     */
-    public function destroyRoom()
-    {
-        //
     }
 }

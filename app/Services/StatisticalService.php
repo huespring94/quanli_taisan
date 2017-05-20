@@ -93,7 +93,8 @@ class StatisticalService extends BaseService
     /**
      * Get store faculty by year
      *
-     * @param int $year []
+     * @param int $year      []
+     * @param any $facultyId []
      *
      * @return mixed
      */

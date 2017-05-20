@@ -175,10 +175,10 @@ class ImportRoomController extends Controller
      *
      * @return Response
      */
-    public function updateStoreRoom (Request $request)
+    public function updateStoreRoom(Request $request)
     {
         $result = $this->stuffFacultyService->updateStoreRoom($request);
-        if($result) {
+        if ($result) {
             Session::flash('msg', 'Cập nhật thành công.');
             $quantity = $request->get('quantity');
         } else {
@@ -197,12 +197,12 @@ class ImportRoomController extends Controller
      *
      * @return Response
      */
-    public function deleteStoreRoom ($id)
+    public function deleteStoreRoom($id)
     {
-        $this->stuffFacultyService->deleteStoreRoom ($id);
-        $rooms = $this->facultyRoomService->getRoomByFaculty (auth ()->user ()->faculty_id);
-        $storeRooms = $this->stuffFacultyService->getImportRoomAllByRoom ($rooms->first ()->room_id);
-        Session::flash ('msg', 'Xóa thành công.');
-        return view ('room.index', ['rooms' => $rooms, 'storeRooms' => $storeRooms]);
+        $this->stuffFacultyService->deleteStoreRoom($id);
+        $rooms = $this->facultyRoomService->getRoomByFaculty(auth()->user()->faculty_id);
+        $storeRooms = $this->stuffFacultyService->getImportRoomAllByRoom($rooms->first()->room_id);
+        Session::flash('msg', 'Xóa thành công.');
+        return view('room.index', ['rooms' => $rooms, 'storeRooms' => $storeRooms]);
     }
 }

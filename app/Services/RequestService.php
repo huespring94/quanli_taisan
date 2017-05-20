@@ -95,9 +95,15 @@ class RequestService
         $request->save();
         $this->liquiService->createLiquidationByRequest($requestId);
         if ($request->type == Request::TYPE_FACULTY) {
-            $this->storeFacultyRepo->deleteWhere(['store_faculty_id' => $request->store_type_id]);
+            $storeFaculty = $this->storeFacultyRepo->findByField('store_faculty_id', $request->store_type_id)->first();
+            if ($storeFaculty->quantity_start == $request->quantity) {
+                $this->storeFacultyRepo->deleteWhere(['store_faculty_id' => $request->store_type_id]);
+            }
         } else {
-            $this->storeRoomRepo->deleteWhere(['store_room_id' => $request->store_type_id]);
+            $storeFaculty = $this->storeRoomRepo->findByField('store_room_id', $request->store_type_id)->first();
+            if ($storeFaculty->quantity_start == $request->quantity) {
+                $this->storeRoomRepo->deleteWhere(['store_room_id' => $request->store_type_id]);
+            }
         }
     }
     
@@ -260,13 +266,13 @@ class RequestService
      *
      * @return void
      */
-    public function deleteReqWaitLiquidation ($id)
+    public function deleteReqWaitLiquidation($id)
     {
-        $req = $this->requestRepository->find ($id);
-        $storeFaculty = $this->storeFacultyRepo->findByField ('store_faculty_id', $req->store_type_id)->first();
+        $req = $this->requestRepository->find($id);
+        $storeFaculty = $this->storeFacultyRepo->findByField('store_faculty_id', $req->store_type_id)->first();
         $storeFaculty->quantity += $req->quantity;
-        $storeFaculty->save ();
-        $req->delete ();
+        $storeFaculty->save();
+        $req->delete();
     }
     
     /**
@@ -276,12 +282,12 @@ class RequestService
      *
      * @return void
      */
-    public function deleteReqWaitLiquidationRoom ($id)
+    public function deleteReqWaitLiquidationRoom($id)
     {
-        $req = $this->requestRepository->find ($id);
-        $storeRoom = $this->storeRoomRepo->findByField ('store_room_id', $req->store_type_id)->first();
+        $req = $this->requestRepository->find($id);
+        $storeRoom = $this->storeRoomRepo->findByField('store_room_id', $req->store_type_id)->first();
         $storeRoom->quantity += $req->quantity;
-        $storeRoom->save ();
-        $req->delete ();
+        $storeRoom->save();
+        $req->delete();
     }
 }

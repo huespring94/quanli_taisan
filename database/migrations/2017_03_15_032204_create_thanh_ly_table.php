@@ -20,6 +20,7 @@ class CreateThanhLyTable extends Migration
 //            $table->integer('detail_import_store_id')->unsigned()->nullable();
             $table->string('store_liquidation_id', 50)->nullable();
             $table->string('store_type', 50);
+            $table->timestamps();
         });
     }
 

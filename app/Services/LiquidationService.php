@@ -38,6 +38,7 @@ class LiquidationService extends BaseService
      * @param StoreFacultyRepository      $storeFacultyRepo []
      * @param StoreRoomRepository         $storeRoomRepo    []
      * @param RequestRepository           $requestRepo      []
+     * @param FacultyRoomService          $facRoomService   []
      */
     public function __construct(
         LiquidationRepository $liquidationRepo,
@@ -115,6 +116,9 @@ class LiquidationService extends BaseService
         ];
         if ($detail->quantity_start == $detail->quantity) {
             $detail->delete();
+        } else {
+            $detail->quantity = 0;
+            $detail->save();
         }
         $this->liquidationRepo->create($datas);
     }

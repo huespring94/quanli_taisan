@@ -73,7 +73,7 @@ class FacultyRoomService extends BaseService
      */
     public function getFacultyByRoom($roomId)
     {
-        return $this->facultyRepo->whereHas('rooms', function($has) use($roomId) {
+        return $this->facultyRepo->whereHas('rooms', function ($has) use ($roomId) {
             $has->where('room_id', '=', $roomId);
         })->first();
     }

@@ -20,8 +20,8 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'password' => bcrypt('123456789'),
-                'firstname' => $faker->lastName,
-                'lastname' => $faker->firstName,
+                'firstname' => $faker->firstName,
+                'lastname' => $faker->lastName,
                 'avatar' => 'user.png',
                 'email' => 'admin@gmail.com',
                 'role_id' => Role::where('name', '=', Role::ROLE_ADMIN)->first()->id,
@@ -45,7 +45,7 @@ class UserSeeder extends Seeder
                 'avatar' => 'user.jpg',
                 'email' => 'quanlikhoa@gmail.com',
                 'role_id' => Role::where('name', '=', Role::ROLE_FACULTY)->first()->id,
-                'faculty_id' => Faculty::first()->faculty_id,
+                'faculty_id' => $facultyIds->first(),
                 'remember_token' => str_random(10)
             ],
             [
@@ -55,13 +55,12 @@ class UserSeeder extends Seeder
                 'avatar' => 'user.jpg',
                 'email' => 'quanliphong@gmail.com',
                 'role_id' => Role::where('name', '=', Role::ROLE_ROOM)->first()->id,
-                'faculty_id' => Faculty::first()->faculty_id,
-                'room_id' => Room::first()->room_id,
+                'faculty_id' => $facultyIds->first(),
                 'remember_token' => str_random(10)
             ]
         ]);
         $roleIds = Role::all()->pluck('id');
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             DB::table('users')->insert([
                 'password' => bcrypt('123456789'),
                 'firstname' => $faker->lastName,

@@ -18,7 +18,6 @@ class CreateHaoMonVoHinhTable extends Migration
             $table->string('name', 1000);
             $table->string('description', 2000);
             $table->integer('atrophy_rate');
-            $table->timestamps();
         });
     }
 

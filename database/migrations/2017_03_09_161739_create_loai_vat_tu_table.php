@@ -18,7 +18,6 @@ class CreateLoaiVatTuTable extends Migration
             $table->string('kind_stuff_id', 10)->unique();
             $table->string('name', 100);
             $table->string('description', 1000)->nullable();
-            $table->timestamps();
         });
     }
 

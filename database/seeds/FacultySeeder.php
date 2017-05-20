@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
 
 class FacultySeeder extends Seeder
 {
@@ -12,13 +11,26 @@ class FacultySeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create('vi_VN');
-        for ($i = 0; $i < 10; $i++)
-        {
-            DB::table('faculties')->insert([
-                'faculty_id' => $faker->unique()->text($maxNbChars = 5),
-                'name' => $faker->sentence($nbWords = 2)
-            ]);
-        }
+        $now = Carbon\Carbon::now();
+        $data = [
+            [
+                'faculty_id' => 'CNTT',
+                'name' => 'Công nghệ thông tin',
+            ],
+            [
+                'faculty_id' => 'DTVT',
+                'name' => 'Điện tử viễn thông',
+            ],
+            [
+                'faculty_id' => 'CK',
+                'name' => 'Cơ khí',
+            ],
+            [
+                'faculty_id' => 'D',
+                'name' => 'Điện',
+            ],
+        ];
+
+        DB::table('faculties')->insert($data);
     }
 }

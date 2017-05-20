@@ -19,7 +19,6 @@ class CreateNhaCungCapTable extends Migration
             $table->string('name', 500);
             $table->string('address', 1000);
             $table->string('description', 1000)->nullable();
-            $table->timestamps();
         });
     }
 

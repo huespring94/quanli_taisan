@@ -17,7 +17,6 @@ class CreateKhoTable extends Migration
             $table->increments('id');
             $table->string('name', 50)->nullable();
             $table->integer('user_id')->unsigned();
-            $table->timestamps();
         });
     }
 

@@ -19,7 +19,6 @@ class CreatePhongTable extends Migration
             $table->string('name', 50);
             $table->string('faculty_id', 10);
             $table->integer('user_id')->unsigned()->nullable();
-            $table->timestamps();
         });
     }
 

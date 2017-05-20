@@ -60,12 +60,14 @@ class StoreFacultyRepository extends BaseRepo
      */
     public function getStoreFacultyByYear($facultyId, $year)
     {
-        return StoreFaculty::with(['stuff.supplier', 'stuff.kindStuff', 'faculty', 'detailImportStore'])
+        return StoreFaculty::with(['stuff.supplier', 'stuff.kindStuff', 'faculty', 'detailImportStore', 'liquidations'])
             ->where('faculty_id', '=', $facultyId)
             ->where('date_import', '>=', $year . '-01-01')
             ->where('date_import', '<=', $year . '-12-31')
-            ->select('stuff_id', DB::raw('sum(quantity) as quantity, sum(quantity_start) as quantity_start'))
-            ->groupBy('stuff_id');
+            ->withTrashed()
+            ->get();
+//            ->select('stuff_id', DB::raw('sum(quantity) as quantity, sum(quantity_start) as quantity_start'))
+//            ->groupBy('stuff_id');
     }
     
     /**
@@ -100,6 +102,22 @@ class StoreFacultyRepository extends BaseRepo
         return Liquidation::with(['detailImportStore.stuff', 'storeFaculty.stuff', 'storeRoom.stuff'])
             ->whereHas('storeFaculty', function ($has) use ($facultyId) {
                 $has->where('faculty_id', '=', $facultyId);
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+    /**
+     * Get liquidation in faculty
+     *
+     * @param any $roomId []
+     *
+     * @return mixed
+     */
+    public function getLiquidationByRoom($roomId)
+    {
+        return Liquidation::with(['storeRoom.stuff'])
+            ->whereHas('storeRoom', function ($has) use ($roomId) {
+                $has->where('room_id', '=', $roomId);
             })
             ->orderBy('created_at', 'desc')
             ->get();

@@ -9,6 +9,7 @@ use App\Repositories\DetailImportStoreRepository;
 use App\Repositories\StoreFacultyRepository;
 use App\Repositories\StoreRoomRepository;
 use App\Repositories\RequestRepository;
+use App\Services\FacultyRoomService;
 
 class LiquidationService extends BaseService
 {
@@ -26,6 +27,8 @@ class LiquidationService extends BaseService
     private $storeRoomRepo;
     
     private $requestRepo;
+    
+    private $facRoomService;
 
     /**
      * Constructor of liquidation service
@@ -35,19 +38,22 @@ class LiquidationService extends BaseService
      * @param StoreFacultyRepository      $storeFacultyRepo []
      * @param StoreRoomRepository         $storeRoomRepo    []
      * @param RequestRepository           $requestRepo      []
+     * @param FacultyRoomService          $facRoomService   []
      */
     public function __construct(
         LiquidationRepository $liquidationRepo,
         DetailImportStoreRepository $detailIStoreRepo,
         StoreFacultyRepository $storeFacultyRepo,
         StoreRoomRepository $storeRoomRepo,
-        RequestRepository $requestRepo
+        RequestRepository $requestRepo,
+        FacultyRoomService $facRoomService
     ) {
         $this->liquidationRepo = $liquidationRepo;
         $this->detailIStoreRepo = $detailIStoreRepo;
         $this->storeFacultyRepo = $storeFacultyRepo;
         $this->storeRoomRepo = $storeRoomRepo;
         $this->requestRepo = $requestRepo;
+        $this->facRoomService = $facRoomService;
     }
     
     /**
@@ -80,6 +86,17 @@ class LiquidationService extends BaseService
         $facultyId = auth()->user()->faculty_id;
         return $this->storeFacultyRepo->getLiquidation($facultyId);
     }
+    
+    /**
+     * Get all liquidations for room
+     *
+     * @return array
+     */
+    public function getAllLiquidationRoom()
+    {
+        $room = $this->facRoomService->getRoomByUser(auth()->user()->id);
+        return $this->storeFacultyRepo->getLiquidationByRoom($room->room_id);
+    }
 
     /**
      * Remove stuff to liquordation
@@ -99,6 +116,9 @@ class LiquidationService extends BaseService
         ];
         if ($detail->quantity_start == $detail->quantity) {
             $detail->delete();
+        } else {
+            $detail->quantity = 0;
+            $detail->save();
         }
         $this->liquidationRepo->create($datas);
     }

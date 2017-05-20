@@ -12,9 +12,19 @@ Danh sách đã tài sản thanh lí
 
 <div class="box">
     <div class="box-header">
+        @if(Auth::user()->role->name == config('constant.r_admin') || Auth::user()->role->name == config('constant.r_accountant'))
         <a href="{{route('download-liquidation')}}" type="button" class="btn bg-navy margin pull-right">
             <i class="fa fa-download"></i>
             Xuất file excel</a>
+        @elseif(Auth::user()->role->name == config('constant.r_faculty'))
+        <a href="{{route('download-liquidation-faculty')}}" type="button" class="btn bg-navy margin pull-right">
+            <i class="fa fa-download"></i>
+            Xuất file excel</a>
+        @else
+        <a href="{{route('download-liquidation-room')}}" type="button" class="btn bg-navy margin pull-right">
+            <i class="fa fa-download"></i>
+            Xuất file excel</a>
+        @endif
     </div>
 
     <div class="box-body">

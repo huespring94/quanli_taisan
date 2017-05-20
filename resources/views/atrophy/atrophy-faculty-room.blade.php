@@ -15,7 +15,7 @@ Thiết bị trong kho
 @section('content')
 @if (Session::has('msg'))
 <div class="callout callout-info">
-    <h4>Message</h4>
+    <h4>Thông báo</h4>
 
     <p>{{ Session::get('msg') }}</p>
 </div>
@@ -153,6 +153,7 @@ Thiết bị trong kho
                             <th>Ngày SD</th>
                             <th>Tên tài sản</th>
                             <th>Số lượng</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody align="center">
@@ -161,6 +162,10 @@ Thiết bị trong kho
                             <td>{{$liquidation->storeFaculty->date_import}}</td>
                             <td>{{$liquidation->storeFaculty->stuff->name}}</td>
                             <td>{{$liquidation->quantity}}</td>
+                            <td>
+                                <a href="{{route('delete-request', [$liquidation->id])}}" class="btn bg-red pull-right">
+                        <i class="fa fa-trash"></i></a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

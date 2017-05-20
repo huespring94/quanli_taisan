@@ -12,7 +12,7 @@ Nhập tài sản cho phòng
 @section('content')
 @if (Session::has('msg-i-f'))
 <div class="callout callout-warning">
-    <h4>Message</h4>
+    <h4>Thông báo</h4>
 
     <p>{{ Session::get('msg-i-f') }}</p>
 </div>

@@ -55,7 +55,10 @@ class StuffFacultyService
      */
     public function getStuffInStoreFacutyByFaculty($facultyId)
     {
-        return StoreFaculty::with('stuff.supplier')->where('faculty_id', $facultyId)->select('stuff_id')
+        return StoreFaculty::with('stuff.supplier')->where('faculty_id', $facultyId)
+            ->whereHas('detailImportStore', function ($has) {
+                $has->where('status', '>', config('constant.rate_deadline'));
+            })->select('stuff_id')
             ->distinct()->get();
     }
     
@@ -224,17 +227,18 @@ class StuffFacultyService
     /**
      * Get import room by room id
      *
+     * @param any $facultyId []
+     *
      * @return array
      */
-    public function getImportFacultyByFaculty()
+    public function getImportFacultyByFaculty($facultyId)
     {
-        $user = auth()->user();
-        $requestQs = $this->requestService->getRequestAllLiquidationByFaculty($user->faculty_id)
+        $requestQs = $this->requestService->getRequestAllLiquidationByFaculty($facultyId)
             ->pluck('quantity', 'store_type_id')->all();
-        $requestSs = $this->requestService->getRequestAllLiquidationByFaculty($user->faculty_id)
+        $requestSs = $this->requestService->getRequestAllLiquidationByFaculty($facultyId)
             ->pluck('status', 'store_type_id')->all();
         $storeFaculties = StoreFaculty::with(['stuff.supplier', 'detailImportStore'])
-            ->where('faculty_id', '=', $user->faculty_id)
+            ->where('faculty_id', '=', $facultyId)
             ->orderBy('created_at', 'desc')->get();
         foreach ($storeFaculties as $storeFaculty) {
             if (in_array($storeFaculty->store_faculty_id, array_keys($requestQs))) {
@@ -282,5 +286,43 @@ class StuffFacultyService
         return $this->detailRepo->with(['importStore.store', 'stuff.supplier'])
             ->findWhere([['quantity', '>', 0]])
             ->all();
+    }
+    
+    /**
+     * Update quantity for store room
+     *
+     * @param Request $request []
+     *
+     * @return boolean
+     */
+    public function updateStoreRoom($request)
+    {
+        $data = $request->only('quantity', 'id');
+        $storeRoom = $this->storeRoomRepo->find($data['id']);
+        $storeFaculty = $this->storeFacultyRepo->findByField('store_faculty_id', $storeRoom->store_faculty_id)->first();
+        if ($data['quantity'] > 0 && $data['quantity'] < $storeFaculty->quantity) {
+            $storeFaculty->quantity += ($storeRoom->quantity - $data['quantity']);
+            $storeFaculty->save();
+            $storeRoom->quantity = $data['quantity'];
+            $storeRoom->save();
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Delete store room
+     *
+     * @param any $id []
+     *
+     * @return void
+     */
+    public function deleteStoreRoom($id)
+    {
+        $storeRoom = $this->storeRoomRepo->find($id);
+        $storeFaculty = $this->storeFacultyRepo->findByField('store_faculty_id', $storeRoom->store_faculty_id)->first();
+        $storeFaculty->quantity += $storeRoom->quantity;
+        $storeFaculty->save();
+        $storeRoom->forceDelete();
     }
 }

@@ -5,8 +5,8 @@
             <i class="fa fa-th"></i> <span>Danh sách TS phòng</span>
         </a>
     </li>
-    <li class="treeview">
-        <a href="">
+    <li class="treeview {{ areActiveRoutes(['liquidation-room']) }}">
+        <a href="{{route('liquidation-room')}}">
             <i class="fa fa-th"></i> <span>Danh sách TS thanh lí</span>
         </a>
     </li>
@@ -17,8 +17,8 @@
             </span>
         </a>
     </li>
-    <li class="treeview">
-        <a href="#">
+    <li class="treeview {{ areActiveRoutes(['room-statistic'])}}">
+        <a href="{{route('room-statistic')}}">
             <i class="fa fa-pie-chart"></i>
             <span>Thống kê</span>
         </a>

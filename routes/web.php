@@ -113,6 +113,10 @@ Route::group(['middleware' => 'faculty', 'prefix' => 'fac'], function () {
         'as' => 'atrophy-store-faculty',
         'uses' => 'AtrophyController@getExpireStuffStoreFaculty'
     ]);
+    Route::get('/delete-request/{id}', [
+        'as' => 'delete-request',
+        'uses' => 'AtrophyController@deleteWaitLiquidation'
+    ]);
     Route::post('/request-liquidation', [
         'as' => 'request-liquidation-faculty',
         'uses' => 'RequestController@storeFaculty'
@@ -120,6 +124,14 @@ Route::group(['middleware' => 'faculty', 'prefix' => 'fac'], function () {
     Route::get('/liquidation-faculty', [
         'as' => 'liquidation-faculty',
         'uses' => 'LiquidationController@getLiquiByFaculty'
+    ]);
+    Route::post('/update-room', [
+        'as' => 'update-room',
+        'uses' => 'ImportRoomController@updateStoreRoom'
+    ]);
+    Route::get('/delete-room/{id}', [
+        'as' => 'delete-room',
+        'uses' => 'ImportRoomController@deleteStoreRoom'
     ]);
 });
 
@@ -136,6 +148,14 @@ Route::group(['middleware' => 'room', 'prefix' => 'roo'], function () {
         'as' => 'store-room-user',
         'uses' => 'ImportRoomController@getImportRoomByRoom'
     ]);
+    Route::get('/liquidation-room', [
+        'as' => 'liquidation-room',
+        'uses' => 'LiquidationController@getLiquiByRoom'
+    ]);
+    Route::get('/room-statistic', [
+        'as' => 'room-statistic',
+        'uses' => 'StatisticalController@statisticByRoomOwnYear'
+    ]);
 });
 
 Route::get('logout', function() {
@@ -146,11 +166,27 @@ Route::get('logout', function() {
 
 Route::get('download-liquidation', [
     'as'  => 'download-liquidation',
+    'uses' => 'ExportExcelController@downloadLiquidation'
+]);
+Route::get('download-liquidation-faculty', [
+    'as'  => 'download-liquidation-faculty',
+    'uses' => 'ExportExcelController@downloadLiquidationOwnFaculty'
+]);
+Route::get('download-liquidation-room', [
+    'as'  => 'download-liquidation-room',
+    'uses' => 'ExportExcelController@downloadLiquidationOwnFaculty'
+]);
+Route::post('download-statistic', [
+    'as'  => 'download-statistic',
     'uses' => 'ExportExcelController@downloadStatistic'
 ]);
 Route::get('download-detail-store', [
     'as'  => 'download-detail-store',
     'uses' => 'ExportExcelController@downloadDetailImport'
+]);
+Route::post('download-list', [
+    'as'  => 'download-list',
+    'uses' => 'ExportExcelController@downloadListStuff'
 ]);
 Route::get('d-detail/{id}', 'ExportExcelController@downloadDetailImportStoreById');
 

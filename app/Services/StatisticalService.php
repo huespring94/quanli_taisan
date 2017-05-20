@@ -89,23 +89,22 @@ class StatisticalService extends BaseService
             'now' => $now
         ];
     }
-
+    
     /**
      * Get store faculty by year
      *
-     * @param int $year []
+     * @param int $year      []
+     * @param any $facultyId []
      *
      * @return mixed
      */
-    public function getStoreFacultyByYear($year)
+    public function getStoreFacultyByYear($year, $facultyId)
     {
-        $facultyId = auth()->user()->faculty_id;
-        $query = $this->storeFacRepo->getStoreFacultyByYear($facultyId, $year);
-        $importExports = $query->withTrashed()->get();
-        $statistics = $query->onlyTrashed()->pluck('quantity_start', 'stuff_id')->all();
+        $importExports = $this->storeFacRepo->getStoreFacultyByYear($facultyId, $year);
+        $liquidations = $this->liquidationRepo->getLiquidationByYear()->pluck('quantity', 'store_liquidation_id')->all();
         foreach ($importExports as $importExport) {
-            if (in_array($importExport->stuff_id, array_keys($statistics))) {
-                $importExport['liquidation'] = $statistics[$importExport->stuff_id];
+            if (in_array($importExport->store_faculty_id, array_keys($liquidations))) {
+                $importExport['liquidation'] = $liquidations[$importExport->store_faculty_id];
             }
         }
         return $importExports;
@@ -121,12 +120,11 @@ class StatisticalService extends BaseService
      */
     public function getStoreRoomByYearRoom($year, $roomId)
     {
-        $query = $this->storeRoomRepo->getStoreFacultyByYearRoom($roomId, $year);
-        $importExports = $query->withTrashed()->get();
-        $statistics = $query->onlyTrashed()->pluck('quantity_start', 'stuff_id')->all();
+        $importExports = $this->storeRoomRepo->getStoreFacultyByYearRoom($roomId, $year);
+        $liquidations = $this->liquidationRepo->getLiquidationByYear()->pluck('quantity', 'store_liquidation_id')->all();
         foreach ($importExports as $importExport) {
-            if (in_array($importExport->stuff_id, array_keys($statistics))) {
-                $importExport['liquidation'] = $statistics[$importExport->stuff_id];
+            if (in_array($importExport->store_room_id, array_keys($liquidations))) {
+                $importExport['liquidation'] = $liquidations[$importExport->store_room_id];
             }
         }
         return $importExports;

@@ -3,7 +3,7 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{url('/')}}"><b>Quản lí</b> TSCĐ</a>
+            <a href="{{url('/')}}"><b>Quản lý</b> TSCĐ</a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
@@ -39,7 +39,7 @@
                     </div>
                     <!-- /.col -->
                     <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat pull-right">Sign In</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-flat pull-right">Đăng nhập</button>
                     </div>
                     <!-- /.col -->
                 </div>

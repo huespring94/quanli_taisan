@@ -49,4 +49,21 @@ class LiquidationRepository extends BaseRepo
             ->groupBy('detail_import_store_id')
             ->get();
     }
+    
+    /**
+     * Get store faculty by year and faculty group by stuff
+     *
+     * @return mixed
+     */
+    public function getLiquidationByYear()
+    {
+        return Liquidation::with([
+                    'detailImportStore.importStore',
+                    'storeFaculty.stuff', 'storeFaculty.detailImportStore',
+                    'storeRoom.stuff', 'storeRoom.storeFaculty.detailImportStore'
+                ])
+            ->select('store_liquidation_id', DB::raw('sum(quantity) as quantity'))
+            ->groupBy('store_liquidation_id')
+            ->get();
+    }
 }

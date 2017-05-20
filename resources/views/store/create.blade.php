@@ -12,7 +12,7 @@ Nhập kho hàng
 
 @if(Session::has('msg'))
 <div class="callout callout-info">
-    <h4>Information</h4>
+    <h4>Thông báo</h4>
 
     <p>{{ Session::get('msg') }}</p>
 </div>

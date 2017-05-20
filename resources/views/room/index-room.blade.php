@@ -22,11 +22,11 @@ Danh sách tài sản phòng
         <table id="mydata" class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>Ngày SD</th>
                     <th>Mã TB</th>
+                    <th>Ngày SD</th>
                     <th>Tên tài sản</th>
                     <th>Thông số</th>
-                    <th>Số lượng CL</th>
+                    <th>Số lượng</th>
                     <th>Thành tiền</th>
                     <th>Tỷ lệ % CL</th>
                     <th>Thanh lí</th>
@@ -35,8 +35,8 @@ Danh sách tài sản phòng
             <tbody align="center">
                 @foreach ($storeRooms as $detail)
                 <tr>
-                    <td>{{$detail->date_import}}</td>
                     <td>{{$detail->store_room_id}}</td>
+                    <td>{{$detail->date_import}}</td>
                     <td>{{$detail->stuff->name}}</td>
                     <td>{{$detail->stuff->supplier->name}}</td>
                     <td>{{$detail->quantity}}</td>

@@ -167,4 +167,42 @@ class ImportRoomController extends Controller
         $storeRooms = $this->stuffFacultyService->getImportRoomAllByRoom($roomId);
         return view('room.index-room', ['storeRooms' => $storeRooms]);
     }
+    
+    /**
+     * Update quantity store room
+     *
+     * @param Request $request []
+     *
+     * @return Response
+     */
+    public function updateStoreRoom(Request $request)
+    {
+        $result = $this->stuffFacultyService->updateStoreRoom($request);
+        if ($result) {
+            Session::flash('msg', 'Cập nhật thành công.');
+            $quantity = $request->get('quantity');
+        } else {
+            Session::flash('msge', 'Không thể cập nhật.');
+            $quantity = null;
+        }
+        $rooms = $this->facultyRoomService->getRoomByFaculty(auth()->user()->faculty_id);
+        $storeRooms = $this->stuffFacultyService->getImportRoomAllByRoom($rooms->first()->room_id);
+        return view('room.index', ['rooms' => $rooms, 'storeRooms' => $storeRooms, 'quantity' => $quantity]);
+    }
+    
+    /**
+     * Delete store room
+     *
+     * @param any $id []
+     *
+     * @return Response
+     */
+    public function deleteStoreRoom($id)
+    {
+        $this->stuffFacultyService->deleteStoreRoom($id);
+        $rooms = $this->facultyRoomService->getRoomByFaculty(auth()->user()->faculty_id);
+        $storeRooms = $this->stuffFacultyService->getImportRoomAllByRoom($rooms->first()->room_id);
+        Session::flash('msg', 'Xóa thành công.');
+        return view('room.index', ['rooms' => $rooms, 'storeRooms' => $storeRooms]);
+    }
 }

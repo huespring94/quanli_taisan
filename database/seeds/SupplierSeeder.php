@@ -1,25 +1,35 @@
 <?php
-
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 
 class SupplierSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run()
+    public function run ()
     {
-        $faker = Faker::create('vi_VN');
-        for ($i = 0; $i < 10; $i++)
-        {
-            DB::table('suppliers')->insert([
-                'supplier_id' => $faker->unique()->text($maxNbChars = 10) ,
-                'name' => $faker->company,
+        $faker = Faker::create ('vi_VN');
+        $data = [
+            [
+                'supplier_id' => 'VN',
+                'name' => 'Việt Nam',
                 'address' => $faker->address,
-            ]);
-        }
+            ],
+            [
+                'supplier_id' => 'HL',
+                'name' => 'Hà Lan',
+                'address' => $faker->address,
+            ],
+            [
+                'supplier_id' => 'HQ',
+                'name' => 'Hàn Quốc',
+                'address' => $faker->address,
+            ],
+        ];
+        DB::table ('suppliers')->insert ($data);
     }
 }

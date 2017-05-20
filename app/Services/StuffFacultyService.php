@@ -229,15 +229,14 @@ class StuffFacultyService
      *
      * @return array
      */
-    public function getImportFacultyByFaculty()
+    public function getImportFacultyByFaculty($facultyId)
     {
-        $user = auth()->user();
-        $requestQs = $this->requestService->getRequestAllLiquidationByFaculty($user->faculty_id)
+        $requestQs = $this->requestService->getRequestAllLiquidationByFaculty($facultyId)
             ->pluck('quantity', 'store_type_id')->all();
-        $requestSs = $this->requestService->getRequestAllLiquidationByFaculty($user->faculty_id)
+        $requestSs = $this->requestService->getRequestAllLiquidationByFaculty($facultyId)
             ->pluck('status', 'store_type_id')->all();
         $storeFaculties = StoreFaculty::with(['stuff.supplier', 'detailImportStore'])
-            ->where('faculty_id', '=', $user->faculty_id)
+            ->where('faculty_id', '=', $facultyId)
             ->orderBy('created_at', 'desc')->get();
         foreach ($storeFaculties as $storeFaculty) {
             if (in_array($storeFaculty->store_faculty_id, array_keys($requestQs))) {

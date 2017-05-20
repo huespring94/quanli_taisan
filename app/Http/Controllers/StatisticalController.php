@@ -54,6 +54,20 @@ class StatisticalController extends Controller
     }
     
     /**
+     * Statistical by room and year
+     *
+     * @return Reponse
+     */
+    public function statisticByRoomOwnYear()
+    {
+        $user = auth()->user();
+        $years = $this->statisService->getYearStoreFacultyByFaculty($user->faculty_id);
+        $room = $this->facRoomService->getRoomByUser(auth()->user()->id);
+        $importRooms = $this->statisService->getStoreRoomByYearRoom($years['now'], $room->room_id);
+        return view('statistic.sta-room-own', ['years' => $years, 'importRooms' => $importRooms, 'room' => $room]);
+    }
+    
+    /**
      * Statistical by faculty and year
      *
      * @param Request $request []

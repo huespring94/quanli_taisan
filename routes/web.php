@@ -152,6 +152,10 @@ Route::group(['middleware' => 'room', 'prefix' => 'roo'], function () {
         'as' => 'liquidation-room',
         'uses' => 'LiquidationController@getLiquiByRoom'
     ]);
+    Route::get('/room-statistic', [
+        'as' => 'room-statistic',
+        'uses' => 'StatisticalController@statisticByRoomOwnYear'
+    ]);
 });
 
 Route::get('logout', function() {
@@ -164,6 +168,14 @@ Route::get('download-liquidation', [
     'as'  => 'download-liquidation',
     'uses' => 'ExportExcelController@downloadLiquidation'
 ]);
+Route::get('download-liquidation-faculty', [
+    'as'  => 'download-liquidation-faculty',
+    'uses' => 'ExportExcelController@downloadLiquidationOwnFaculty'
+]);
+Route::get('download-liquidation-room', [
+    'as'  => 'download-liquidation-room',
+    'uses' => 'ExportExcelController@downloadLiquidationOwnFaculty'
+]);
 Route::post('download-statistic', [
     'as'  => 'download-statistic',
     'uses' => 'ExportExcelController@downloadStatistic'
@@ -171,6 +183,10 @@ Route::post('download-statistic', [
 Route::get('download-detail-store', [
     'as'  => 'download-detail-store',
     'uses' => 'ExportExcelController@downloadDetailImport'
+]);
+Route::post('download-list', [
+    'as'  => 'download-list',
+    'uses' => 'ExportExcelController@downloadListStuff'
 ]);
 Route::get('d-detail/{id}', 'ExportExcelController@downloadDetailImportStoreById');
 

@@ -17,8 +17,8 @@
             </span>
         </a>
     </li>
-    <li class="treeview">
-        <a href="#">
+    <li class="treeview {{ areActiveRoutes(['room-statistic'])}}">
+        <a href="{{route('room-statistic')}}">
             <i class="fa fa-pie-chart"></i>
             <span>Thống kê</span>
         </a>

@@ -106,6 +106,20 @@ class ExportExcelController extends Controller
         $liquidations = $this->liquiService->getAllLiquidation ();
         $this->liquidation ($liquidations, $title);
     }
+    
+    /**
+     * Download statistic
+     *
+     * @return void
+     */
+    public function downloadLiquidationOwnFaculty ()
+    {
+        $nameFaculty = $this->facRoomService->getFacultyById(auth()->user()->faculty_id)->name;
+        $title = 'DANH SÁCH TÀI SẢN THANH LÍ KHOA '. strtoupper($nameFaculty);
+        $titleSheet = 'Khoa-' . $nameFaculty;
+        $liquidations = $this->liquiService->getAllLiquidationFaculty();
+        $this->liquidation ($liquidations, $title, $titleSheet);
+    }
 
     /**
      * Use for export excel for liquidation
@@ -115,16 +129,16 @@ class ExportExcelController extends Controller
      *
      * @return void
      */
-    public function liquidation ($liquidations, $title)
+    public function liquidation ($liquidations, $title, $titleSheet = 'DHBK')
     {
-        return Excel::create ('Đại học bách khoa', function ($excel) use ($title) {
-                $excel->sheet ('ThanhLi', function ($sheet) use ($title) {
+        return Excel::create ('ThanhLi', function ($excel) use ($liquidations, $title, $titleSheet) {
+                $excel->sheet ($titleSheet, function ($sheet) use ($liquidations, $title) {
                     $sheet->setHeight (4, 20);
                     $sheet->setAutoSize (false);
                     $sheet->cell ('C4', function ($cell) use ($title) {
                         $cell->setFont (array(
                             'family' => 'Times New Roman',
-                            'size' => '16',
+                            'size' => '15',
                             'bold' => false
                         ));
                         $cell->setValue ($title);
@@ -203,7 +217,7 @@ class ExportExcelController extends Controller
                     $sheet->cells ('A5:Z100', function ($cells) {
                         $cells->setAlignment ('center');
                     });
-                    $sheet->row (6, config ('structure.list'));
+                    $sheet->row (6, config ('structure.list-detail'));
                     foreach ($details as $key => $data) {
                         $importedDatas = array($key + 1, $data->id, $data->importStore->date_import,
                             $data->stuff->name, $data->stuff->supplier->name, $data->importStore->store->name, $data->quantity, number_format ($data->quantity * $data->price_unit), $data->status);
@@ -252,7 +266,7 @@ class ExportExcelController extends Controller
                         $sheet->row (7, array('Phòng ', $this->facRoomService->getFacultyByRoom($data['room_id'])->name));
                     }
                     
-                    $sheet->cells ('A9:K9', function ($cells) {
+                    $sheet->cells ('A9:I9', function ($cells) {
                         $cells->setBackground ('#00ffff');
                     });
                     $sheet->cells ('A5:Z100', function ($cells) {
@@ -284,6 +298,89 @@ class ExportExcelController extends Controller
                             $status
                         );
                         $sheet->row ($key + 10, $importedDatas);
+                    }
+                });
+            })->download ('xls');
+    }
+    
+    /**
+     * Download list of stuff for faculty or room
+     *
+     * @return void
+     */
+    public function downloadListStuff (Request $request)
+    {
+        $data = $request->all();
+        if(!isset($data['faculty_id'])) {
+            $data['faculty_id'] = auth()->user()->faculty_id;
+        }
+        if(!isset($data['room_id'])) {
+            $list = $this->stuffFacService->getImportFacultyByFaculty($data['faculty_id']);
+        } else {
+            $list = $this->stuffFacService->getImportRoomAllByRoom($data['room_id']);
+        }
+        if(!isset($data['room_id'])){
+            $title = 'DANH SÁCH TÀI SẢN KHOA '. strtoupper($this->facRoomService->getFacultyById($data['faculty_id'])->name);
+            $sheetName = 'Khoa-'. $data['faculty_id'];
+        } else {
+            $title = 'DANH SÁCH TÀI SẢN PHÒNG '. strtoupper($this->facRoomService->getRoomById($data['room_id'])->name);
+            $sheetName = 'Phong-'.$data['room_id'];
+        }
+        return Excel::create ('DanhSachTaiSan', function ($excel) use ($list, $title, $sheetName) {
+                $excel->sheet ($sheetName, function ($sheet) use ($list, $title) {
+                    $sheet->setHeight (4, 20);
+                    $sheet->setAutoSize (false);
+                    $sheet->cell ('C4', function ($cell) use ($title) {
+                        $cell->setFont (array(
+                            'family' => 'Times New Roman',
+                            'size' => '15',
+                            'bold' => false
+                        ));
+                        $cell->setValue ($title);
+                    });
+                    $sheet->setFontSize (10);
+                    $sheet->cells ('A6:I6', function ($cells) {
+                        $cells->setBackground ('#00ffff');
+                    });
+                    $sheet->cells ('A5:Z100', function ($cells) {
+                        $cells->setAlignment ('center');
+                    });
+                    $sheet->row (6, config ('structure.list'));
+                    foreach ($list as $key => $data) {
+                        if(!isset($data->store_room_id)) {
+                            $id = $data->store_faculty_id;
+                            $amount = number_format ($data->quantity * $data->detailImportStore->price_unit);
+                            $status = $data->detailImportStore->status;
+                        } else {
+                            $id = $data->store_room_id;
+                            $amount = number_format ($data->quantity * $data->storeFaculty->detailImportStore->price_unit);
+                            $status = $data->storeFaculty->detailImportStore->status;
+                        }
+                        $date = $data->date_import;
+                        $stuff = $data->stuff->name;
+                        $supplier = $data->stuff->supplier->name;
+                        $quantity = $data->quantity;
+                        
+                        if (isset ($data->liquidation_quantity)) {
+                            if ($data->liquidation_status) {
+                                $note = 'Đã thanh lí (' . $data->liquidation_quantity . ')';
+                            } else {
+                                $note = 'Đang chờ (' . $data->liquidation_quantity . ')';
+                            }
+                        } else {
+                            $note = '';
+                        }
+                        $importedDatas = array($key + 1,
+                            $id,
+                            $date,
+                            $stuff,
+                            $supplier,
+                            $quantity,
+                            $amount,
+                            $status,
+                            $note
+                            );
+                        $sheet->row ($key + 7, $importedDatas);
                     }
                 });
             })->download ('xls');

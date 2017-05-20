@@ -127,7 +127,8 @@ class ImportFacultyController extends Controller
      */
     public function getImportFacultyByOwnFaculty()
     {
-        $importFacs = $this->stuffFacultyService->getImportFacultyByFaculty();
+        $facultyId = auth()->user()->faculty_id;
+        $importFacs = $this->stuffFacultyService->getImportFacultyByFaculty($facultyId);
         return view('faculty.index-faculty', ['importFacs' => $importFacs]);
     }
     

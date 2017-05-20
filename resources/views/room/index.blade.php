@@ -46,9 +46,13 @@ Danh sách tài sản phòng
 <div class="box">
     <div class="box-header">
         <h3 class="box-title">Danh sách tài sản</h3>
-        <button type="button" class="btn bg-navy margin pull-right">
+        <form method="POST" action="{{route('download-list')}}">
+            {{ csrf_field() }}
+            <input name="room_id" value="{{!isset($roomId) ? $rooms[0]->room_id : $roomId}}" hidden>
+            <button type="submit" class="btn bg-navy pull-right">
             <i class="fa fa-download"></i>
             Xuất file excel</button>
+        </form>
     </div>
     <div class="box-body">
         <table id="mydata" class="table table-bordered table-striped">

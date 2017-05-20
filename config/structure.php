@@ -25,7 +25,7 @@ return [
         'Tỷ lệ % CL'
     ],
     
-    'list' => [
+    'list-detail' => [
         'STT',
         'Mã nhập kho',
         'Ngày nhập',
@@ -49,5 +49,16 @@ return [
         'Tỷ lệ % CL'
     ],
     
+    'list' => [
+        'STT',
+        'Mã TB',
+        'Ngày SD',
+        'Tên tài sản',
+        'Thông số',
+        'Số lượng',
+        'Thành tiền',
+        'Tỷ lệ % CL',
+        'Thanh lí'
+    ],
 ];
 

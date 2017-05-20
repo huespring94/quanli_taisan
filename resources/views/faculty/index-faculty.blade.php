@@ -14,9 +14,12 @@ Danh sách tài sản khoa
 <div class="box">
     <div class="box-header">
         <h3 class="box-title">Khoa <b>{{Auth::user()->faculty->name}}</b></h3>
-        <button type="button" class="btn bg-navy margin pull-right">
+        <form method="POST" action="{{route('download-list')}}">
+            {{ csrf_field() }}
+            <button type="submit" class="btn bg-navy pull-right">
             <i class="fa fa-download"></i>
             Xuất file excel</button>
+        </form>
     </div>
 
     <div class="box-body">
@@ -27,7 +30,7 @@ Danh sách tài sản khoa
                     <th>Mã TB</th>
                     <th>Ngày SD</th>
                     <th>Tên tài sản</th>
-                    <th>Tổng số lượng</th>
+                    <th>Thông số</th>
                     <th>Số lượng</th>
                     <th>Thành tiền</th>
                     <th>Tỷ lệ % CL</th>
@@ -46,7 +49,7 @@ Danh sách tài sản khoa
                         @endif
                     <td>{{$importFac->date_import}}</td>
                     <td>{{$importFac->stuff->name}}</td>
-                    <td>{{$importFac->quantity_start}}</td>
+                    <td>{{$importFac->stuff->supplier->name}}</td>
                     <td>{{$importFac->quantity}}</td>
                     <td align="right">{{number_format($importFac->quantity * $importFac->detailImportStore->price_unit)}}</td>
                     <td>

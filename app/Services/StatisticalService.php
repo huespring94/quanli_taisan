@@ -89,7 +89,7 @@ class StatisticalService extends BaseService
             'now' => $now
         ];
     }
-
+    
     /**
      * Get store faculty by year
      *

@@ -68,7 +68,7 @@ class UserSeeder extends Seeder
                 'avatar' => 'user.png',
                 'email' => $faker->unique()->userName . '@gmail.com',
                 'role_id' => $faker->randomElement($roleIds->toArray()),
-                'faculty_id' => $faker->randomElement($facultyIds->toArray()),
+                'faculty_id' => $facultyIds->first(),
                 'remember_token' => str_random(10)
             ]);
         }

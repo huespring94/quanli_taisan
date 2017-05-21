@@ -10,11 +10,8 @@
             </div>
         </div>
         </br>
-        @if (Auth::user()->role->name == Config::get('constant.r_admin'))
+        @if (Auth::user()->role->name == Config::get('constant.r_admin') || Auth::user()->role->name == Config::get('constant.r_accountant'))
         @include ('layouts.left-bar-admin')
-        
-        @elseif (Auth::user()->role->name == Config::get('constant.r_accountant'))
-        @include ('layouts.left-bar-acc')
 
         @elseif (Auth::user()->role->name == Config::get('constant.r_faculty'))
         @include ('layouts.left-bar-fac')

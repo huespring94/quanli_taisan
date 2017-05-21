@@ -13,7 +13,7 @@ Nhập tài sản cho phòng
 
 @if(Session::has('msg'))
 <div class="callout callout-success">
-    <h4>Success!</h4>
+    <h4>Thành công</h4>
 
     <p>{{ Session::get('msg') }}</p>
 </div>

@@ -18,7 +18,7 @@ class AtrophySeeder extends Seeder
             DB::table('atrophies')->insert([
                 'name' => $faker->sentence($nbWords = 3),
                 'description' => $faker->paragraph($nbSentences = 3),
-                'atrophy_rate' => $faker->numberBetween(0, 100),
+                'atrophy_rate' => $faker->numberBetween(0, 10),
             ]);
         }
     }

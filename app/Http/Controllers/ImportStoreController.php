@@ -87,41 +87,4 @@ class ImportStoreController extends Controller
         $stuffs = $this->importStuffService->getAllStuff();
         return view('store.create_detail', ['storeImport' => $storeImport, 'stuffs' => $stuffs]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id []
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        return $id;
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request []
-     * @param int                      $id      []
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        return $request . $id;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id []
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        return $id;
-    }
 }

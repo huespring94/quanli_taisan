@@ -13,6 +13,7 @@ use App\Repositories\StoreRoomRepository;
 use App\Repositories\SupplierRepository;
 use App\Models\StoreFaculty;
 use App\Repositories\LiquidationRepository;
+use App\Repositories\AtrophyRepository;
 
 class ImportStuffService extends BaseService
 {
@@ -67,6 +68,8 @@ class ImportStuffService extends BaseService
     protected $supplierRepository;
     
     private $liquiRepo;
+    
+    private $atrophyRepo;
 
     /**
      * Constructor of import stuff service
@@ -79,6 +82,7 @@ class ImportStuffService extends BaseService
      * @param StoreRoomRepository         $storeRoomRepository []
      * @param SupplierRepository          $supplierRepository  []
      * @param LiquidationRepository       $liquiRepo           []
+     * @param AtrophyRepository           $atrophyRepo         []
      */
     public function __construct(
         KindStuffRepository $kindStuffRepo,
@@ -88,7 +92,8 @@ class ImportStuffService extends BaseService
         StoreFacultyRepository $storeFacultyRepo,
         StoreRoomRepository $storeRoomRepository,
         SupplierRepository $supplierRepository,
-        LiquidationRepository $liquiRepo
+        LiquidationRepository $liquiRepo,
+        AtrophyRepository $atrophyRepo
     ) {
         $this->kindStuffRepo = $kindStuffRepo;
         $this->stuffRepo = $stuffRepo;
@@ -98,6 +103,7 @@ class ImportStuffService extends BaseService
         $this->storeRoomRepository = $storeRoomRepository;
         $this->supplierRepository = $supplierRepository;
         $this->liquiRepo = $liquiRepo;
+        $this->atrophyRepo = $atrophyRepo;
     }
     
     /**
@@ -142,6 +148,16 @@ class ImportStuffService extends BaseService
         $data = $request->only('quantity', 'price_unit', 'status', 'stuff_id', 'import_store_id');
         $data['quantity_start'] = $data['quantity'];
         $data['status_start'] = $data['status'];
+        $importStore = $this->importStoreRepo->find($data['import_store_id']);
+        $atrophy = $this->atrophyRepo->whereHas('stuffs', function ($has) use ($data) {
+           $has->where('stuff_id', '=', $data['stuff_id']); 
+        })->first();
+        $lenghtDays = Carbon::now()->diffInDays(Carbon::parse($importStore->date_import));
+        $numYears = $lenghtDays / 365;
+        if ($numYears > 0) {
+            $rateDown = round($numYears) * $atrophy->atrophy_rate;
+            $data['status'] -= $rateDown;
+        }
         $conditions = [
             'status' => $data['status'],
             'price_unit' => $data['price_unit'],

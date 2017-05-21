@@ -81,7 +81,7 @@ class ImportRoomController extends Controller
         $room = $this->facultyRoomService->getRoomById($request->get('room_id'));
         $stuff = $this->importStuffService->getStuffById($request->get('stuff_id'));
         $quantity = $request->get('quantity');
-        Session::flash('msg', 'success');
+        Session::flash('msg', 'Nhập thành công');
         return view('room.detail-import', [
             'storeRooms' => $storeRooms,
             'room' => $room,

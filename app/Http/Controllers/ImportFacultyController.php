@@ -123,6 +123,21 @@ class ImportFacultyController extends Controller
     /**
      * Get import faculty by faculty id
      *
+     * @param any $id []
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showImportFacultyByFaculty($id)
+    {
+        $faculties = $this->facultyRoomService->getAllFaculties();
+        $importFacs = $this->importStuffService->getImportFacultyByFaculty($id);
+        $facultyId = $id;
+        return view('faculty.index', ['importFacs' => $importFacs, 'faculties' => $faculties, 'facultyId' => $facultyId]);
+    }
+    
+    /**
+     * Get import faculty by faculty id
+     *
      * @return \Illuminate\Http\Response
      */
     public function getImportFacultyByOwnFaculty()

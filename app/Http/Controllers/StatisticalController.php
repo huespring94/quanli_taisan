@@ -115,4 +115,34 @@ class StatisticalController extends Controller
         $importFacs = $this->statisService->getStoreFacultyByStoreFaculty($user->faculty_id, $year, $stuffId);
         return view('statistic.sta-faculty-detail', ['importFacs' => $importFacs]);
     }
+    
+    /**
+     * Index statistical by faculty and year
+     *
+     * @return Reponse
+     */
+    public function indexStatisticByFacultyByYear()
+    {
+        $faculties = $this->facRoomService->getAllFaculties();
+        $years = $this->statisService->getYearDetail();
+        $importFacs = $this->statisService->getStoreFacultyByYear($years['now'], $faculties->first()->faculty_id);
+        return view('statistic.sta-each-faculty', ['years' => $years, 'faculties' => $faculties, 'importFacs' => $importFacs]);
+    }
+    
+    /**
+     * Get statistical by faculty and year
+     *
+     * @param Request $request []
+     *
+     * @return Reponse
+     */
+    public function getStatisticByFacultyByYear(Request $request)
+    {
+        $years = $this->statisService->getYearDetail();
+        $years['now'] = $request->get('year');
+        $faculties = $this->facRoomService->getAllFaculties();
+        $facultyId = $request->get('faculty_id');
+        $importFacs = $this->statisService->getStoreFacultyByYear($years['now'], $facultyId);
+        return view('statistic.sta-each-faculty', ['years' => $years, 'faculties' => $faculties, 'importFacs' => $importFacs, 'facultyId' => $facultyId]);
+    }
 }

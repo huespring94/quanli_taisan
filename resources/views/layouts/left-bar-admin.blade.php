@@ -25,15 +25,13 @@
             <li class="{{ areActiveRoutes(['atrophy-store', 'delete-atrophy-store'])}}"><a href="{{route('atrophy-store')}}"><i class="fa fa-list-alt"></i> Hết hạn</a></li>
         </ul>
     </li>
-    <li class="treeview">
+    <li class="treeview {{ areActiveRoutes(['get-statis-by-faculty-year', 'statis-by-faculty-year'])}}">
         <a href="#">
             <i class="fa fa-pie-chart"></i>
             <span> {{trans('content.left_bar.statistical')}}</span>
         </a>
         <ul class="treeview-menu">
-            <li><a href=""><i class="fa fa-circle-o"></i>Kho tổng</a></li>
-            <li><a href=""><i class="fa fa-circle-o"></i>Kho khoa</a></li>
-            <li><a href=""><i class="fa fa-circle-o"></i>Kho phòng</a></li>
+            <li class="{{ areActiveRoutes(['get-statis-by-faculty-year'])}}"><a href="{{route('get-statis-by-faculty-year')}}"><i class="fa fa-circle-o"></i>Kho khoa</a></li>
         </ul>
     </li>
     <li class="treeview {{ areActiveRoutes(['request', 'liquidation', 'request-accept-all']) }}">

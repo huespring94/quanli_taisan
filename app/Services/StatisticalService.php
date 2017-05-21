@@ -7,6 +7,7 @@ use App\Repositories\DetailImportStoreRepository;
 use App\Repositories\StoreFacultyRepository;
 use App\Repositories\StoreRoomRepository;
 use Carbon\Carbon;
+use App\Repositories\ImportStoreRepository;
 use App\Models\StoreFaculty;
 use DB;
 
@@ -19,6 +20,8 @@ class StatisticalService extends BaseService
     private $storeFacRepo;
     
     private $storeRoomRepo;
+    
+    private $importStoreRepo;
 
     /**
      * Constructor of statistical service
@@ -32,15 +35,41 @@ class StatisticalService extends BaseService
         LiquidationRepository $liquidationRepo,
         DetailImportStoreRepository $detailISRepo,
         StoreFacultyRepository $storeFacRepo,
-        StoreRoomRepository $storeRoomRepo
+        StoreRoomRepository $storeRoomRepo,
+        ImportStoreRepository $importStoreRepo
     ) {
-    
         $this->liquidationRepo = $liquidationRepo;
         $this->detailISRepo = $detailISRepo;
         $this->storeFacRepo = $storeFacRepo;
         $this->storeRoomRepo = $storeRoomRepo;
+        $this->importStoreRepo = $importStoreRepo;
     }
 
+    /**
+     * Get smallest year of store faculty by faculty id
+     *
+     * @param any $facultyId []
+     *
+     * @return Date
+     */
+    public function getMiniYearDetail()
+    {
+        return $this->importStoreRepo->orderBy('date_import')
+            ->first()->date_import;
+    }
+    
+    /**
+     * Get largest year of store faculty by faculty id
+     *
+     * @param any $facultyId []
+     *
+     * @return Date
+     */
+    public function getMaxiYearDetail()
+    {
+        return $this->importStoreRepo->orderBy('date_import', 'desc')
+            ->first()->date_import;
+    }
     /**
      * Get smallest year of store faculty by faculty id
      *
@@ -67,6 +96,25 @@ class StatisticalService extends BaseService
         return $this->storeFacRepo->orderBy('date_import', 'desc')
             ->findByField('faculty_id', $facultyId)
             ->first()->date_import;
+    }
+    
+    /**
+     * Get year store faculty by faculty id
+     *
+     * @return array
+     */
+    public function getYearDetail()
+    {
+        $max = Carbon::parse($this->getMaxiYearDetail())->year;
+        $now = Carbon::now()->year;
+        if ($now > $max) {
+            $max = $now;
+        }
+        return [
+            'max' => $max,
+            'min' => Carbon::parse($this->getMiniYearDetail())->year,
+            'now' => $now
+        ];
     }
     
     /**

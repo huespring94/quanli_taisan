@@ -31,7 +31,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     ]);
     Route::get('/store-faculty/{id}', [
         'as' => 'store-faculty-show',
-        'uses' => 'ImportFacultyController@getImportFacultyByFaculty'
+        'uses' => 'ImportFacultyController@showImportFacultyByFaculty'
     ]);
     Route::post('/delete-import-faculty', 'ImportFacultyController@destroy');
     Route::get('/atrophy-store', [
@@ -68,56 +68,13 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
         'as' => 'delete-detail',
         'uses' => 'ImportFacultyController@deleteDetail'
     ]);
-});
-
-Route::group(['middleware' => 'accountant', 'prefix' => 'acc'], function () {
-    Route::resource('/import-store', 'ImportStoreController');
-    Route::resource('/import-store-detail', 'DetailImportStoreController');
-    Route::post('/update-detail-store/{id}', 'DetailImportStoreController@update');
-    Route::get('/delete-detail-store/{id}', 'DetailImportStoreController@destroy');
-    Route::resource('/import-faculty', 'ImportFacultyController');
-    Route::post('/store-faculty', [
-        'as' => 'store-faculty',
-        'uses' => 'ImportFacultyController@getImportFacultyByFaculty'
+     Route::get('/get-statis-by-faculty-year', [
+        'as' => 'get-statis-by-faculty-year',
+        'uses' => 'StatisticalController@indexStatisticByFacultyByYear'
     ]);
-    Route::get('/store-faculty/{id}', [
-        'as' => 'store-faculty-show',
-        'uses' => 'ImportFacultyController@getImportFacultyByFaculty'
-    ]);
-    Route::post('/delete-import-faculty', 'ImportFacultyController@destroy');
-    Route::get('/atrophy-store', [
-        'as' => 'atrophy-store',
-        'uses' => 'AtrophyController@getExpireStuffStore'
-    ]);
-    Route::get('/delete-atrophy-store/{id}', [
-        'as' => 'delete-atrophy-store',
-        'uses' => 'AtrophyController@destroy'
-    ]);
-    Route::get('/delete-atrophy-faculty/{id}', 'AtrophyController@destroyFaculty');
-    Route::get('/delete-atrophy-room/{id}', 'AtrophyController@destroyRoom');
-    Route::get('/request', [
-        'as' => 'request',
-        'uses' => 'RequestController@getAll'
-    ]);
-    Route::get('/request-accept/{id}', [
-        'as' => 'request-accept',
-        'uses' => 'RequestController@acceptRequest'
-    ]);
-    Route::get('/liquidation', [
-        'as' => 'liquidation',
-        'uses' => 'LiquidationController@getAllLiquidation'
-    ]);
-    Route::get('/request-accept-all', [
-        'as' => 'request-accept-all',
-        'uses' => 'RequestController@acceptAllRequest'
-    ]);
-    Route::get('/details', [
-        'as' => 'details',
-        'uses' => 'ImportFacultyController@getAllDetail'
-    ]);
-    Route::get('/delete-detail/{id}', [
-        'as' => 'delete-detail',
-        'uses' => 'ImportFacultyController@deleteDetail'
+    Route::post('/statis-by-faculty-year', [
+        'as' => 'statis-by-faculty-year',
+        'uses' => 'StatisticalController@getStatisticByFacultyByYear'
     ]);
 });
 

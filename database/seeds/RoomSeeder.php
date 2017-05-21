@@ -15,15 +15,15 @@ class RoomSeeder extends Seeder
      */
     public function run ()
     {
-        $faker = Faker::create('vi_VN');
         $facultyId = Faculty::all ()->pluck ('faculty_id')->first();
         $userIds = User::where ('faculty_id', '=', $facultyId)->pluck ('id');
+        $getUser = User::where('email', '=', 'quanliphong@gmail.com')->first()->id;
         $data = [
             [
                 'name' => 'C103',
                 'room_id' => 'C103',
                 'faculty_id' => $facultyId,
-                'user_id' => $userIds[3]
+                'user_id' => $getUser
             ],
             [
                 'name' => 'C104',
@@ -41,13 +41,13 @@ class RoomSeeder extends Seeder
                 'name' => 'C205',
                 'room_id' => 'C205',
                 'faculty_id' => $facultyId,
-                'user_id' => $userIds[1]
+                'user_id' => $userIds[6]
             ],
             [
                 'name' => 'C206',
                 'room_id' => 'C206',
                 'faculty_id' => $facultyId,
-                'user_id' => $userIds[2]
+                'user_id' => $userIds[7]
             ],
         ];
         DB::table ('rooms')->insert ($data);

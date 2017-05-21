@@ -101,6 +101,25 @@ class AtrophyController extends Controller
     }
     
     /**
+     * Get expire stuff in store faculty
+     *
+     * @param any $id []
+     *
+     * @return Reponse
+     */
+    public function deleteWaitLiquidationRoom($id)
+    {
+        $this->requestService->deleteReqWaitLiquidationRoom($id);
+        $roomId = $this->facRoomService->getRoomByUser(auth()->user()->id)->room_id;
+        $atrophyStores = $this->messageService->getExpireStuffStoreRoom();
+        $waitLiquidations = $this->requestService->getRequestNotLiquidationByRoom($roomId);
+        return view('atrophy.atrophy-room', [
+            'atrophyStores' => $atrophyStores,
+            'liquidations' => $waitLiquidations,
+        ]);
+    }
+    
+    /**
      * Get expire stuff in store room
      *
      * @return Reponse

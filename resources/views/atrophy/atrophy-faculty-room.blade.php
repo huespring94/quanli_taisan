@@ -164,7 +164,7 @@ Thiết bị trong kho
                             <td>{{$liquidation->quantity}}</td>
                             <td>
                                 <a href="{{route('delete-request', [$liquidation->id])}}" class="btn bg-red pull-right">
-                        <i class="fa fa-trash"></i></a>
+                                    <i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                         @endforeach

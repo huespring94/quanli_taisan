@@ -269,9 +269,6 @@ class RequestService
     public function deleteReqWaitLiquidation($id)
     {
         $req = $this->requestRepository->find($id);
-        $storeFaculty = $this->storeFacultyRepo->findByField('store_faculty_id', $req->store_type_id)->first();
-        $storeFaculty->quantity += $req->quantity;
-        $storeFaculty->save();
         $req->delete();
     }
     
@@ -285,9 +282,6 @@ class RequestService
     public function deleteReqWaitLiquidationRoom($id)
     {
         $req = $this->requestRepository->find($id);
-        $storeRoom = $this->storeRoomRepo->findByField('store_room_id', $req->store_type_id)->first();
-        $storeRoom->quantity += $req->quantity;
-        $storeRoom->save();
         $req->delete();
     }
 }

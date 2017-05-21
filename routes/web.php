@@ -164,6 +164,10 @@ Route::group(['middleware' => 'room', 'prefix' => 'roo'], function () {
         'as' => 'room-statistic',
         'uses' => 'StatisticalController@statisticByRoomOwnYear'
     ]);
+    Route::get('/delete-request/{id}', [
+        'as' => 'delete-request-room',
+        'uses' => 'AtrophyController@deleteWaitLiquidationRoom'
+    ]);
 });
 
 Route::get('logout', function() {

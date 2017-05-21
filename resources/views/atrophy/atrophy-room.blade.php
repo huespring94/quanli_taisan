@@ -151,6 +151,7 @@ Thiết bị trong kho
                             <th>Ngày SD</th>
                             <th>Tên tài sản</th>
                             <th>Số lượng</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody align="center">
@@ -159,6 +160,10 @@ Thiết bị trong kho
                             <td>{{$liquidation->storeRoom->date_import}}</td>
                             <td>{{$liquidation->storeRoom->stuff->name}}</td>
                             <td>{{$liquidation->quantity}}</td>
+                            <td>
+                                <a href="{{route('delete-request-room', [$liquidation->id])}}" class="btn bg-red pull-right">
+                                    <i class="fa fa-trash"></i></a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

@@ -239,6 +239,7 @@ class StuffFacultyService
             ->pluck('status', 'store_type_id')->all();
         $storeFaculties = StoreFaculty::with(['stuff.supplier', 'detailImportStore'])
             ->where('faculty_id', '=', $facultyId)
+            ->where('quantity', '>', 0)
             ->orderBy('created_at', 'desc')->get();
         foreach ($storeFaculties as $storeFaculty) {
             if (in_array($storeFaculty->store_faculty_id, array_keys($requestQs))) {

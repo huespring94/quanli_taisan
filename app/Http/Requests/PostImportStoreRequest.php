@@ -28,16 +28,4 @@ class PostImportStoreRequest extends FormRequest
             'store_id' => 'required|exists:stores,id'
         ];
     }
-    
-    /**
-     * Messages
-     *
-     * @return mixed
-     */
-    public function messages()
-    {
-        return [
-            
-        ];
-    }
 }

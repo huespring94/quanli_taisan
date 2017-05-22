@@ -247,7 +247,7 @@ class ExportExcelController extends Controller
             $data['faculty_id'] = auth()->user()->faculty_id;
         }
         return Excel::create('ThongKe', function ($excel) use ($data) {
-                $excel->sheet($data['year'].'-'.(isset($data['room_id']) ? $data['faculty_id'] : $data['room_id']), function ($sheet) use ($data) {
+                $excel->sheet($data['year'].'-'.(!isset($data['room_id']) ? $data['faculty_id'] : $data['room_id']), function ($sheet) use ($data) {
                     $sheet->setHeight(4, 20);
                     $sheet->setAutoSize(false);
                     $sheet->cell('C4', function ($cell) use ($data) {

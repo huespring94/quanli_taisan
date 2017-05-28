@@ -56,8 +56,7 @@
                                 <img src="{{asset(config('path.user').Auth::user()->avatar)}}" class="img-circle" alt="User Image">
 
                                 <p>
-                                    {{Auth::user()->firstname}} {{Auth::user()->lastname}} - {{Auth::user()->role->name}}
-                                    <small>Member since Nov. 2012</small>
+                                    {{Auth::user()->lastname}} {{Auth::user()->firstname}} - {{Auth::user()->role->name}}
                                 </p>
                             </li>
                             <li class="user-footer">

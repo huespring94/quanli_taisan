@@ -1,6 +1,6 @@
 <ul class="sidebar-menu">
     <li class="header">MENU</li>
-    <li class="treeview {{ areActiveRoutes(['store-room-user']) }}">
+    <li class="treeview {{ areActiveRoutes(['store-room-user', 'download-list']) }}">
         <a href="{{route('store-room-user')}}">
             <i class="fa fa-th"></i> <span>Danh sách TS phòng</span>
         </a>

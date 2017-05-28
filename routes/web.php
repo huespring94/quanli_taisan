@@ -19,7 +19,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 Route::get('/user/profile', 'UserController@getTimeline');
 
-Route::group(['middleware' => 'admin', 'prefix' => 'acc'], function () {
+Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('/import-store', 'ImportStoreController');
     Route::resource('/import-store-detail', 'DetailImportStoreController');
     Route::post('/update-detail-store/{id}', 'DetailImportStoreController@update');

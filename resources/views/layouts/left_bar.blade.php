@@ -5,7 +5,7 @@
                 <img src="{{asset(config('path.user').Auth::user()->avatar)}}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>{{Auth::user()->firstname}} {{Auth::user()->lastname}}</p>
+                <p>{{Auth::user()->lastname}} {{Auth::user()->firstname}}</p>
                 <a href="#"> {{Auth::user()->role->name}}</a>
             </div>
         </div>

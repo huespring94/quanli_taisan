@@ -104,7 +104,7 @@ Thiết bị trong kho
                                             <span class="input-group-addon">
                                                 <i class="fa fa-database"></i>
                                             </span>
-                                            <input type="number" value="{{$atrophyStores[0]->quantity}}" min="1" name="quantity" class="form-control pull-right">
+                                            <input type="number" value="{{isset($atrophyStores[0]->num_liquidation) ? $atrophyStores[0]->quantity - $atrophyStores[0]->num_liquidation : $atrophyStores[0]->quantity}}" min="1" name="quantity" class="form-control pull-right">
                                         </div>
                                     </div>
                                 </div>

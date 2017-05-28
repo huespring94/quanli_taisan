@@ -17,8 +17,8 @@ Danh sách tài sản khoa
         <form method="POST" action="{{route('download-list')}}">
             {{ csrf_field() }}
             <button type="submit" class="btn bg-navy pull-right">
-            <i class="fa fa-download"></i>
-            Xuất file excel</button>
+                <i class="fa fa-download"></i>
+                Xuất file excel</button>
         </form>
     </div>
 
@@ -45,12 +45,13 @@ Danh sách tài sản khoa
                         <a href="{{route('detail-store-faculty', [$importFac->store_faculty_id])}}" class="btn bg-gray-light pull-right">
                             {{$importFac->store_faculty_id}}</a>
                         @else
-                        {{$importFac->store_faculty_id}}</td>
+                        {{$importFac->store_faculty_id}}
                         @endif
+                    </td>
                     <td>{{$importFac->date_import}}</td>
                     <td>{{$importFac->stuff->name}}</td>
                     <td>{{$importFac->stuff->supplier->name}}</td>
-                    <td>{{$importFac->quantity}}</td>
+                    <td>{{$importFac->quantity_start}}</td>
                     <td align="right">{{number_format($importFac->quantity * $importFac->detailImportStore->price_unit)}}</td>
                     <td>
                         @if ($importFac->detailImportStore->status <= 20)
@@ -61,11 +62,7 @@ Danh sách tài sản khoa
                     </td>
                     <td>
                         @if (isset($importFac->liquidation_quantity))
-                        @if($importFac->liquidation_status)
                         <i>Đã thanh lí ({{$importFac->liquidation_quantity}})</i>
-                        @else
-                        <i>Đang chờ ({{$importFac->liquidation_quantity}})</i>
-                        @endif
                         @else
                         -
                         @endif

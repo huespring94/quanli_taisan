@@ -187,8 +187,8 @@ class StuffFacultyService
     {
         $requestQs = $this->requestService->getRequestAllLiquidationByRoom($roomId)
             ->pluck('quantity', 'store_type_id')->all();
-        $requestSs = $this->requestService->getRequestAllLiquidationByRoom($roomId)
-            ->pluck('status', 'store_type_id')->all();
+//        $requestSs = $this->requestService->getRequestAllLiquidationByRoom($roomId)
+//            ->pluck('status', 'store_type_id')->all();
         $storeRooms = $this->storeRoomRepo
             ->with(['room', 'storeFaculty.detailImportStore', 'stuff.supplier'])
             ->whereHas('storeFaculty', function ($has) use ($roomId) {
@@ -197,7 +197,7 @@ class StuffFacultyService
         foreach ($storeRooms as $storeRoom) {
             if (in_array($storeRoom->store_room_id, array_keys($requestQs))) {
                 $storeRoom['liquidation_quantity'] = $requestQs[$storeRoom->store_room_id];
-                $storeRoom['liquidation_status'] = $requestSs[$storeRoom->store_room_id];
+//                $storeRoom['liquidation_status'] = $requestSs[$storeRoom->store_room_id];
             }
         }
         return $storeRooms;
@@ -235,8 +235,8 @@ class StuffFacultyService
     {
         $requestQs = $this->requestService->getRequestAllLiquidationByFaculty($facultyId)
             ->pluck('quantity', 'store_type_id')->all();
-        $requestSs = $this->requestService->getRequestAllLiquidationByFaculty($facultyId)
-            ->pluck('status', 'store_type_id')->all();
+//        $requestSs = $this->requestService->getRequestAllLiquidationByFaculty($facultyId)
+//            ->pluck('status', 'store_type_id')->all();
         $storeFaculties = StoreFaculty::with(['stuff.supplier', 'detailImportStore'])
             ->where('faculty_id', '=', $facultyId)
             ->where('quantity', '>', 0)
@@ -244,7 +244,7 @@ class StuffFacultyService
         foreach ($storeFaculties as $storeFaculty) {
             if (in_array($storeFaculty->store_faculty_id, array_keys($requestQs))) {
                 $storeFaculty['liquidation_quantity'] = $requestQs[$storeFaculty->store_faculty_id];
-                $storeFaculty['liquidation_status'] = $requestSs[$storeFaculty->store_faculty_id];
+//                $storeFaculty['liquidation_status'] = $requestSs[$storeFaculty->store_faculty_id];
             }
         }
         return $storeFaculties;

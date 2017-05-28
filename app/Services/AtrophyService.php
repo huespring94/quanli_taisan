@@ -112,7 +112,6 @@ class AtrophyService
     {
         $this->storeFacultyRepo->update(['quantity' => 0], $detail->id);
         $this->storeFacultyRepo->deleteWhere(['detail_import_store_id' => $detail->id]);
-//        $this->storeFacultyRepo->whereHas('', $closure)
     }
     
     

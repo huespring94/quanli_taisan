@@ -19,7 +19,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 Route::get('/user/profile', 'UserController@getTimeline');
 
-Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
+Route::group(['middleware' => 'admin', 'prefix' => 'acc'], function () {
     Route::resource('/import-store', 'ImportStoreController');
     Route::resource('/import-store-detail', 'DetailImportStoreController');
     Route::post('/update-detail-store/{id}', 'DetailImportStoreController@update');
@@ -75,6 +75,10 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::post('/statis-by-faculty-year', [
         'as' => 'statis-by-faculty-year',
         'uses' => 'StatisticalController@getStatisticByFacultyByYear'
+    ]);
+    Route::get('/detail-store-faculty/{id}', [
+        'as' => 'detail-store-fac',
+        'uses' => 'HistoryImportController@getStoreRoomByStoreFaculty'
     ]);
 });
 

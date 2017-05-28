@@ -356,24 +356,25 @@ class ExportExcelController extends Controller
                             $id = $data->store_faculty_id;
                             $amount = number_format($data->quantity * $data->detailImportStore->price_unit);
                             $status = $data->detailImportStore->status;
+                            $quantity = $data->quantity_start;
                         } else {
                             $id = $data->store_room_id;
                             $amount = number_format($data->quantity * $data->storeFaculty->detailImportStore->price_unit);
                             $status = $data->storeFaculty->detailImportStore->status;
+                            $quantity = $data->quantity;
                         }
                         $date = $data->date_import;
                         $stuff = $data->stuff->name;
                         $supplier = $data->stuff->supplier->name;
-                        $quantity = $data->quantity;
                         
                         if (isset($data->liquidation_quantity)) {
-                            if ($data->liquidation_status) {
+//                            if ($data->liquidation_status) {
                                 $note = 'Đã thanh lí (' . $data->liquidation_quantity . ')';
-                            } else {
-                                $note = 'Đang chờ (' . $data->liquidation_quantity . ')';
-                            }
+//                            } else {
+//                                $note = 'Đang chờ (' . $data->liquidation_quantity . ')';
+//                            }
                         } else {
-                            $note = '';
+                            $note = '-';
                         }
                         $importedDatas = array($key + 1,
                             $id,

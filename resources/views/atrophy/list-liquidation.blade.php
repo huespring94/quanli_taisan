@@ -1,7 +1,7 @@
 @extends('layouts.template_admin')
 
 @section('title_content')
-Danh sách đã tài sản thanh lí
+Danh sách tài sản đã thanh lí
 @stop
 
 @section('home')

@@ -1,7 +1,7 @@
 @extends('layouts.template_admin')
 
 @section('title_content')
-Danh sách tài sản của các khoa
+Danh sách tài sản của khoa
 @stop
 
 @section('home')
@@ -58,8 +58,8 @@ Danh sách tài sản của các khoa
                     <td>{{$importFac->date_import}}</td>
                     <td>{{$importFac->stuff->name}}</td>
                     <td>{{$importFac->stuff->supplier->name}}</td>
-                    <td>{{$importFac->quantity}}</td>
-                    <td align="right">{{number_format($importFac->quantity * $importFac->detailImportStore->price_unit)}}</td>
+                    <td>{{$importFac->quantity_start}}</td>
+                    <td align="right">{{number_format($importFac->quantity_start * $importFac->detailImportStore->price_unit)}}</td>
                     <td>
                         @if ($importFac->detailImportStore->status <= 20)
                         <span class="badge bg-warning">{{$importFac->detailImportStore->status}}%</span>

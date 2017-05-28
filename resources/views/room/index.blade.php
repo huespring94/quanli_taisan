@@ -96,11 +96,7 @@ Danh sách tài sản phòng
                 </td>
                 <td>
                     @if (isset($detail->liquidation_quantity))
-                    @if($detail->liquidation_status)
                     <i>Đã thanh lí ({{$detail->liquidation_quantity}})</i>
-                    @else
-                    <i>Đang chờ ({{$detail->liquidation_quantity}})</i>
-                    @endif
                     @else
                     -
                     @endif

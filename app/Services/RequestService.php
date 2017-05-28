@@ -7,6 +7,7 @@ use App\Models\Request;
 use App\Repositories\StoreFacultyRepository;
 use App\Repositories\StoreRoomRepository;
 use App\Services\LiquidationService;
+use DB;
 
 class RequestService
 {
@@ -98,11 +99,17 @@ class RequestService
             $storeFaculty = $this->storeFacultyRepo->findByField('store_faculty_id', $request->store_type_id)->first();
             if ($storeFaculty->quantity_start == $request->quantity) {
                 $this->storeFacultyRepo->deleteWhere(['store_faculty_id' => $request->store_type_id]);
+            } else {
+                $storeFaculty->quantity -= $request->quantity;
+                $storeFaculty->save();
             }
         } else {
-            $storeFaculty = $this->storeRoomRepo->findByField('store_room_id', $request->store_type_id)->first();
-            if ($storeFaculty->quantity_start == $request->quantity) {
+            $storeRoom = $this->storeRoomRepo->findByField('store_room_id', $request->store_type_id)->first();
+            if ($storeRoom->quantity_start == $request->quantity) {
                 $this->storeRoomRepo->deleteWhere(['store_room_id' => $request->store_type_id]);
+            } else {
+                $storeRoom->quantity -= $request->quantity;
+                $storeRoom->save();
             }
         }
     }
@@ -171,15 +178,17 @@ class RequestService
      */
     public function getRequestAllLiquidationByRoom($roomId)
     {
-        return $this->requestRepository
-            ->with('storeRoom.stuff')
+        return Request::with('storeRoom.stuff')
             ->whereHas('storeRoom', function ($has) use ($roomId) {
                 $has->where('room_id', '=', $roomId);
             })
-            ->findWhere([
+            ->where([
                 ['type', '=', Request::TYPE_ROOM],
                 ['kind_request', '=', Request::KIND_REQ_ONE]
-            ]);
+            ])
+            ->select('store_type_id', DB::raw('sum(quantity) as quantity'))
+            ->groupBy('store_type_id')
+            ->get();
     }
     
     /**
@@ -212,15 +221,18 @@ class RequestService
      */
     public function getRequestAllLiquidationByFaculty($facultyId)
     {
-        return $this->requestRepository
-            ->with('storeFaculty.stuff')
+        return Request::with('storeFaculty.stuff')
             ->whereHas('storeFaculty', function ($has) use ($facultyId) {
                 $has->where('faculty_id', '=', $facultyId);
             })
-            ->findWhere([
+            ->where([
                 ['type', '=', Request::TYPE_FACULTY],
-                ['kind_request', '=', Request::KIND_REQ_ONE]
-            ]);
+                ['kind_request', '=', Request::KIND_REQ_ONE],
+                ['status', '=', 1]
+            ])
+            ->select('store_type_id', DB::raw('sum(quantity) as quantity'))
+            ->groupBy('store_type_id')
+            ->get();
     }
     
     /**

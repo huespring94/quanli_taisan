@@ -128,6 +128,10 @@ class ImportRoomController extends Controller
     public function destroy(Request $request)
     {
         $this->stuffFacultyService->prepareCreateImportRoom($request->all());
+        $user = auth('web')->user();
+        $rooms = $this->facultyRoomService->getRoomByFaculty($user->faculty_id);
+        $stuffs = $this->stuffFacultyService->getStuffInStoreFacutyByFaculty($user->faculty_id);
+        return view('room.create', ['rooms' => $rooms, 'stuffs' => $stuffs]);
     }
     
     /**

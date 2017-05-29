@@ -54,7 +54,7 @@ Nhập kho hàng
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="date" name="date_import" class="form-control pull-right">
+                            <input type="date" value="{{$now}}" name="date_import" class="form-control pull-right">
                         </div>
                         <div class="has-error">
                             @foreach ($errors->get('date_import') as $error)

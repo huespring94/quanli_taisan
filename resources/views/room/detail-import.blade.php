@@ -76,7 +76,7 @@ Nhập tài sản cho phòng
                                 <form method="POST" action="{{url('fac/store-room-delete')}}">
                                     {{ csrf_field() }}
                                     <input name='stuff_id' value="{{$stuff->stuff_id}}" hidden>
-                                    <input name='faculty_id' value="{{$room->room_id}}" hidden>
+                                    <input name='room_id' value="{{$room->room_id}}" hidden>
                                     <input name='date_import' value="{{$storeRooms['import_room'][0]->date_import}}" hidden>
                                     <button type="submit" class="btn btn-default">OK</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

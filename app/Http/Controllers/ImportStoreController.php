@@ -57,7 +57,8 @@ class ImportStoreController extends Controller
     {
         Session::forget('msg');
         $stores = $this->storeService->getAll();
-        return view('store.create', ['stores' => $stores]);
+        $now = Carbon::now()->format(config('define.date_format'));
+        return view('store.create', ['stores' => $stores, 'now' => $now]);
     }
 
     /**
